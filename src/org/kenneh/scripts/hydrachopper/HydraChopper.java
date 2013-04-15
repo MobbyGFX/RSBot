@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.kenneh.core.api.Misc;
+import org.kenneh.core.api.PriceWrapper;
 import org.powerbot.core.event.events.MessageEvent;
 import org.powerbot.core.event.listeners.MessageListener;
 import org.powerbot.core.event.listeners.PaintListener;
@@ -18,7 +19,6 @@ import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.methods.tab.Skills;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Time;
-import org.powerbot.game.api.util.net.GeItem;
 import org.powerbot.game.api.wrappers.node.SceneObject;
 
 @Manifest(authors = { "Kenneh" }, description = "Uses a spirit hydra to regrow trees to chop in falador park", name = "HydraChopper")
@@ -38,7 +38,7 @@ public class HydraChopper extends ActiveScript implements PaintListener, Message
 			Task.sleep(20);
 		}
 		Constants.myTree = hcgui.getMySelection();
-		Constants.logPrice = GeItem.lookup(Constants.myTree.getLogId()).getPrice();
+		Constants.logPrice = new PriceWrapper().getPrice(Constants.myTree.getLogId());
 		startTime = System.currentTimeMillis();
 		container.add(new ResummonHydra());
 		container.add(new ChopTree());
