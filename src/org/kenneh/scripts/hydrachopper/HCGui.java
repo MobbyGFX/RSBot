@@ -30,24 +30,7 @@ public class HCGui {
 	private JLabel imageLabel;
 	private Tree myTree;
 	
-	public void show(boolean t) {
-		guiFrame.setVisible(t);
-	}
-	
-	public Tree getMySelection() {
-		return myTree;
-	}
-	
-	public JFrame getFrame() {
-		return guiFrame;
-	}
-	
-	public void initImages() throws MalformedURLException, IOException {
-		treePictures[0] = ImageIO.read(new URL("http://puu.sh/2A4xz"));
-		treePictures[1] = ImageIO.read(new URL("http://puu.sh/2A4AN"));
-	}
-
-	public void initGUI() {
+	public HCGui() {
 		try {
 			initImages();
 		} catch (IOException e) {
@@ -89,7 +72,23 @@ public class HCGui {
 		guiFrame.setLocationRelativeTo(null);
 		guiFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		guiFrame.pack();
-		guiFrame.setVisible(true);
 	}
 	
+	public void show(boolean t) {
+		guiFrame.setVisible(t);
+	}
+	
+	public Tree getMySelection() {
+		return myTree;
+	}
+	
+	public JFrame getFrame() {
+		return guiFrame;
+	}
+	
+	public void initImages() throws MalformedURLException, IOException {
+		treePictures[0] = ImageIO.read(new URL("http://puu.sh/2A4xz"));
+		treePictures[1] = ImageIO.read(new URL("http://puu.sh/2A4AN"));
+	}
+
 }

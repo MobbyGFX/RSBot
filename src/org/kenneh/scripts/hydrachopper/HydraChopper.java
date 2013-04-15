@@ -35,7 +35,7 @@ public class HydraChopper extends ActiveScript implements PaintListener, Message
 
 	public void onStart() {
 		final HCGui hcgui = new HCGui();
-		hcgui.initGUI();
+		hcgui.show(true);
 		while(hcgui.getFrame() != null && hcgui.getFrame().isVisible()) {
 			Task.sleep(20);
 		}
