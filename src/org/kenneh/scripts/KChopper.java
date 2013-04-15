@@ -25,7 +25,7 @@ import org.powerbot.game.api.wrappers.node.GroundItem;
 import org.powerbot.game.api.wrappers.node.SceneObject;
 
 
-@Manifest(authors = { "" }, description = "", name = "KChopper")
+@Manifest(authors = { "Kenneh" }, description = "Chops Ivy in Ardy", name = "KChopper")
 public class KChopper extends ActiveScript implements PaintListener {
 
 	public Timer timer = new Timer(0);

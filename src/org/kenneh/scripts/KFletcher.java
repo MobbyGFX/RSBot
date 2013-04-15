@@ -24,7 +24,7 @@ import org.powerbot.game.api.wrappers.node.Item;
 import org.powerbot.game.api.wrappers.widget.WidgetChild;
 
 
-@Manifest(authors = { "Kenneh" }, description = "An AIO Fletching Script", name = "KFletcher")
+@Manifest(authors = { "Kenneh" }, description = "An AIO Fletching Script", name = "KFletcher", hidden = true)
 public class KFletcher extends ActiveScript implements PaintListener {
 
 	public enum Log {
