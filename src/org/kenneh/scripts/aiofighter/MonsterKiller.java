@@ -71,7 +71,7 @@ import sk.action.ActionBar;
 description = "Select stuff, fight mobs, loot things, gain xp. :3 \nBring a teleport tablet for safety", 
 version = 2.38,
 website = "http://loot-files.atspace.com",
-vip = false)
+vip = true)
 public class MonsterKiller extends ActiveScript implements PaintListener, MouseListener, MessageListener, MouseMotionListener {
 
 	Timer t = new Timer(0);
