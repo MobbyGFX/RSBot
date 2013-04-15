@@ -4,7 +4,7 @@ import java.awt.Font;
 
 import org.powerbot.game.api.wrappers.Tile;
 
-public class Constants {
+public class Settings {
 
 	public static Font paintFont = new Font("Calibri", Font.PLAIN, 13);
 	public static Tile bankTile = new Tile(3012, 3355, 0);

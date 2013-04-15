@@ -11,12 +11,12 @@ public class ChopTree implements Node {
 
 	@Override
 	public boolean activate() {
-		return Misc.distanceTo(Constants.treeTile) <= 5 && Constants.myTree.isTree() && Players.getLocal().getAnimation() == -1 && !Inventory.isFull();
+		return Misc.distanceTo(Settings.treeTile) <= 5 && Settings.myTree.isTree() && Players.getLocal().getAnimation() == -1 && !Inventory.isFull();
 	}
 
 	@Override
 	public void execute() {
-		final SceneObject tree = SceneEntities.getNearest(Constants.myTree.getObjectId());
+		final SceneObject tree = SceneEntities.getNearest(Settings.myTree.getObjectId());
 		if(tree != null) {
 			if(!tree.isOnScreen()) {
 				Camera.turnTo(tree);

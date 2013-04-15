@@ -25,14 +25,12 @@ public enum Tree {
 
 	public boolean isStump() {
 		final SceneObject tree = SceneEntities.getNearest(getObjectId());
-		if(tree == null) return false;
-		return tree.getModel().getTriangles().length == choppedPolys;
+		return tree != null && tree.getModel().getTriangles().length == choppedPolys;
 	}
 
 	public boolean isTree() {
 		final SceneObject tree = SceneEntities.getNearest(getObjectId());
-		if(tree == null) return false;
-		return tree.getModel().getTriangles().length == grownPolys;
+		return tree != null && tree.getModel().getTriangles().length == grownPolys;
 	}
 
 }

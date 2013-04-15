@@ -53,7 +53,7 @@ public class HCGui {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		guiFrame = new JFrame(getClass().getAnnotation(Manifest.class).name());
+		guiFrame = new JFrame(HydraChopper.class.getAnnotation(Manifest.class).name());
 		guiPanel = new JPanel();
 		guiPanel.setLayout(new BorderLayout());
 		myModel = new DefaultComboBoxModel<Tree>();

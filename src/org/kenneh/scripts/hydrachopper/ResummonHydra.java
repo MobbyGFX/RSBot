@@ -9,18 +9,18 @@ public class ResummonHydra implements Node {
 
 	@Override
 	public boolean activate() {
-		return !Summoning.isFamiliarSummoned() && Inventory.contains(Constants.hydraPouch) && Constants.myTree.isStump();
+		return !Summoning.isFamiliarSummoned() && Inventory.contains(Settings.hydraPouch) && Settings.myTree.isStump();
 	}
 
 	@Override
 	public void execute() {
 		if(Summoning.getPoints() >= Familiar.HYDRA.getRequiredPoints()) {
-			final Item i = Inventory.getItem(Constants.hydraPouch);
+			final Item i = Inventory.getItem(Settings.hydraPouch);
 			if(i != null) {
 				i.getWidgetChild().interact("Summon");
 			}
 		} else {
-			final Item restore = Inventory.getItem(Constants.restores);
+			final Item restore = Inventory.getItem(Settings.restores);
 			if(restore != null) {
 				restore.getWidgetChild().interact("Drink");
 			}

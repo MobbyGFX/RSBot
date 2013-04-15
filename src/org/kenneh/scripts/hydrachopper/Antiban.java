@@ -1,21 +1,17 @@
 package org.kenneh.scripts.hydrachopper;
 
-import org.powerbot.game.api.methods.Calculations;
+import org.kenneh.core.api.Misc;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.widget.Camera;
 import org.powerbot.game.api.util.Random;
-import org.powerbot.game.api.wrappers.Tile;
 
 public class Antiban implements Node {
 	// really just a failsafe to prevent idle log
-	
-	public int distanceTo(final Tile tile) {
-		return (int) Calculations.distanceTo(tile);
-	}
+
 	
 	@Override
 	public boolean activate() {
-		return Players.getLocal().getAnimation() != -1 && distanceTo(Constants.treeTile) <= 5;
+		return Players.getLocal().getAnimation() != -1 && Misc.distanceTo(Settings.treeTile) <= 5;
 	}
 
 	@Override

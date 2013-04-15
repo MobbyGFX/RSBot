@@ -8,12 +8,12 @@ public class WalkToTree implements Node {
 
 	@Override
 	public boolean activate() {
-		return !Inventory.isFull() && Misc.distanceTo(Constants.treeTile) > 5;
+		return !Inventory.isFull() && Misc.distanceTo(Settings.treeTile) > 5;
 	}
 
 	@Override
 	public void execute() {
-		Walking.walk(Constants.treeTile);
+		Walking.walk(Settings.treeTile);
 	}
 
 }

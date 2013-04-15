@@ -1,4 +1,5 @@
 package org.kenneh.scripts.hydrachopper;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -34,11 +35,13 @@ public class HydraChopper extends ActiveScript implements PaintListener, Message
 
 	public void onStart() {
 		final HCGui hcgui = new HCGui();
+		hcgui.initGUI();
 		while(hcgui.getFrame() != null && hcgui.getFrame().isVisible()) {
 			Task.sleep(20);
 		}
-		Constants.myTree = hcgui.getMySelection();
-		Constants.logPrice = new PriceWrapper().getPrice(Constants.myTree.getLogId());
+		Settings.myTree = hcgui.getMySelection();
+		final PriceWrapper pw = new PriceWrapper();
+		Settings.logPrice = pw.getPrice(Settings.myTree.getLogId());
 		startTime = System.currentTimeMillis();
 		container.add(new ResummonHydra());
 		container.add(new ChopTree());
@@ -69,16 +72,24 @@ public class HydraChopper extends ActiveScript implements PaintListener, Message
 	public void onRepaint(Graphics g) {
 		final Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setFont(Constants.paintFont);
-		g2d.drawString(getClass().getAnnotation(Manifest.class).name() + " Running for " + timer.toElapsedString(), 5, 100);
-		g2d.drawString(generateString(Skills.WOODCUTTING), 5, 112);
-		g2d.drawString("Regrowth scrolls used: "+ Constants.scrollsUsed, 5, 124);
-		g2d.drawString("Logs chopped: " + Misc.perHour(startTime, Constants.logsChopped) + "(+" + Constants.logsChopped + ")", 5, 136);
-		g2d.drawString("Profit made: " + Misc.perHour(startTime, Constants.logsChopped * Constants.logPrice) + "(+" + Constants.logsChopped *  Constants.logPrice + ")", 5, 148);
+		g2d.setFont(Settings.paintFont);
 		
+		final FontMetrics fm = g2d.getFontMetrics();
+		final int stringHeight = fm.getHeight();
+		int y = 100; // first line
+		g2d.drawString(getClass().getAnnotation(Manifest.class).name() + " Running for " + timer.toElapsedString(), 5, y);
+		y += stringHeight;
+		g2d.drawString(generateString(Skills.WOODCUTTING), 5, y);
+		y += stringHeight;
+		g2d.drawString("Regrowth scrolls used: "+ Settings.scrollsUsed, 5, y);
+		y += stringHeight;
+		g2d.drawString("Logs chopped: " + Misc.perHour(startTime, Settings.logsChopped) + "(+" + Settings.logsChopped + ")", 5, y);
+		y += stringHeight;
+		g2d.drawString("Profit made: " + Misc.perHour(startTime, Settings.logsChopped * Settings.logPrice) + "(+" + Settings.logsChopped *  Settings.logPrice + ")", 5, y);
+		y += stringHeight;
 		final SceneObject tree = SceneEntities.getNearest(8389);
 		if(tree != null) {
-			g2d.drawString("Poly amount: "+ tree.getModel().getTriangles().length, 5, 160);
+			g2d.drawString("Poly amount: "+ tree.getModel().getTriangles().length, 5, y);
 		}
 
 	}
@@ -95,7 +106,7 @@ public class HydraChopper extends ActiveScript implements PaintListener, Message
 	@Override
 	public void messageReceived(MessageEvent arg0) {
 		if(arg0.getMessage().contains("get some")) {
-			Constants.logsChopped++;
+			Settings.logsChopped++;
 		}
 	}
 

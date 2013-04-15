@@ -14,14 +14,14 @@ public class RegrowTree implements Node {
 
 	@Override
 	public boolean activate() {
-		return Misc.distanceTo(Constants.treeTile) <= 5 && Constants.myTree.isStump() 
+		return Misc.distanceTo(Settings.treeTile) <= 5 && Settings.myTree.isStump() 
 				&& !Inventory.isFull() && Summoning.isFamiliarSummoned() 
-				&& Inventory.contains(Constants.hydraScroll);
+				&& Inventory.contains(Settings.hydraScroll);
 	}
 
 	@Override
 	public void execute() {
-		final SceneObject tree = SceneEntities.getNearest(Constants.myTree.getObjectId());
+		final SceneObject tree = SceneEntities.getNearest(Settings.myTree.getObjectId());
 		final WidgetChild orb = Widgets.get(Summoning.WIDGET_SUMMONING_ORB, 0);
 		if(orb != null) {
 			orb.interact("Cast");
@@ -30,11 +30,11 @@ public class RegrowTree implements Node {
 			tree.interact("Cast");
 		}
 		final Timer t = new Timer(2000);
-		while(t.isRunning() && Constants.myTree.isStump()) {
+		while(t.isRunning() && Settings.myTree.isStump()) {
 			Task.sleep(20);
 		}
-		if(Constants.myTree.isTree()) {
-			Constants.scrollsUsed++;
+		if(Settings.myTree.isTree()) {
+			Settings.scrollsUsed++;
 		}
 	}
 

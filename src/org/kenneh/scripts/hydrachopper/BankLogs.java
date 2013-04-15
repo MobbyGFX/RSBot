@@ -9,7 +9,7 @@ public class BankLogs implements Node {
 
 	@Override
 	public boolean activate() {
-		return Misc.distanceTo(Constants.bankTile) <=5 && Inventory.isFull();
+		return Misc.distanceTo(Settings.bankTile) <=5 && Inventory.isFull();
 	}
 
 	@Override
@@ -17,12 +17,12 @@ public class BankLogs implements Node {
 		if(!Bank.isOpen()) {
 			Bank.open();
 		} else {
-			Bank.deposit(Constants.myTree.getLogId(), 0);
-			if(Inventory.getItem(Constants.hydraPouch) == null) {
-				Bank.withdraw(Constants.hydraPouch, 1);
+			Bank.deposit(Settings.myTree.getLogId(), 0);
+			if(Inventory.getItem(Settings.hydraPouch) == null) {
+				Bank.withdraw(Settings.hydraPouch, 1);
 			}
-			if(Inventory.getItem(Constants.restores) == null) {
-				Item i =  Bank.getItem(Constants.restores);
+			if(Inventory.getItem(Settings.restores) == null) {
+				Item i =  Bank.getItem(Settings.restores);
 				if(i != null) {
 					Bank.withdraw(i.getId(), 1);
 				}

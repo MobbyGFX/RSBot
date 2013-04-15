@@ -8,12 +8,12 @@ public class WalkToBank implements Node {
 
 	@Override
 	public boolean activate() {
-		return Misc.distanceTo(Constants.bankTile) > 5 && Inventory.isFull();
+		return Misc.distanceTo(Settings.bankTile) > 5 && Inventory.isFull();
 	}
 
 	@Override
 	public void execute() {
-		Walking.walk(Constants.bankTile);
+		Walking.walk(Settings.bankTile);
 	}
 
 }
