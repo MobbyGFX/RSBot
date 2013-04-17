@@ -48,12 +48,12 @@ public class Prayer extends LoopTask {
 	}
 	
 	public void disableQuickPrayer() {
-		Widgets.get(749, 3).interact("Turn prayers off");
+		Widgets.get(749, 3).interact("off");
 		Task.sleep(1000);
 	}
 	
 	public void enableQuickPrayer() {
-		Widgets.get(749, 3).interact("Turn quick prayers on");
+		Widgets.get(749, 3).interact("on");
 		Task.sleep(1000);
 	}
 
