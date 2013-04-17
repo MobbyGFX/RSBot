@@ -2,11 +2,13 @@ package org.kenneh.scripts.aiofighter.nodes;
 
 import org.kenneh.core.api.MCamera;
 import org.kenneh.core.api.Misc;
+import org.kenneh.scripts.aiofighter.FighterGUI;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
 import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.interactive.NPCs;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.tab.Summoning;
+import org.powerbot.game.api.methods.widget.Camera;
 import org.powerbot.game.api.util.Filter;
 import org.powerbot.game.api.wrappers.interactive.NPC;
 
@@ -30,15 +32,7 @@ public class AttackOneOf extends Node {
 	public static NPC getNearest() {
 		return Misc.getNearest(getNearestAgressiveMob());
 	}
-	
-//	public static NPC getNearest() {
-//		for(NPC i : getNearestAgressiveMob()) {
-//			if(i.getInteracting() != null
-//					&& i.getInteracting().equals(Players.getLocal()))
-//				return i;
-//		}
-//		return null;
-//	}
+
 
 	@Override
 	public boolean activate() {
@@ -59,8 +53,11 @@ public class AttackOneOf extends Node {
 				//Logger.log("Attacking closest aggressive npc");
 				MonsterKiller.status = "Attacking closest aggressive npc";
 				if(!Misc.isOnScreen(mob)) {
-					//Camera.turnTo(mob, 5);
+					if(FighterGUI.useFastCamera) {
 					MCamera.turnTo(mob, 50);
+					} else {
+						Camera.turnTo(mob, 5);
+					}
 				}
 				//Misc.interact(mob, "Attack");
 				mob.interact("Attack", mob.getName());

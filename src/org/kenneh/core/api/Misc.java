@@ -3,6 +3,7 @@ package org.kenneh.core.api;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -11,6 +12,7 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.RadialGradientPaint;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -27,8 +29,11 @@ import org.powerbot.game.api.methods.interactive.NPCs;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.methods.tab.Inventory;
+import org.powerbot.game.api.methods.tab.Skills;
 import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.util.Filter;
+import org.powerbot.game.api.util.SkillData;
+import org.powerbot.game.api.util.Time;
 import org.powerbot.game.api.wrappers.Entity;
 import org.powerbot.game.api.wrappers.Locatable;
 import org.powerbot.game.api.wrappers.graphics.CapturedModel;
@@ -40,6 +45,73 @@ import org.powerbot.game.api.wrappers.widget.WidgetChild;
 
 
 public class Misc {
+	
+	public static void drawProgressBar(Graphics2D g, final int x, final int y,
+			final int width, final int height, final Color main,
+			final Color progress, final int alpha, final int percentage) {
+		g.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON));
+		final GradientPaint base = new GradientPaint(x, y, new Color(200, 200,
+				200, alpha), x, y + height, main);
+		final GradientPaint overlay = new GradientPaint(x, y, new Color(200,
+				200, 200, alpha), x, y + height, progress);
+		if (height > width) {
+			g.setPaint(base);
+			g.fillRect(x, y, width, height);
+			g.setPaint(overlay);
+			g.fillRect(x,
+					y + (height - (int) (height * (percentage / 100.0D))),
+					width, (int) (height * (percentage / 100.0D)));
+		} else {
+			g.setPaint(base);
+			g.fillRect(x, y, width, height);
+			g.setPaint(overlay);
+			g.fillRect(x, y, (int) (width * (percentage / 100.0D)), height);
+		}
+		g.setColor(Color.BLACK);
+		g.drawRect(x, y, width, height);
+	}
+	
+	public static String generateString(SkillData sd, int index) {
+		StringBuilder sb = new StringBuilder();
+		String name = SKILL_NAMES[index];
+		sb.append(name +": ");
+		sb.append(Skills.getRealLevel(index) + "(+" + sd.level(index) + ") ");
+		sb.append("Experience: " + sd.experience(SkillData.Rate.HOUR, index) + "(+" + sd.experience(index) + ") ");
+		sb.append("TTL: " + Time.format(sd.timeToLevel(SkillData.Rate.HOUR, index)));
+		return sb.toString();
+	}
+	
+	public static int getPercentToNextLevel(final int index) {
+		if (index > SKILL_NAMES.length - 1) {
+			return -1;
+		}
+		final int lvl = Skills.getRealLevel(index);
+		return getPercentToLevel(index, lvl + 1);
+	}
+
+	public static int getPercentToLevel(final int index, final int endLvl) {
+		if (index > SKILL_NAMES.length - 1) {
+			return -1;
+		}
+		final int lvl = Skills.getRealLevel(index);
+		if (lvl == 99 || endLvl > 99) {
+			return 0;
+		}
+		final int xpTotal = Skills.XP_TABLE[endLvl] - Skills.XP_TABLE[lvl];
+		if (xpTotal == 0) {
+			return 0;
+		}
+		final int xpDone = Skills.getExperience(index) - Skills.XP_TABLE[lvl];
+		return 100 * xpDone / xpTotal;
+	}
+
+	public static final String[] SKILL_NAMES = {"attack", "defence",
+			"strength", "constitution", "range", "prayer", "magic", "cooking",
+			"woodcutting", "fletching", "fishing", "firemaking", "crafting",
+			"smithing", "mining", "herblore", "agility", "thieving", "slayer",
+			"farming", "runecrafting", "hunter", "construction", "summoning",
+			"dungeoneering", "-unused-"};
 
 	public static NPC getNearest(NPC[] mobs) {
 		int distance = 9999;

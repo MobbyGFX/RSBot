@@ -2,11 +2,13 @@ package org.kenneh.scripts.aiofighter.nodes;
 
 import org.kenneh.core.api.MCamera;
 import org.kenneh.core.api.Misc;
+import org.kenneh.scripts.aiofighter.FighterGUI;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
 import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Walking;
 import org.powerbot.game.api.methods.interactive.NPCs;
 import org.powerbot.game.api.methods.interactive.Players;
+import org.powerbot.game.api.methods.widget.Camera;
 import org.powerbot.game.api.util.Filter;
 import org.powerbot.game.api.wrappers.interactive.NPC;
 
@@ -48,7 +50,11 @@ public class FightEntity extends Node {
 		final NPC mob = getNearestNpc();
 		if(mob != null) {
 			if(!Misc.isOnScreen(mob)) {
-				MCamera.turnTo(mob, 50);
+				if(FighterGUI.useFastCamera) {
+					MCamera.turnTo(mob, 50);
+					} else {
+						Camera.turnTo(mob, 5);
+					}
 			}
 			int dist = (int)mob.getLocation().distanceTo();
 			if(dist > 7 && !Players.getLocal().isMoving()) {

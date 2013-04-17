@@ -2,6 +2,7 @@ package org.kenneh.scripts.aiofighter.nodes;
 
 
 
+import org.kenneh.scripts.aiofighter.FighterGUI;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
 import org.powerbot.core.script.job.LoopTask;
 import org.powerbot.core.script.job.Task;
@@ -163,7 +164,7 @@ public class AbilityHandler extends LoopTask {
 		} catch(Exception a) {
 			a.printStackTrace();
 		}
-		return 250;
+		return FighterGUI.abilityDelay;
 	}
 
 }

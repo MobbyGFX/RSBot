@@ -1,6 +1,9 @@
 package org.kenneh.scripts.aiofighter;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -28,6 +31,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.LayoutStyle;
@@ -57,6 +61,8 @@ import org.kenneh.scripts.aiofighter.nodes.SummoningHandler;
 import org.kenneh.scripts.aiofighter.nodes.Teleport;
 import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Environment;
+import org.powerbot.game.api.methods.input.Mouse;
+import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.methods.interactive.NPCs;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.tab.Inventory;
@@ -214,6 +220,9 @@ public class FighterGUI extends JPanel {
 		spinner1.setValue(Integer.parseInt(props.getProperty("radius")));
 		spinner2.setValue(Integer.parseInt(props.getProperty("overx")));
 		editorPane2.setText(props.getProperty("alchs"));
+		abilDelay.setValue(Integer.parseInt(props.getProperty("abildelay")));
+		mouseBox.setSelectedIndex(Integer.parseInt(props.getProperty("mouse")));
+		fastCamera.setSelected(props.getProperty("fcamera").equals("true") ? true : false );
 	}
 
 	public void save() throws Exception {
@@ -228,6 +237,9 @@ public class FighterGUI extends JPanel {
 		prop.setProperty("radius", String.valueOf(spinner1.getValue()));
 		prop.setProperty("overx", String.valueOf(spinner2.getValue()));
 		prop.setProperty("alchs", editorPane2.getText());
+		prop.setProperty("mouse", String.valueOf(mouseBox.getSelectedIndex()));
+		prop.setProperty("abildelay", String.valueOf(abilDelay.getValue()));
+		prop.setProperty("fcamera", String.valueOf(useFastCamera));
 		prop.store(new FileOutputStream(Environment.getStorageDirectory()+ "/config.properties"), null);
 		System.out.println("Settings saved!");
 	}
@@ -276,12 +288,7 @@ public class FighterGUI extends JPanel {
 			MonsterKiller.fighting.add(Integer.parseInt(format));
 		}
 		frame.setVisible(false);
-		try {
-			save();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 		
 		if(Alch.hasRunes()) {
 			MonsterKiller.provide(new Alch());
@@ -313,9 +320,34 @@ public class FighterGUI extends JPanel {
 		if(Inventory.getItem(4155) != null) {
 			MonsterKiller.provide(new EndOnSlayerTask());
 		}
+		speed = (Speed) mouseBox.getSelectedItem();
+		useFastCamera = fastCamera.isSelected();
+		abilityDelay = abilDelay.getValue();
+		
+		Mouse.setSpeed(speed);
+		
+		Logger.log("Mouse speed: " + speed);
+		Logger.log("Camera speed: "+ (FighterGUI.useFastCamera? "fast":"slow"));
+		Logger.log("Ability delay: " + FighterGUI.abilityDelay);
 		Logger.log("Food id: " + Constants.foodID);
 		Logger.log("AIOFighter Initialized..");
+		
+		try {
+			save();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
+	
+	public static Speed speed;
+	public static boolean useFastCamera = true;
+	public static int abilityDelay = 250;
+	
+	private JComboBox<Speed> mouseBox;
+	private DefaultComboBoxModel<Speed> mouseBoxModel;
+	private JSlider abilDelay;
+	private JCheckBox fastCamera;
 
 	public int[] parseCustomLoot(String text) {
 		try {
@@ -342,6 +374,46 @@ public class FighterGUI extends JPanel {
 
 	public static boolean radiusIsNull() {
 		return spinner1 == null;
+	}
+
+	public void initExtraPanel() {
+		final JPanel panel = new JPanel();
+		final JLabel label = new JLabel();
+		final JLabel label2 = new JLabel();
+		label2.setText("Choose the default mouse speed!");
+		label.setText("Choose the ability delay (The higher the value, the longer it will wait inbetween ability usage!)");
+		mouseBoxModel = new DefaultComboBoxModel<Speed>();
+		mouseBox = new JComboBox<Speed>(mouseBoxModel);
+		for(Speed s : Speed.values()) {
+			mouseBoxModel.addElement(s);
+		}
+		fastCamera = new JCheckBox("Use fast camera movements");
+		abilDelay = new JSlider();
+		abilDelay.setValue(abilityDelay);
+		abilDelay.setMajorTickSpacing(50);
+		abilDelay.setMaximum(5000);
+		abilDelay.setPaintTicks(true);
+		panel.setLayout(new GridBagLayout());
+		abilDelay.setPreferredSize(new Dimension(600, 10));
+		final GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.CENTER;
+		c.ipady = 20;
+		c.gridx = 0;
+		c.gridy = 0;
+		panel.add(label, c);
+		c.gridx = 0;
+		c.gridy = 1;
+		panel.add(abilDelay, c);
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(label2, c);
+		c.gridx = 0;
+		c.gridy = 3;
+		panel.add(mouseBox, c);
+		c.gridx = 0;
+		c.gridy = 4;
+		panel.add(fastCamera, c);
+		tabbedPane1.addTab("Settings", panel);
 	}
 
 	private void initComponents() {
@@ -877,6 +949,7 @@ public class FighterGUI extends JPanel {
 									.addComponent(label3))
 									.addGap(7, 7, 7))
 					);
+			initExtraPanel();
 			frame.add(this);
 			frame.pack();
 			frame.setVisible(true);
