@@ -24,7 +24,7 @@ import sk.general.TimedCondition;
 public class LootHandler extends Node {
 
 	static DropHandler dh = new DropHandler();
-	
+
 	public static int totalValue = 0;
 
 	public static void loot() {
@@ -66,6 +66,8 @@ public class LootHandler extends Node {
 				}
 			}
 		} else {
+			if(item.getId() == 22448 && item.getGroundItem().getStackSize() < 10) {
+			}
 			take(item);
 		}
 	}
@@ -79,8 +81,11 @@ public class LootHandler extends Node {
 		@Override
 		public boolean accept(GroundItem arg0) {
 			for(int i : MonsterKiller.loot) {
-				if(arg0.getId() == i
-						&& MonsterKiller.isInLootArea(arg0)) return true;
+				if(arg0.getId() == 22448 && arg0.getGroundItem().getStackSize() < 10) {
+					return false;
+				}
+				if(arg0.getId() == i && MonsterKiller.isInLootArea(arg0)) 
+					return true;
 			}
 			return false;
 		}
@@ -109,7 +114,6 @@ public class LootHandler extends Node {
 							&& i.getId() != 954
 							&& !Misc.arrayContains(i.getId(), MonsterKiller.summoning)
 							&& !Test.getName(i.getId()).contains("noted")) {
-
 						price = PriceChecker.lootlist.get(i.getId()) * i.getStackSize();
 						item = i;
 					}
@@ -118,7 +122,7 @@ public class LootHandler extends Node {
 		}
 		return item;
 	}
-	
+
 	//static DropHandler dh = new DropHandler();
 
 	public static void take(final GroundItem item) {

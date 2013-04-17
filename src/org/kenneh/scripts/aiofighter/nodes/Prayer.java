@@ -9,6 +9,8 @@ import org.powerbot.game.api.methods.Widgets;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.tab.Inventory;
 
+import sk.action.ActionBar;
+
 
 public class Prayer extends LoopTask {
 
@@ -46,14 +48,16 @@ public class Prayer extends LoopTask {
 		Inventory.getItem(renewal).getWidgetChild().interact("Drink");
 		Task.sleep(1000);
 	}
-	
+
 	public void disableQuickPrayer() {
-		Widgets.get(749, 3).interact("off");
+		ActionBar.useSlot(0);
+		//Widgets.get(749, 3).interact("off");
 		Task.sleep(1000);
 	}
-	
+
 	public void enableQuickPrayer() {
-		Widgets.get(749, 3).interact("on");
+		ActionBar.useSlot(0);
+		//Widgets.get(749, 3).interact("on");
 		Task.sleep(1000);
 	}
 
@@ -69,7 +73,10 @@ public class Prayer extends LoopTask {
 					}
 				} else {
 					// fighting, but prayer is off
-					enableQuickPrayer();
+					if(getPrayerPoints() > 0) {
+						// if we actually have prayer points..
+						enableQuickPrayer();
+					}
 				}
 			} else {
 				if(prayerIsOn()) {

@@ -387,6 +387,8 @@ public class FighterGUI extends JPanel {
 		final JPanel panel = new JPanel();
 		final JLabel label = new JLabel();
 		final JLabel label2 = new JLabel();
+		final JLabel label3 = new JLabel();
+		label3.setText("Have quick prayers in ActionBar slot 0!");
 		label2.setText("Choose the default mouse speed!");
 		label.setText("Choose the ability delay (The higher the value, the longer it will wait inbetween ability usage!)");
 		mouseBoxModel = new DefaultComboBoxModel<Speed>();
@@ -425,6 +427,9 @@ public class FighterGUI extends JPanel {
 		panel.add(fastCamera, c);
 		c.gridx = 0;
 		c.gridy = 5;
+		panel.add(label3, c);
+		c.gridx = 0;
+		c.gridy = 6;
 		panel.add(quickPrayer, c);
 		tabbedPane1.addTab("Settings", panel);
 	}
