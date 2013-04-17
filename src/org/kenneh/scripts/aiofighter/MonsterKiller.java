@@ -59,7 +59,7 @@ import sk.action.ActionBar;
 
 @Manifest(authors = { "Kenneh" }, name = "Kenneh's AIO Fighter", 
 description = "Select stuff, fight mobs, loot things, gain xp. :3 \nBring a teleport tablet for safety", 
-version = 2.4,
+version = 2.41,
 website = "http://loot-files.atspace.com",
 vip = true)
 public class MonsterKiller extends ActiveScript implements PaintListener, MouseListener, MessageListener, MouseMotionListener {
