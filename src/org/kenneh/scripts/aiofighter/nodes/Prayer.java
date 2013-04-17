@@ -6,6 +6,7 @@ import org.powerbot.core.script.job.LoopTask;
 import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.methods.Settings;
 import org.powerbot.game.api.methods.Widgets;
+import org.powerbot.game.api.methods.input.Keyboard;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.tab.Inventory;
 
@@ -50,13 +51,17 @@ public class Prayer extends LoopTask {
 	}
 
 	public void disableQuickPrayer() {
-		ActionBar.useSlot(0);
+		//ActionBar.useSlot(0);
+		Keyboard.sendKey((char)  48 );
+		System.out.println("Turning off");
 		//Widgets.get(749, 3).interact("off");
 		Task.sleep(1000);
 	}
 
 	public void enableQuickPrayer() {
-		ActionBar.useSlot(0);
+		//ActionBar.useSlot(0);
+		Keyboard.sendKey((char)  48 );
+		System.out.println("Turning on!");
 		//Widgets.get(749, 3).interact("on");
 		Task.sleep(1000);
 	}
@@ -64,7 +69,7 @@ public class Prayer extends LoopTask {
 	@Override
 	public int loop() {
 		if(FighterGUI.useQuickPrayer) {
-			if(Players.getLocal().isInCombat()) {
+			if(Players.getLocal().isInCombat() && AttackOneOf.getNearest() != null) {
 				if(prayerIsOn()) {
 					if(potPray()) {
 						drinkPrayerPot();

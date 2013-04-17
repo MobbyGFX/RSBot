@@ -427,6 +427,7 @@ public class FighterGUI extends JPanel {
 		panel.add(fastCamera, c);
 		c.gridx = 0;
 		c.gridy = 5;
+		c.ipady = 0;
 		panel.add(label3, c);
 		c.gridx = 0;
 		c.gridy = 6;
