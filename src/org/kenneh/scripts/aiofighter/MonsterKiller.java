@@ -29,6 +29,7 @@ import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.kenneh.scripts.aiofighter.nodes.AbilityHandler;
 import org.kenneh.scripts.aiofighter.nodes.Expandbar;
 import org.kenneh.scripts.aiofighter.nodes.Potions;
+import org.kenneh.scripts.aiofighter.nodes.Prayer;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
 import org.kenneh.scripts.aiofighter.nodes.SprinkleNeem;
 import org.powerbot.core.event.events.MessageEvent;
@@ -257,6 +258,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		Logger.log("Current bar: "+ barIndex);
 		getContainer().submit(new AbilityHandler());
 		getContainer().submit(new PriceChecker());
+		getContainer().submit(new Prayer());
 		startTime = System.currentTimeMillis();
 		provide(new SprinkleNeem());
 		Logger.log("ShieldId: "+ shieldId + " WeaponId: " + mainWeapon);

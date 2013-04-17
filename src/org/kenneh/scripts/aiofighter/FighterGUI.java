@@ -223,7 +223,11 @@ public class FighterGUI extends JPanel {
 		abilDelay.setValue(Integer.parseInt(props.getProperty("abildelay")));
 		mouseBox.setSelectedIndex(Integer.parseInt(props.getProperty("mouse")));
 		fastCamera.setSelected(props.getProperty("fcamera").equals("true") ? true : false );
+		quickPrayer.setSelected(props.getProperty("qprayer").equals("true") ? true : false );
 	}
+	
+	public static boolean useQuickPrayer = false;
+	public JCheckBox quickPrayer;
 
 	public void save() throws Exception {
 		Properties prop = new Properties();
@@ -240,6 +244,7 @@ public class FighterGUI extends JPanel {
 		prop.setProperty("mouse", String.valueOf(mouseBox.getSelectedIndex()));
 		prop.setProperty("abildelay", String.valueOf(abilDelay.getValue()));
 		prop.setProperty("fcamera", String.valueOf(useFastCamera));
+		prop.setProperty("qprayer", String.valueOf(quickPrayer.isSelected()));
 		prop.store(new FileOutputStream(Environment.getStorageDirectory()+ "/config.properties"), null);
 		System.out.println("Settings saved!");
 	}
@@ -323,12 +328,14 @@ public class FighterGUI extends JPanel {
 		speed = (Speed) mouseBox.getSelectedItem();
 		useFastCamera = fastCamera.isSelected();
 		abilityDelay = abilDelay.getValue();
+		useQuickPrayer = quickPrayer.isSelected();
 		
 		Mouse.setSpeed(speed);
 		
 		Logger.log("Mouse speed: " + speed);
 		Logger.log("Camera speed: "+ (FighterGUI.useFastCamera? "fast":"slow"));
 		Logger.log("Ability delay: " + FighterGUI.abilityDelay);
+		Logger.log("Quick prayer: " + FighterGUI.useQuickPrayer);
 		Logger.log("Food id: " + Constants.foodID);
 		Logger.log("AIOFighter Initialized..");
 		
@@ -387,6 +394,7 @@ public class FighterGUI extends JPanel {
 		for(Speed s : Speed.values()) {
 			mouseBoxModel.addElement(s);
 		}
+		quickPrayer = new JCheckBox("Enable quick prayer usage");
 		fastCamera = new JCheckBox("Use fast camera movements");
 		abilDelay = new JSlider();
 		abilDelay.setValue(abilityDelay);
@@ -396,7 +404,7 @@ public class FighterGUI extends JPanel {
 		panel.setLayout(new GridBagLayout());
 		abilDelay.setPreferredSize(new Dimension(600, 10));
 		final GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.CENTER;
+		c.anchor = GridBagConstraints.NORTHWEST;
 		c.ipady = 20;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -409,10 +417,15 @@ public class FighterGUI extends JPanel {
 		panel.add(label2, c);
 		c.gridx = 0;
 		c.gridy = 3;
+		c.ipady = 0;
 		panel.add(mouseBox, c);
+		c.ipady = 20;
 		c.gridx = 0;
 		c.gridy = 4;
 		panel.add(fastCamera, c);
+		c.gridx = 0;
+		c.gridy = 5;
+		panel.add(quickPrayer, c);
 		tabbedPane1.addTab("Settings", panel);
 	}
 

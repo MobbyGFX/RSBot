@@ -1,14 +1,16 @@
 package org.kenneh.scripts.aiofighter.nodes;
 
 import org.kenneh.core.api.Misc;
+import org.kenneh.scripts.aiofighter.FighterGUI;
+import org.powerbot.core.script.job.LoopTask;
 import org.powerbot.core.script.job.Task;
-import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Settings;
 import org.powerbot.game.api.methods.Widgets;
+import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.tab.Inventory;
 
 
-public class Prayer extends Node {
+public class Prayer extends LoopTask {
 
 	int[] ppots = {139, 141, 143, 2434, 14207, 14209, 14211, 14213, 14215,
 			23243, 23245, 23247, 23249, 23251, 23253};
@@ -45,27 +47,38 @@ public class Prayer extends Node {
 		Task.sleep(1000);
 	}
 	
+	public void disableQuickPrayer() {
+		Widgets.get(749, 3).interact("Turn prayers off");
+		Task.sleep(1000);
+	}
+	
 	public void enableQuickPrayer() {
 		Widgets.get(749, 3).interact("Turn quick prayers on");
 		Task.sleep(1000);
 	}
 
 	@Override
-	public boolean activate() {
-		return true;
-	}
-
-	@Override
-	public void execute() {
-		//if(!prayerIsOn()) {
-		//	enableQuickPrayer();
-		//}
-		if(potPray()) {
-			drinkPrayerPot();
+	public int loop() {
+		if(FighterGUI.useQuickPrayer) {
+			if(Players.getLocal().isInCombat()) {
+				if(prayerIsOn()) {
+					if(potPray()) {
+						drinkPrayerPot();
+					} else {
+						// everything should be okay
+					}
+				} else {
+					// fighting, but prayer is off
+					enableQuickPrayer();
+				}
+			} else {
+				if(prayerIsOn()) {
+					// prayer is on and not fighting
+					disableQuickPrayer();
+				}
+			}
 		}
-		if(potRenewal()) {
-			drinkRenewal();
-		}
+		return 250;
 	}
 
 }
