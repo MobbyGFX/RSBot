@@ -4,6 +4,9 @@ import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.wrappers.node.SceneObject;
 
 public enum Tree {
+	OAK(8389, 312, 363, 1521),
+    WILLOW(8389, 239, 176, 1519),
+    MAPLE(8389, 271, 395, 1517),
 	YEW(8389, 155, 224, 1515),
 	MAGIC(8389, 1965, 910, 1513);
 
