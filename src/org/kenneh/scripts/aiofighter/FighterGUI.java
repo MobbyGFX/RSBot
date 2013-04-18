@@ -225,6 +225,7 @@ public class FighterGUI extends JPanel {
 		fastCamera.setSelected(props.getProperty("fcamera").equals("true") ? true : false );
 		quickPrayer.setSelected(props.getProperty("qprayer").equals("true") ? true : false );
 		buryBones.setSelected(props.getProperty("burybones").equals("true") ? true : false );
+		waitLoot.setSelected(props.getProperty("waitloot").equals("true") ? true : false);
 	}
 	
 	public static boolean useQuickPrayer = false;
@@ -250,6 +251,7 @@ public class FighterGUI extends JPanel {
 		prop.setProperty("fcamera", String.valueOf(useFastCamera));
 		prop.setProperty("qprayer", String.valueOf(quickPrayer.isSelected()));
 		prop.setProperty("burybones", String.valueOf(buryBones.isSelected()));
+		prop.setProperty("waitloot", String.valueOf(waitLoot.isSelected()));
 		prop.store(new FileOutputStream(Environment.getStorageDirectory()+ "/config.properties"), null);
 		System.out.println("Settings saved!");
 	}
@@ -334,6 +336,8 @@ public class FighterGUI extends JPanel {
 		useFastCamera = fastCamera.isSelected();
 		abilityDelay = abilDelay.getValue();
 		useQuickPrayer = quickPrayer.isSelected();
+		bury = buryBones.isSelected();
+		waitForLoot = waitLoot.isSelected();
 		
 		Mouse.setSpeed(speed);
 		
@@ -355,11 +359,14 @@ public class FighterGUI extends JPanel {
 	public static Speed speed;
 	public static boolean useFastCamera = true;
 	public static int abilityDelay = 250;
+	public static boolean waitForLoot = false;
 	
 	private JComboBox<Speed> mouseBox;
 	private DefaultComboBoxModel<Speed> mouseBoxModel;
 	private JSlider abilDelay;
 	private JCheckBox fastCamera;
+	
+	private JCheckBox waitLoot;
 
 	public int[] parseCustomLoot(String text) {
 		try {
@@ -394,6 +401,7 @@ public class FighterGUI extends JPanel {
 		final JLabel label2 = new JLabel();
 		final JLabel label3 = new JLabel();
 		buryBones = new JCheckBox("Bury bones");
+		waitLoot = new JCheckBox("Wait for loot");
 		label3.setText("Have quick prayers in ActionBar slot 0!");
 		label2.setText("Choose the default mouse speed!");
 		label.setText("Choose the ability delay (The higher the value, the longer it will wait inbetween ability usage!)");
@@ -441,6 +449,9 @@ public class FighterGUI extends JPanel {
 		c.gridx = 0;
 		c.gridy = 7;
 		panel.add(buryBones, c);
+		c.gridx = 0;
+		c.gridy = 8;
+		panel.add(waitLoot, c);
 		tabbedPane1.addTab("Settings", panel);
 	}
 

@@ -18,9 +18,13 @@ import sk.general.TimedCondition;
 
 public class FightEntity extends Node {
 
+	public boolean getActivate() {
+		return FighterGUI.waitForLoot ? !Players.getLocal().isInCombat() : Players.getLocal().getInteracting() == null;
+	}
+	
 	@Override
 	public boolean activate() {
-		return Players.getLocal().getInteracting() == null 
+		return getActivate()
 				&& Alch.getAlchableItem() == null
 				&& !AbilityHandler.waitingForRejuv 
 				&& !AbilityHandler.waitForAbility
