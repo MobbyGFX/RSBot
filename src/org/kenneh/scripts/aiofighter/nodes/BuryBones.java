@@ -1,5 +1,6 @@
 package org.kenneh.scripts.aiofighter.nodes;
 
+import org.kenneh.scripts.aiofighter.FighterGUI;
 import org.powerbot.core.script.job.Task;
 import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Tabs;
@@ -21,7 +22,11 @@ public class BuryBones extends Node {
 	@Override
 	public void execute() {
 		while(Inventory.getItem(bonesarray) != null) {
+			if(FighterGUI.bury) { 
 			Inventory.getItem(bonesarray).getWidgetChild().interact("Bury");
+			} else {
+				Inventory.getItem(bonesarray).getWidgetChild().interact("Drop");
+			}
 			Task.sleep(500);
 		}
 	}

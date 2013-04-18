@@ -224,10 +224,14 @@ public class FighterGUI extends JPanel {
 		mouseBox.setSelectedIndex(Integer.parseInt(props.getProperty("mouse")));
 		fastCamera.setSelected(props.getProperty("fcamera").equals("true") ? true : false );
 		quickPrayer.setSelected(props.getProperty("qprayer").equals("true") ? true : false );
+		buryBones.setSelected(props.getProperty("burybones").equals("true") ? true : false );
 	}
 	
 	public static boolean useQuickPrayer = false;
 	public JCheckBox quickPrayer;
+	
+	public static boolean bury = false;
+	private JCheckBox buryBones;
 
 	public void save() throws Exception {
 		Properties prop = new Properties();
@@ -245,6 +249,7 @@ public class FighterGUI extends JPanel {
 		prop.setProperty("abildelay", String.valueOf(abilDelay.getValue()));
 		prop.setProperty("fcamera", String.valueOf(useFastCamera));
 		prop.setProperty("qprayer", String.valueOf(quickPrayer.isSelected()));
+		prop.setProperty("burybones", String.valueOf(buryBones.isSelected()));
 		prop.store(new FileOutputStream(Environment.getStorageDirectory()+ "/config.properties"), null);
 		System.out.println("Settings saved!");
 	}
@@ -388,6 +393,7 @@ public class FighterGUI extends JPanel {
 		final JLabel label = new JLabel();
 		final JLabel label2 = new JLabel();
 		final JLabel label3 = new JLabel();
+		buryBones = new JCheckBox("Bury bones");
 		label3.setText("Have quick prayers in ActionBar slot 0!");
 		label2.setText("Choose the default mouse speed!");
 		label.setText("Choose the ability delay (The higher the value, the longer it will wait inbetween ability usage!)");
@@ -400,13 +406,13 @@ public class FighterGUI extends JPanel {
 		fastCamera = new JCheckBox("Use fast camera movements");
 		abilDelay = new JSlider();
 		abilDelay.setValue(abilityDelay);
-		abilDelay.setMajorTickSpacing(50);
+		abilDelay.setMajorTickSpacing(250);
 		abilDelay.setMaximum(5000);
 		abilDelay.setPaintTicks(true);
 		panel.setLayout(new GridBagLayout());
 		abilDelay.setPreferredSize(new Dimension(600, 10));
 		final GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.NORTHWEST;
+		c.anchor = GridBagConstraints.NORTH;
 		c.ipady = 20;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -432,6 +438,9 @@ public class FighterGUI extends JPanel {
 		c.gridx = 0;
 		c.gridy = 6;
 		panel.add(quickPrayer, c);
+		c.gridx = 0;
+		c.gridy = 7;
+		panel.add(buryBones, c);
 		tabbedPane1.addTab("Settings", panel);
 	}
 

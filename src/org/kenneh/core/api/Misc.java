@@ -21,7 +21,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import org.kenneh.core.api.astar.AStar;
-import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.methods.Settings;
 import org.powerbot.game.api.methods.Tabs;
 import org.powerbot.game.api.methods.Widgets;
@@ -30,7 +29,6 @@ import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.tab.Skills;
-import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.util.Filter;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Time;
@@ -45,6 +43,16 @@ import org.powerbot.game.api.wrappers.widget.WidgetChild;
 
 
 public class Misc {
+	
+	
+	public static String capitalize(String toCaps) {
+		if(toCaps.length() == 0) {
+			return null;
+		} else {
+			final String first = String.valueOf(toCaps.charAt(0));
+			return toCaps.replaceFirst(first, String.valueOf(first).toUpperCase());
+		}
+	}
 	
 	public static void drawProgressBar(Graphics2D g, final int x, final int y,
 			final int width, final int height, final Color main,
@@ -75,10 +83,13 @@ public class Misc {
 	public static String generateString(SkillData sd, int index) {
 		StringBuilder sb = new StringBuilder();
 		String name = SKILL_NAMES[index];
-		sb.append(name +": ");
+		sb.append(capitalize(name) +": ");
 		sb.append(Skills.getRealLevel(index) + "(+" + sd.level(index) + ") ");
 		sb.append("Experience: " + sd.experience(SkillData.Rate.HOUR, index) + "(+" + sd.experience(index) + ") ");
 		sb.append("TTL: " + Time.format(sd.timeToLevel(SkillData.Rate.HOUR, index)));
+		if(index == Skills.SLAYER) {
+			sb.append(" NPCS Left: " + Settings.get(394));
+		}
 		return sb.toString();
 	}
 	
@@ -152,48 +163,8 @@ public class Misc {
 		return temp;
 	}
 
-	public static int distanceTo(SceneObject t) {
-		return AStar.findDistance(t.getLocation());
-	}
-
 	public static SceneObject getNearest(final int... id) {
 		return getNearest(SceneEntities.getLoaded(id));
-	}
-
-	public static boolean depositAllExcept(final int... itemIDs) {
-		for(Integer i : itemIDs) {
-			if(i == null) {
-				return false;
-			}
-		}
-		if (Bank.isOpen()) {
-			if (Inventory.getCount(true) - Inventory.getCount(true, itemIDs) <= 0) {
-				return true;
-			}
-			if (Inventory.getCount() == 0) {
-				return true;
-			}
-			if (Inventory.getCount(true, itemIDs) == 0) {
-				return Bank.depositInventory();
-			}
-			outer:
-				for (final Item item : Inventory.getItems()) {
-					if (item != null && item.getId() != -1) {
-						for (final int itemID : itemIDs) {
-							if (item.getId() == itemID) {
-								continue outer;
-							}
-						}
-						for (int j = 0; j < 5 && Inventory.getCount(item.getId()) != 0; j++) {
-							if (Bank.deposit(item.getId(), 0)) {
-								Task.sleep(40, 120);
-							}
-						}
-					}
-				}
-			return Inventory.getCount(true) - Inventory.getCount(true, itemIDs) <= 0;
-		}
-		return false;
 	}
 
 	public static String formatNumber(int start) {
@@ -208,9 +179,6 @@ public class Misc {
 		return ""+start;
 	}
 
-	/**
-	 * Calculates a "per hour" rate based on the param (gained)
-	 */
 	public static String perHour(long startTime, int gained) {
 		return formatNumber((int) ((gained) * 3600000D / (System.currentTimeMillis() - startTime)));
 	}

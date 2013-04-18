@@ -10,8 +10,6 @@ import org.powerbot.game.api.methods.input.Keyboard;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.tab.Inventory;
 
-import sk.action.ActionBar;
-
 
 public class Prayer extends LoopTask {
 

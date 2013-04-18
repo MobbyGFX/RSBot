@@ -28,6 +28,7 @@ import org.kenneh.core.graphics.Logger;
 import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.kenneh.scripts.aiofighter.nodes.AbilityHandler;
 import org.kenneh.scripts.aiofighter.nodes.Expandbar;
+import org.kenneh.scripts.aiofighter.nodes.LootHandler;
 import org.kenneh.scripts.aiofighter.nodes.Potions;
 import org.kenneh.scripts.aiofighter.nodes.Prayer;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
@@ -59,7 +60,7 @@ import sk.action.ActionBar;
 
 @Manifest(authors = { "Kenneh" }, name = "Kenneh's AIO Fighter", 
 description = "Select stuff, fight mobs, loot things, gain xp. :3 \nBring a teleport tablet for safety", 
-version = 2.43,
+version = 2.44,
 website = "http://loot-files.atspace.com",
 vip = true)
 public class MonsterKiller extends ActiveScript implements PaintListener, MouseListener, MessageListener, MouseMotionListener {
@@ -121,7 +122,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			Graphics2D g1 = (Graphics2D) g;
 			g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			drawArea(g1);
-			g1.setFont(new Font("Calibri", Font.PLAIN, 13));
+			g1.setFont(new Font("Calibri", Font.PLAIN, 12));
 			elapsed = System.currentTimeMillis() - starttime;
 			paint(g);
 			g.setColor(Color.CYAN);
@@ -162,16 +163,19 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	public void paint(Graphics arg0) {
 		Graphics2D g1 = (Graphics2D) arg0;
 		g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g1.setFont(new Font("Calibri", Font.PLAIN, 14));
+		
 		int x = 8, y = 90;
 		g1.setColor(Color.WHITE);
+		g1.setFont(new Font("Calibri", Font.PLAIN, 12));
 		g1.drawString("Kennehs AIO Fighter - Runtime: " + t.toElapsedString() + " - Status: " + status, x, y);
+		g1.drawString("Total looted value - "  + LootHandler.totalValue + "(+" + Misc.perHour(startTime, LootHandler.totalValue) + ")", x, y + 12);
 		if(mouseimg != null) {
 			drawMouse(arg0);
 		}
 		g1.setColor(Color.WHITE);
 		y = 395;
 		if(show) {
+			g1.setFont(new Font("Calibri", Font.PLAIN, 14));
 			for(int i = 0; i < Misc.SKILL_NAMES.length -1; i++) {
 				if(sd.experience(i) > 0) {
 					Misc.drawProgressBar(g1, x, y, 487, 17, Color.BLACK, Color.MAGENTA, 150, Misc.getPercentToNextLevel(i));
@@ -197,12 +201,14 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		sd = new SkillData(t);
 		dh.init();
 		logger = new Logger();
+		logger.display();
 		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					mouseimg = ImageIO.read(new URL("http://i.imgur.com/WDgWvVu.png"));
 					Test.addToHashtable();
+					Logger.log("Items loaded: " + Test.pricelist.size());
 					Environment.enableRandom(org.powerbot.core.randoms.SpinTickets.class, false);
 				} catch (Exception a) {
 					a.printStackTrace();
@@ -211,7 +217,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		});
 		t.start();
 		
-		Logger.log("Items loaded: " + Test.pricelist.size());
+		
 		if (!hasAntifires()) {
 			Logger.log("You're out of antifires..");
 		} else {
