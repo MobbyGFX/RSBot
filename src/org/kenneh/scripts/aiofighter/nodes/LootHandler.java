@@ -2,9 +2,8 @@ package org.kenneh.scripts.aiofighter.nodes;
 
 import org.kenneh.core.api.MCamera;
 import org.kenneh.core.api.Misc;
-import org.kenneh.core.api.Test;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
-import org.kenneh.scripts.aiofighter.constants.Constants;
+import org.kenneh.scripts.aiofighter.Settings;
 import org.powerbot.core.script.job.Task;
 import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Calculations;
@@ -77,7 +76,7 @@ public class LootHandler extends Node {
 
 		@Override
 		public boolean accept(GroundItem arg0) {
-			for(int i : MonsterKiller.loot) {
+			for(int i : Settings.getLootArray()) {
 				if(arg0.getId() == 22448 && arg0.getGroundItem().getStackSize() < 10) {
 					return false;
 				}
@@ -102,16 +101,16 @@ public class LootHandler extends Node {
 		int price = Integer.MAX_VALUE;
 		Item item = null;
 		for(Item i : Inventory.getItems()) {
-			if(PriceChecker.lootlist.containsKey(i.getId())) {
-				if(PriceChecker.lootlist.get(i.getId()) * i.getStackSize() < price && i.getStackSize() == 1) {
-					if(i.getId() != Constants.foodID 
+			if(PriceChecker.priceWrapper.contains(i.getId())) {
+				if(PriceChecker.priceWrapper.getPrice(i.getId()) * i.getStackSize() < price && i.getStackSize() == 1) {
+					if(i.getId() != Settings.getFoodId()
 							&& i.getId() != MonsterKiller.shieldId
-							&& i.getId() != Constants.teletab 
-							&& Test.getName(i.getId()) != null 
+							&& i.getId() != Settings.getTeletab()
+							//&& Test.getName(i.getId()) != null 
 							&& i.getId() != 954
-							&& !Misc.arrayContains(i.getId(), MonsterKiller.summoning)
-							&& !Test.getName(i.getId()).contains("noted")) {
-						price = PriceChecker.lootlist.get(i.getId()) * i.getStackSize();
+							&& !Misc.arrayContains(i.getId(), MonsterKiller.summoning)) {
+							//&& !Test.getName(i.getId()).contains("noted")) {
+						price = PriceChecker.priceWrapper.getPrice(i.getId()) * i.getStackSize();
 						item = i;
 					}
 				}
@@ -135,20 +134,20 @@ public class LootHandler extends Node {
 			}.waitStop();
 			try {
 				int value = 0;
-				if(PriceChecker.lootlist.containsKey(id)) {
-					value = PriceChecker.lootlist.get(id);
+				if(PriceChecker.priceWrapper.contains(id)) {
+					value = PriceChecker.priceWrapper.getPrice(id);
 				}
 				if(value == -1) {
-					value = PriceChecker.lootlist.get(id + 1);
+					value = PriceChecker.priceWrapper.getPrice(id + 1);
 					if(value != -1) {
 						int price = value * stack;
 						totalValue += price;
-						if(value * stack > 500) {
+						if(value * stack > 100) {
 							Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
 						}
 					}
 				} else {
-						if(value * stack > 500) {
+						if(value * stack > 100) {
 							Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
 						}
 					totalValue += value * stack;

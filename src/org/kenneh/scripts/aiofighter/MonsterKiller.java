@@ -24,13 +24,11 @@ import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 
 import org.kenneh.core.api.Misc;
-import org.kenneh.core.api.Test;
 import org.kenneh.core.graphics.Logger;
 import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.kenneh.scripts.aiofighter.nodes.AbilityHandler;
 import org.kenneh.scripts.aiofighter.nodes.Expandbar;
 import org.kenneh.scripts.aiofighter.nodes.LootHandler;
-import org.kenneh.scripts.aiofighter.nodes.Potions;
 import org.kenneh.scripts.aiofighter.nodes.Prayer;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
 import org.kenneh.scripts.aiofighter.nodes.SprinkleNeem;
@@ -73,10 +71,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	public Image mouseimg = null;
 
 	public static long startTime;
-
-	public static ArrayList<Integer> fighting = new ArrayList<Integer>();
-	public static ArrayList<Integer> loot = new ArrayList<Integer>();
-	public static ArrayList<Integer> alchs = new ArrayList<Integer>();
 
 	long lastcall  = 0;
 	long elapsed = 0;
@@ -147,19 +141,19 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	public static int[] antifires;
 
 	public int[] determineAntifires() {
-		if (Misc.contains(Potions.antifire)) {
+		if (Misc.contains(Constants.ANTIFIRE)) {
 			antiPotAtValue = 1;
-			return Potions.antifire;
-		} else if (Misc.contains(Potions.superantifire)) {
+			return Constants.ANTIFIRE;
+		} else if (Misc.contains(Constants.SUPER_ANTIFIRE)) {
 			antiPotAtValue = 32;
-			return Potions.superantifire;
+			return Constants.SUPER_ANTIFIRE;
 		}
 		return null;
 	}
 
 	public boolean hasAntifires() {
-		return Misc.contains(Potions.antifire)
-				|| Misc.contains(Potions.superantifire);
+		return Misc.contains(Constants.ANTIFIRE)
+				|| Misc.contains(Constants.SUPER_ANTIFIRE);
 	}
 
 	public void paint(Graphics arg0) {
@@ -219,8 +213,8 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 					img = Toolkit.getDefaultToolkit().getImage(new URL("http://puu.sh/2CPmc.gif"));
 					System.out.println("Gif loaded");
 					mouseimg = ImageIO.read(new URL("http://i.imgur.com/WDgWvVu.png"));
-					Test.addToHashtable();
-					Logger.log("Items loaded: " + Test.pricelist.size());
+//					Test.addToHashtable();
+//					Logger.log("Items loaded: " + Test.pricelist.size());
 					Environment.enableRandom(org.powerbot.core.randoms.SpinTickets.class, false);
 				} catch (Exception a) {
 					a.printStackTrace();
@@ -240,13 +234,13 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		if (Misc.returnTeletab() != null) {
 			Item tab = Misc.returnTeletab();
 			Logger.log("Detected tab: " + tab.getName());
-			Constants.teletab = tab.getId();
+			Settings.setTeletab(tab.getId());
 		} else {
 			Logger.log("No teletab detected, stopping script!");
 		}
 
 		for(Item i : Inventory.getItems()) {
-			for(int i2 : Constants.shields) {
+			for(int i2 : Constants.SHIELDS) {
 				if(i.getId() == i2) {
 					Logger.log("Found shield: " + Inventory.getItem(i2).getName());
 					shieldId = i2;

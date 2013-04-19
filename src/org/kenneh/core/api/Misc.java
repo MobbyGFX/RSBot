@@ -17,7 +17,9 @@ import java.awt.RenderingHints;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -50,6 +52,18 @@ import ch.swingfx.twinkle.window.Positions;
 
 
 public class Misc {
+	
+	public static int[] setToArray(final Set<Integer> set) {
+		final int length = set.size();
+		final Iterator<Integer> it = set.iterator();
+		int[] temp = new int[length];
+		int index = 0;
+		while(it != null && it.hasNext()) {
+			temp[index] = it.next();
+			index++;
+		}
+		return temp;
+	}
 
 	public static Color getSkillColor(int index) {
 		switch(index) {
@@ -75,23 +89,25 @@ public class Misc {
 
 	public static void showMessage(final String title, final String message, final Image img) {
 		if(FighterGUI.showPopups){ 
-			EventQueue.invokeLater(new Runnable() {
+			try {
+				EventQueue.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						new NotificationBuilder()
+						.withStyle(new DarkDefaultNotification()
+						.withMessageFont(new Font("Calibri", Font.PLAIN, 13))
+						.withWindowCornerRadius(25))
+						.withTitle(title)
+						.withMessage(message)
+						.withDisplayTime(3000)
+						.withPosition(Positions.SOUTH_EAST)
+						.withIcon(new ImageIcon(img))
+						.showNotification();
+					}
+				});
+			} catch(SecurityException a) {
 
-				@Override
-				public void run() {
-					new NotificationBuilder()
-					.withStyle(new DarkDefaultNotification()
-					.withMessageFont(new Font("Calibri", Font.PLAIN, 13))
-					.withWindowCornerRadius(25))
-					.withTitle(title)
-					.withMessage(message)
-					.withDisplayTime(3000)
-					.withPosition(Positions.SOUTH_EAST)
-					.withIcon(new ImageIcon(img))
-					.showNotification();
-				}
-
-			});
+			}
 		}
 	}
 

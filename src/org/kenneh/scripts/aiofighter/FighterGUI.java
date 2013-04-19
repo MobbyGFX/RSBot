@@ -40,7 +40,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 import org.kenneh.core.api.Misc;
-import org.kenneh.core.api.Test;
 import org.kenneh.core.graphics.Logger;
 import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.kenneh.scripts.aiofighter.nodes.Alch;
@@ -84,17 +83,6 @@ public class FighterGUI extends JPanel {
 		list1.repaint();
 	}
 
-	public static void main(String[] args) {
-		try {
-			Test.addToHashtable();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		new FighterGUI();
-	}
-
 	public int getFoodId(String name) {
 		int[] ids = {315, 333, 329, 379, 373, 7946, 385, 15266, 15272};
 		String[] names = {"Shrimp", "Trout", "Salmon", "Tuna", "Lobster", "Monkfish", "Shark", "Cavefish", "Rocktail"};
@@ -120,53 +108,42 @@ public class FighterGUI extends JPanel {
 		}
 	}
 
-	ArrayList<Integer> loot = new ArrayList<Integer>();
-	ArrayList<Integer> alch = new ArrayList<Integer>();
-
 	public void addToArraylist() {
-		if(checkBox[0].isSelected()) loot.add(12158);
-		if(checkBox[1].isSelected()) loot.add(12159);
-		if(checkBox[2].isSelected()) loot.add(12160);
-		if(checkBox[3].isSelected()) loot.add(12163);
-		if(checkBox[4].isSelected()) loot.add(452);
-		if(checkBox[5].isSelected()) loot.add(574);
-		if(checkBox[6].isSelected()) loot.add(9342);
-		if(checkBox[7].isSelected()) loot.add(5289);
-		if(checkBox[8].isSelected()) loot.add(570);
-		if(checkBox[9].isSelected()) loot.add(1392);
-		if(checkBox[10].isSelected()) loot.add(3001);
-		if(checkBox[11].isSelected()) loot.add(2364);
-		if(checkBox[12].isSelected()) loot.add(384);
-		if(checkBox[13].isSelected()) loot.add(1215);
-		if(checkBox[14].isSelected()) loot.add(1216);
-		if(checkBox[15].isSelected()) loot.add(450);
-		if(checkBox[16].isSelected()) loot.add(20667);
-		if(checkBox[17].isSelected()) loot.add(2362);
-		if(checkBox[18].isSelected()) loot.add(270);
-		if(checkBox[19].isSelected()) loot.add(5304);
-		if(checkBox[20].isSelected()) loot.add(1201);
-		if(checkBox[21].isSelected()) loot.add(2366);
-		if(checkBox[22].isSelected()) loot.add(1149);
-		if(checkBox[23].isSelected()) loot.add(892);
-		if(checkBox[24].isSelected()) loot.add(7937);
-		if(checkBox[25].isSelected()) loot.add(454);
-		if(checkBox[26].isSelected()) loot.add(258);
-		if(checkBox[27].isSelected()) loot.add(2999);
-		if(checkBox[28].isSelected()) loot.add(6686);
-		if(checkBox[29].isSelected()) loot.add(5315);
-		if(checkBox[30].isSelected()) loot.add(5316);
-		if(checkBox[31].isSelected()) loot.add(1516);
-		if(checkBox[32].isSelected()) loot.add(24154);
-		if(checkBox[33].isSelected()) loot.add(18778);
-		if(checkBox[34].isSelected()) for(int i : Constants.champscrolls) loot.add(i); 
-		loot.add(27365);
-	}
-	
-	
-	public static void toArrayList(int[] array, ArrayList<Integer> list) {
-		for(int i : array) {
-			list.add(i);
-		}
+		if(checkBox[0].isSelected()) Settings.setLootIds(12158);
+		if(checkBox[1].isSelected()) Settings.setLootIds(12159);
+		if(checkBox[2].isSelected()) Settings.setLootIds(12160);
+		if(checkBox[3].isSelected()) Settings.setLootIds(12163);
+		if(checkBox[4].isSelected()) Settings.setLootIds(452);
+		if(checkBox[5].isSelected()) Settings.setLootIds(574);
+		if(checkBox[6].isSelected()) Settings.setLootIds(9342);
+		if(checkBox[7].isSelected()) Settings.setLootIds(5289);
+		if(checkBox[8].isSelected()) Settings.setLootIds(570);
+		if(checkBox[9].isSelected()) Settings.setLootIds(1392);
+		if(checkBox[10].isSelected()) Settings.setLootIds(3001);
+		if(checkBox[11].isSelected()) Settings.setLootIds(2364);
+		if(checkBox[12].isSelected()) Settings.setLootIds(384);
+		if(checkBox[13].isSelected()) Settings.setLootIds(1215);
+		if(checkBox[14].isSelected()) Settings.setLootIds(1216);
+		if(checkBox[15].isSelected()) Settings.setLootIds(450);
+		if(checkBox[16].isSelected()) Settings.setLootIds(20667);
+		if(checkBox[17].isSelected()) Settings.setLootIds(2362);
+		if(checkBox[18].isSelected()) Settings.setLootIds(270);
+		if(checkBox[19].isSelected()) Settings.setLootIds(5304);
+		if(checkBox[20].isSelected()) Settings.setLootIds(1201);
+		if(checkBox[21].isSelected()) Settings.setLootIds(2366);
+		if(checkBox[22].isSelected()) Settings.setLootIds(1149);
+		if(checkBox[23].isSelected()) Settings.setLootIds(892);
+		if(checkBox[24].isSelected()) Settings.setLootIds(7937);
+		if(checkBox[25].isSelected()) Settings.setLootIds(454);
+		if(checkBox[26].isSelected()) Settings.setLootIds(258);
+		if(checkBox[27].isSelected()) Settings.setLootIds(2999);
+		if(checkBox[28].isSelected()) Settings.setLootIds(6686);
+		if(checkBox[29].isSelected()) Settings.setLootIds(5315);
+		if(checkBox[30].isSelected()) Settings.setLootIds(5316);
+		if(checkBox[31].isSelected()) Settings.setLootIds(1516);
+		if(checkBox[32].isSelected()) Settings.setLootIds(24154);
+		if(checkBox[33].isSelected()) Settings.setLootIds(18778);
+		if(checkBox[34].isSelected()) Settings.setLootIds(Constants.CHAMPION_SCROLLS); 
 	}
 
 	public void loadButtonActionEvent(ActionEvent e) {
@@ -225,7 +202,7 @@ public class FighterGUI extends JPanel {
 		quickPrayer.setSelected(props.getProperty("qprayer").equals("true") ? true : false );
 		buryBones.setSelected(props.getProperty("burybones").equals("true") ? true : false );
 		waitLoot.setSelected(props.getProperty("waitloot").equals("true") ? true : false);
-		popupCheckbox.setSelected(props.getProperty("popup").equals("true") ? true : false );
+		popupCheckbox.setSelected(props.getProperty("popups").equals("true") ? true : false );
 	}
 	
 	public static boolean useQuickPrayer = false;
@@ -276,32 +253,26 @@ public class FighterGUI extends JPanel {
 	}
 
 	public void startActionEvent(ActionEvent e) {
-		loot.clear();
 		addToArraylist();
 		if(parseCustomLoot(editorPane1.getText()) != null ) {
-			for(int i : parseCustomLoot(editorPane1.getText())) {
-				loot.add(i);
-			}
+			Settings.setLootIds(parseCustomLoot(editorPane1.getText()));
 		}
 		if(parseCustomLoot(editorPane2.getText()) != null) {
-			for(int i : parseCustomLoot(editorPane2.getText())) {
-				alch.add(i);
-			}
+			Settings.setAlchIds(parseCustomLoot(editorPane2.getText()));
 		}
 
-		MonsterKiller.radius = getRadius();
-		MonsterKiller.myPos = Players.getLocal().getLocation();
-		MonsterKiller.overXValue = lootOverX();
-		MonsterKiller.loot = loot;
-		MonsterKiller.alchs = alch;
-		Constants.foodID = getFoodId((String)comboBox1.getSelectedItem());
+		Settings.setRadius(getRadius());
+		Settings.setStartTile(Players.getLocal().getLocation());
+		Settings.setLootValue(lootOverX());
+
+		Settings.setFoodId(getFoodId((String)comboBox1.getSelectedItem()));
 		for (String i : list1.getSelectedValuesList()) {
 			String name = i;
 			String format = name.split("- ")[1];
-			MonsterKiller.fighting.add(Integer.parseInt(format));
+			Settings.setMonsterIds(Integer.parseInt(format));
 		}
-		frame.setVisible(false);
 		
+		frame.setVisible(false);
 		
 		if(Alch.hasRunes()) {
 			MonsterKiller.provide(new Alch());
@@ -313,28 +284,26 @@ public class FighterGUI extends JPanel {
 				new RejuvFailsafe()
 		};
 		MonsterKiller.provide(nodes);
-		if(Misc.contains(SummoningHandler.restores)) {
+		if(Misc.contains(Constants.SUMMONING_RESTORE)) {
 			MonsterKiller.provide(new SummoningHandler());
 		}
 		if(GemBag.hasGemBag()) {
 			MonsterKiller.provide(new GemBag());
 		}
-		ArrayList<Integer> pots = new ArrayList<Integer>();
-		toArrayList(Potions.attackpots, pots);
-		toArrayList(Potions.strengthpots, pots);
-		toArrayList(Potions.magicpots, pots);
-		toArrayList(Potions.rangepots, pots);
-		toArrayList(Potions.defensepots, pots);
 
-		if(Misc.contains(pots)) {
+		if(Misc.contains(Constants.ATTACK) || Misc.contains(Constants.STRENGTH) || Misc.contains(Constants.DEFENSE)
+				|| Misc.contains(Constants.RANGE)|| Misc.contains(Constants.MAGIC)) {
 			MonsterKiller.provide(new Potions());
 		}
 
 		if(Inventory.getItem(4155) != null) {
 			MonsterKiller.provide(new EndOnSlayerTask());
 		}
-		speed = (Speed) mouseBox.getSelectedItem();
-		MonsterKiller.setSpeed(speed);
+		
+		Settings.setMouseSpeed((Speed) mouseBox.getSelectedItem());
+
+		MonsterKiller.setSpeed(Settings.getMouseSpeed());
+		
 		useFastCamera = fastCamera.isSelected();
 		abilityDelay = abilDelay.getValue();
 		useQuickPrayer = quickPrayer.isSelected();
@@ -342,11 +311,11 @@ public class FighterGUI extends JPanel {
 		waitForLoot = waitLoot.isSelected();
 		showPopups = popupCheckbox.isSelected();
 		
-		Logger.log("Mouse speed: " + speed);
+		Logger.log("Mouse speed: " + Settings.getMouseSpeed());
 		Logger.log("Camera speed: "+ (FighterGUI.useFastCamera? "fast":"slow"));
 		Logger.log("Ability delay: " + FighterGUI.abilityDelay);
 		Logger.log("Quick prayer: " + FighterGUI.useQuickPrayer);
-		Logger.log("Food id: " + Constants.foodID);
+		Logger.log("Food id: " + Settings.getFoodId());
 		
 		Misc.showMessage("Kenneh's AIO Fighter", "Script started!", MonsterKiller.img);
 		
@@ -360,7 +329,7 @@ public class FighterGUI extends JPanel {
 		}
 	}
 	
-	public static Speed speed = Speed.VERY_FAST;
+//	public static Speed speed = Speed.VERY_FAST;
 	public static boolean useFastCamera = true;
 	public static int abilityDelay = 250;
 	public static boolean waitForLoot = false;

@@ -1,7 +1,6 @@
 package org.kenneh.scripts.aiofighter.nodes;
 
-import org.kenneh.core.api.Misc;
-import org.kenneh.scripts.aiofighter.MonsterKiller;
+import org.kenneh.scripts.aiofighter.Settings;
 import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Tabs;
 import org.powerbot.game.api.methods.interactive.Players;
@@ -21,7 +20,7 @@ public class Alch extends Node {
 	}
 	
 	public static Item getAlchableItem() {
-		for(int i : MonsterKiller.alchs) {
+		for(int i : Settings.getAlchArray()) {
 			if(Inventory.getItem(i) != null) return Inventory.getItem(i);
 		}
 		return null;
@@ -37,7 +36,7 @@ public class Alch extends Node {
 
 	@Override
 	public void execute() {
-		final Item i = Inventory.getItem(Misc.convertIntegers(MonsterKiller.alchs));
+		final Item i = Inventory.getItem(Settings.getAlchArray());
 		final Ability alch = ActionBar.getAbilityInSlot(ActionBar.findAbility(Spell.HIGH_LEVEL_ALCHEMY));
 		ActionBar.useAbility(alch);
 		i.getWidgetChild().interact("Cast");

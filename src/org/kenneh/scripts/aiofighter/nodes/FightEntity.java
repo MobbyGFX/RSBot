@@ -4,6 +4,7 @@ import org.kenneh.core.api.MCamera;
 import org.kenneh.core.api.Misc;
 import org.kenneh.scripts.aiofighter.FighterGUI;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
+import org.kenneh.scripts.aiofighter.Settings;
 import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Walking;
 import org.powerbot.game.api.methods.interactive.NPCs;
@@ -35,7 +36,7 @@ public class FightEntity extends Node {
 	public static Filter<NPC> NPC_FILTER = new Filter<NPC>() {
 		@Override
 		public boolean accept(NPC npc) {
-			for(int ids : MonsterKiller.fighting) {
+			for(int ids : Settings.getMonsterArray()) {
 				if(npc != null
 						&& npc.getId() == ids
 						&& !npc.isInCombat()
