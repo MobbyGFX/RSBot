@@ -23,6 +23,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import org.kenneh.core.api.astar.AStar;
+import org.kenneh.scripts.aiofighter.FighterGUI;
 import org.powerbot.game.api.methods.Settings;
 import org.powerbot.game.api.methods.Tabs;
 import org.powerbot.game.api.methods.Widgets;
@@ -49,7 +50,7 @@ import ch.swingfx.twinkle.window.Positions;
 
 
 public class Misc {
-	
+
 	public static Color getSkillColor(int index) {
 		switch(index) {
 		case Skills.ATTACK:
@@ -71,27 +72,29 @@ public class Misc {
 		}
 		return Color.MAGENTA;
 	}
-	
+
 	public static void showMessage(final String title, final String message, final Image img) {
-		EventQueue.invokeLater(new Runnable() {
+		if(FighterGUI.showPopups){ 
+			EventQueue.invokeLater(new Runnable() {
 
-			@Override
-			public void run() {
-				new NotificationBuilder()
-				.withStyle(new DarkDefaultNotification()
-				.withMessageFont(new Font("Calibri", Font.PLAIN, 13))
-				.withWindowCornerRadius(25))
-				.withTitle(title)
-				.withMessage(message)
-				.withDisplayTime(5000)
-				.withPosition(Positions.SOUTH_EAST)
-				.withIcon(new ImageIcon(img))
-				.showNotification();
-			}
+				@Override
+				public void run() {
+					new NotificationBuilder()
+					.withStyle(new DarkDefaultNotification()
+					.withMessageFont(new Font("Calibri", Font.PLAIN, 13))
+					.withWindowCornerRadius(25))
+					.withTitle(title)
+					.withMessage(message)
+					.withDisplayTime(3000)
+					.withPosition(Positions.SOUTH_EAST)
+					.withIcon(new ImageIcon(img))
+					.showNotification();
+				}
 
-		});
+			});
+		}
 	}
-	
+
 	public static String capitalize(String toCaps) {
 		if(toCaps.length() == 0) {
 			return null;
@@ -100,7 +103,7 @@ public class Misc {
 			return toCaps.replaceFirst(first, String.valueOf(first).toUpperCase());
 		}
 	}
-	
+
 	public static void drawProgressBar(Graphics2D g, final int x, final int y,
 			final int width, final int height, final Color main,
 			final Color progress, final int alpha, final int percentage) {
@@ -126,7 +129,7 @@ public class Misc {
 		g.setColor(Color.BLACK);
 		g.drawRect(x, y, width, height);
 	}
-	
+
 	public static String generateString(SkillData sd, int index) {
 		StringBuilder sb = new StringBuilder();
 		String name = SKILL_NAMES[index];
@@ -139,7 +142,7 @@ public class Misc {
 		}
 		return sb.toString();
 	}
-	
+
 	public static int getPercentToNextLevel(final int index) {
 		if (index > SKILL_NAMES.length - 1) {
 			return -1;
@@ -165,11 +168,11 @@ public class Misc {
 	}
 
 	public static final String[] SKILL_NAMES = {"attack", "defence",
-			"strength", "constitution", "range", "prayer", "magic", "cooking",
-			"woodcutting", "fletching", "fishing", "firemaking", "crafting",
-			"smithing", "mining", "herblore", "agility", "thieving", "slayer",
-			"farming", "runecrafting", "hunter", "construction", "summoning",
-			"dungeoneering", "-unused-"};
+		"strength", "constitution", "range", "prayer", "magic", "cooking",
+		"woodcutting", "fletching", "fishing", "firemaking", "crafting",
+		"smithing", "mining", "herblore", "agility", "thieving", "slayer",
+		"farming", "runecrafting", "hunter", "construction", "summoning",
+		"dungeoneering", "-unused-"};
 
 	public static NPC getNearest(NPC[] mobs) {
 		int distance = 9999;
@@ -196,7 +199,7 @@ public class Misc {
 			}
 		}));
 	}
-	
+
 	public static SceneObject getNearest(SceneObject[] mobs) {
 		int distance = 9999;
 		SceneObject temp = null;

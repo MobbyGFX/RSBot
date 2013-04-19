@@ -62,7 +62,7 @@ import sk.action.ActionBar;
 
 @Manifest(authors = { "Kenneh" }, name = "Kenneh's AIO Fighter", 
 description = "Select stuff, fight mobs, loot things, gain xp. :3 \nBring a teleport tablet for safety", 
-version = 2.46,
+version = 2.47,
 website = "http://loot-files.atspace.com",
 vip = true)
 public class MonsterKiller extends ActiveScript implements PaintListener, MouseListener, MessageListener, MouseMotionListener {
@@ -189,8 +189,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		}
 	}
 
-	DropHandler dh = new DropHandler();
-
 	public void drawMouse(Graphics g) {
 		int centerX = mouseimg.getWidth(null) / 2;
 		int centerY = mouseimg.getHeight(null) / 2;
@@ -212,8 +210,8 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			}
 		});
 		sd = new SkillData(t);
-		dh.init();
 		logger = new Logger();
+		logger.display();
 		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -382,7 +380,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 
 	@Override
 	public void messageReceived(MessageEvent arg0) {
-		String text = arg0.getMessage();
+		String text = arg0.getMessage().toLowerCase();
 		if(text.contains("resistance to dragon")) {
 			status = "Detected antifire message";
 			if(antifires != null && Inventory.getItem(antifires) != null) {
@@ -390,6 +388,9 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 				i.getWidgetChild().click(true);
 				Task.sleep(500);
 			}
+		}
+		if(text.contains("a level")) {
+			Misc.showMessage("Kenneh's AIO Fighter", text, MonsterKiller.img);
 		}
 		if(text.contains("are dead")) {
 			Misc.showMessage("Kenneh's AIO Fighter", "Somehow we've died!", MonsterKiller.img);

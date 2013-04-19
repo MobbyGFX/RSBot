@@ -225,6 +225,7 @@ public class FighterGUI extends JPanel {
 		quickPrayer.setSelected(props.getProperty("qprayer").equals("true") ? true : false );
 		buryBones.setSelected(props.getProperty("burybones").equals("true") ? true : false );
 		waitLoot.setSelected(props.getProperty("waitloot").equals("true") ? true : false);
+		popupCheckbox.setSelected(props.getProperty("popup").equals("true") ? true : false );
 	}
 	
 	public static boolean useQuickPrayer = false;
@@ -251,6 +252,7 @@ public class FighterGUI extends JPanel {
 		prop.setProperty("qprayer", String.valueOf(quickPrayer.isSelected()));
 		prop.setProperty("burybones", String.valueOf(buryBones.isSelected()));
 		prop.setProperty("waitloot", String.valueOf(waitLoot.isSelected()));
+		prop.setProperty("popups", String.valueOf(popupCheckbox.isSelected()));
 		prop.store(new FileOutputStream(Environment.getStorageDirectory()+ "/config.properties"), null);
 		System.out.println("Settings saved!");
 	}
@@ -338,6 +340,7 @@ public class FighterGUI extends JPanel {
 		useQuickPrayer = quickPrayer.isSelected();
 		bury = buryBones.isSelected();
 		waitForLoot = waitLoot.isSelected();
+		showPopups = popupCheckbox.isSelected();
 		
 		Logger.log("Mouse speed: " + speed);
 		Logger.log("Camera speed: "+ (FighterGUI.useFastCamera? "fast":"slow"));
@@ -361,7 +364,10 @@ public class FighterGUI extends JPanel {
 	public static boolean useFastCamera = true;
 	public static int abilityDelay = 250;
 	public static boolean waitForLoot = false;
+	public static boolean showPopups = false;
 	
+	
+	private JCheckBox popupCheckbox;
 	private JComboBox<Speed> mouseBox;
 	private DefaultComboBoxModel<Speed> mouseBoxModel;
 	private JSlider abilDelay;
@@ -411,6 +417,7 @@ public class FighterGUI extends JPanel {
 		for(Speed s : Speed.values()) {
 			mouseBoxModel.addElement(s);
 		}
+		popupCheckbox = new JCheckBox("Show popup notifications?");
 		quickPrayer = new JCheckBox("Enable quick prayer usage");
 		fastCamera = new JCheckBox("Use fast camera movements");
 		abilDelay = new JSlider();
@@ -453,7 +460,10 @@ public class FighterGUI extends JPanel {
 		c.gridx = 0;
 		c.gridy = 8;
 		panel.add(waitLoot, c);
-		tabbedPane1.addTab("Settings", panel);
+		c.gridx = 0;
+		c.gridy = 9;
+		panel.add(popupCheckbox, c);
+		tabbedPane1.addTab("SETTINGS", panel);
 	}
 
 	private void initComponents() {

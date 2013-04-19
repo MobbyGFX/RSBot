@@ -3,7 +3,6 @@ package org.kenneh.scripts.aiofighter.nodes;
 import org.kenneh.core.api.MCamera;
 import org.kenneh.core.api.Misc;
 import org.kenneh.core.api.Test;
-import org.kenneh.scripts.aiofighter.DropHandler;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
 import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.powerbot.core.script.job.Task;
@@ -22,8 +21,6 @@ import sk.general.TimedCondition;
 
 
 public class LootHandler extends Node {
-
-	static DropHandler dh = new DropHandler();
 
 	public static int totalValue = 0;
 
@@ -123,8 +120,6 @@ public class LootHandler extends Node {
 		return item;
 	}
 
-	//static DropHandler dh = new DropHandler();
-
 	public static void take(final GroundItem item) {
 		if(item == null) return;
 		int id = item.getId();
@@ -146,15 +141,21 @@ public class LootHandler extends Node {
 				if(value == -1) {
 					value = PriceChecker.lootlist.get(id + 1);
 					if(value != -1) {
-						totalValue += value * stack;
+						int price = value * stack;
+						totalValue += price;
+						if(value * stack > 500) {
+							Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value  + "!", MonsterKiller.img);
+						}
 					}
 				} else {
+						if(value * stack > 500) {
+							Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value  + "!", MonsterKiller.img);
+						}
 					totalValue += value * stack;
 				}
 			} catch(Exception a) {
 
 			}
-			DropHandler.populate(id, stack);
 		}
 	}
 
