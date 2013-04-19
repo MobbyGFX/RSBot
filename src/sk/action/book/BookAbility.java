@@ -145,6 +145,14 @@ public enum BookAbility implements Ability {
 	WILD_MAGIC(AbilityStyle.MAGIC, AbilityType.THRESHOLD, 55, 9, 14239, 150, 20),
 
 	METAMORPHOSIS(AbilityStyle.MAGIC, AbilityType.ULTIMATE, 66, 10, 14241, 166, 60),
+	
+	SONIC_WAVE(AbilityStyle.MAGIC, AbilityType.BASIC, 8, 165, 9314, 2646, 5),
+	  
+	CONCENTRATED_BLAST(AbilityStyle.MAGIC, AbilityType.BASIC, 12, 166, 8684, 2662, 5),
+	
+	DAZING_SHOT(AbilityStyle.RANGED, AbilityType.BASIC, 8, 15, 9316, 245, 5),
+	  
+	NEEDLE_STRIKE(AbilityStyle.RANGED, AbilityType.BASIC, 12, 16, 9315, 261, 5),
 
 	TSUNAMI(AbilityStyle.MAGIC, AbilityType.ULTIMATE, 81, 11, 14240, 182, 60);
 

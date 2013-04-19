@@ -61,7 +61,7 @@ import sk.action.ActionBar;
 
 @Manifest(authors = { "Kenneh" }, name = "Kenneh's AIO Fighter", 
 description = "Select stuff, fight mobs, loot things, gain xp. :3 \nBring a teleport tablet for safety", 
-version = 2.45,
+version = 2.46,
 website = "http://loot-files.atspace.com",
 vip = true)
 public class MonsterKiller extends ActiveScript implements PaintListener, MouseListener, MessageListener, MouseMotionListener {
@@ -92,7 +92,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	public static boolean isInLootArea(Locatable arg0) {
 		return Calculations.distance(myPos, arg0) <= radius + 2;
 	}
-
 
 	public static void drawArea(Graphics g2d) {
 		try {
@@ -198,6 +197,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	}
 	
 	public static void setSpeed(Speed s) {
+		System.out.println("Setting default mouse speed to: " + s);
 		Mouse.setSpeed(s);
 	}
 
@@ -270,6 +270,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		startTime = System.currentTimeMillis();
 		provide(new SprinkleNeem());
 		Logger.log("ShieldId: "+ shieldId + " WeaponId: " + mainWeapon);
+		Mouse.setSpeed(Speed.VERY_FAST);
 	}
 
 	Rectangle chat = Widgets.get(137, 0).getBoundingRectangle();
