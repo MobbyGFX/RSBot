@@ -60,7 +60,7 @@ import sk.action.ActionBar;
 
 @Manifest(authors = { "Kenneh" }, name = "Kenneh's AIO Fighter", 
 description = "Select stuff, fight mobs, loot things, gain xp. :3 \nBring a teleport tablet for safety", 
-version = 2.47,
+version = 2.48,
 website = "http://loot-files.atspace.com",
 vip = true)
 public class MonsterKiller extends ActiveScript implements PaintListener, MouseListener, MessageListener, MouseMotionListener {
@@ -335,8 +335,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	public static boolean stopScript = false;
 
 	public static int[] summoning = {12029, 12039, 3024, 3026, 3028, 3030};
-
-	public static int overXValue = 90000;
 
 	public static void screenCap() {
 		try {

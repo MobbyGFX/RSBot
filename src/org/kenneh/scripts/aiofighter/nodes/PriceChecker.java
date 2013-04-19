@@ -2,7 +2,6 @@ package org.kenneh.scripts.aiofighter.nodes;
 
 import org.kenneh.core.api.PriceWrapper;
 import org.kenneh.core.graphics.Logger;
-import org.kenneh.scripts.aiofighter.MonsterKiller;
 import org.kenneh.scripts.aiofighter.Settings;
 import org.powerbot.core.script.job.LoopTask;
 import org.powerbot.game.api.methods.node.GroundItems;
@@ -26,7 +25,7 @@ public class PriceChecker extends LoopTask {
 				int stacksize = arg0.getGroundItem().getStackSize();
 				if(priceWrapper.contains(id)) {
 					int totalPrice = stacksize * priceWrapper.getPrice(id);
-					if (totalPrice >= MonsterKiller.overXValue) {
+					if (totalPrice >= Settings.getLootValue()) {
 						return true;
 					}
 				} else {
