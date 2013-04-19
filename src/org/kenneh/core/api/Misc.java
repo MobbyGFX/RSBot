@@ -44,6 +44,28 @@ import org.powerbot.game.api.wrappers.widget.WidgetChild;
 
 public class Misc {
 	
+	public static Color getSkillColor(int index) {
+		switch(index) {
+		case Skills.ATTACK:
+			return Color.red;
+		case Skills.STRENGTH:
+			return Color.green;
+		case Skills.DEFENSE:
+			return Color.blue;
+		case Skills.RANGE:
+			return Color.orange;
+		case Skills.MAGIC:
+			return Color.blue;
+		case Skills.CONSTITUTION:
+			return Color.pink;
+		case Skills.SUMMONING:
+			return Color.cyan;
+		case Skills.SLAYER:
+			return Color.gray;
+		}
+		return Color.MAGENTA;
+	}
+	
 	
 	public static String capitalize(String toCaps) {
 		if(toCaps.length() == 0) {
@@ -86,9 +108,9 @@ public class Misc {
 		sb.append(capitalize(name) +": ");
 		sb.append(Skills.getRealLevel(index) + "(+" + sd.level(index) + ") ");
 		sb.append("Experience: " + sd.experience(SkillData.Rate.HOUR, index) + "(+" + sd.experience(index) + ") ");
-		sb.append("TTL: " + Time.format(sd.timeToLevel(SkillData.Rate.HOUR, index)));
+		sb.append("TTL: " + (Skills.getRealLevel(index) == 99 ? "N/A" : Time.format(sd.timeToLevel(SkillData.Rate.HOUR, index))));
 		if(index == Skills.SLAYER) {
-			sb.append(" NPCS Left: " + Settings.get(394));
+			sb.append(" NPCS Left: " + Settings.get(183));
 		}
 		return sb.toString();
 	}
@@ -107,7 +129,7 @@ public class Misc {
 		}
 		final int lvl = Skills.getRealLevel(index);
 		if (lvl == 99 || endLvl > 99) {
-			return 0;
+			return 100;
 		}
 		final int xpTotal = Skills.XP_TABLE[endLvl] - Skills.XP_TABLE[lvl];
 		if (xpTotal == 0) {

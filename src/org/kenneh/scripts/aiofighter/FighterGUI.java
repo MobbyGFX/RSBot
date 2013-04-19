@@ -61,7 +61,6 @@ import org.kenneh.scripts.aiofighter.nodes.SummoningHandler;
 import org.kenneh.scripts.aiofighter.nodes.Teleport;
 import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Environment;
-import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.methods.interactive.NPCs;
 import org.powerbot.game.api.methods.interactive.Players;
@@ -333,13 +332,12 @@ public class FighterGUI extends JPanel {
 			MonsterKiller.provide(new EndOnSlayerTask());
 		}
 		speed = (Speed) mouseBox.getSelectedItem();
+		MonsterKiller.setSpeed(speed);
 		useFastCamera = fastCamera.isSelected();
 		abilityDelay = abilDelay.getValue();
 		useQuickPrayer = quickPrayer.isSelected();
 		bury = buryBones.isSelected();
 		waitForLoot = waitLoot.isSelected();
-		
-		Mouse.setSpeed(speed);
 		
 		Logger.log("Mouse speed: " + speed);
 		Logger.log("Camera speed: "+ (FighterGUI.useFastCamera? "fast":"slow"));
@@ -356,7 +354,7 @@ public class FighterGUI extends JPanel {
 		}
 	}
 	
-	public static Speed speed;
+	public static Speed speed = Speed.VERY_FAST;
 	public static boolean useFastCamera = true;
 	public static int abilityDelay = 250;
 	public static boolean waitForLoot = false;

@@ -46,6 +46,7 @@ import org.powerbot.game.api.methods.Environment;
 import org.powerbot.game.api.methods.Game;
 import org.powerbot.game.api.methods.Widgets;
 import org.powerbot.game.api.methods.input.Mouse;
+import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.tab.Equipment;
 import org.powerbot.game.api.methods.tab.Inventory;
@@ -60,7 +61,7 @@ import sk.action.ActionBar;
 
 @Manifest(authors = { "Kenneh" }, name = "Kenneh's AIO Fighter", 
 description = "Select stuff, fight mobs, loot things, gain xp. :3 \nBring a teleport tablet for safety", 
-version = 2.44,
+version = 2.45,
 website = "http://loot-files.atspace.com",
 vip = true)
 public class MonsterKiller extends ActiveScript implements PaintListener, MouseListener, MessageListener, MouseMotionListener {
@@ -173,12 +174,12 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			drawMouse(arg0);
 		}
 		g1.setColor(Color.WHITE);
-		y = 395;
+		y = 396;
 		if(show) {
 			g1.setFont(new Font("Calibri", Font.PLAIN, 14));
 			for(int i = 0; i < Misc.SKILL_NAMES.length -1; i++) {
 				if(sd.experience(i) > 0) {
-					Misc.drawProgressBar(g1, x, y, 487, 17, Color.BLACK, Color.MAGENTA, 150, Misc.getPercentToNextLevel(i));
+					Misc.drawProgressBar(g1, x, y, 487, 17, Color.BLACK, Misc.getSkillColor(i), 150, Misc.getPercentToNextLevel(i));
 					g1.setColor(Color.WHITE);
 					g1.drawString(Misc.generateString(sd, i), x + 5, y + 13);
 					y += 18;
@@ -195,13 +196,22 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		Point center = new Point(Mouse.getX() - centerX, Mouse.getY() - centerY);
 		g.drawImage(mouseimg,  center.x, center.y, null);
 	}
+	
+	public static void setSpeed(Speed s) {
+		Mouse.setSpeed(s);
+	}
 
 	@Override
 	public void onStart() {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new FighterGUI();
+			}
+		});
 		sd = new SkillData(t);
 		dh.init();
 		logger = new Logger();
-		logger.display();
 		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -216,7 +226,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			}
 		});
 		t.start();
-		
 		
 		if (!hasAntifires()) {
 			Logger.log("You're out of antifires..");
@@ -233,13 +242,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		} else {
 			Logger.log("No teletab detected, stopping script!");
 		}
-
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				new FighterGUI();
-			}
-		});
 
 		for(Item i : Inventory.getItems()) {
 			for(int i2 : Constants.shields) {

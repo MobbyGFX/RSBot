@@ -21,7 +21,7 @@ public class FightEntity extends Node {
 	public boolean getActivate() {
 		return FighterGUI.waitForLoot ? !Players.getLocal().isInCombat() : Players.getLocal().getInteracting() == null;
 	}
-	
+
 	@Override
 	public boolean activate() {
 		return getActivate()
@@ -46,7 +46,8 @@ public class FightEntity extends Node {
 	};
 
 	public static NPC getNearestNpc() {
-		return Misc.getNearest(NPCs.getLoaded(NPC_FILTER));
+		return NPCs.getNearest(NPC_FILTER);
+		//return Misc.getNearest(NPCs.getLoaded(NPC_FILTER));
 	}
 
 	@Override
@@ -56,22 +57,24 @@ public class FightEntity extends Node {
 			if(!Misc.isOnScreen(mob)) {
 				if(FighterGUI.useFastCamera) {
 					MCamera.turnTo(mob, 50);
-					} else {
-						Camera.turnTo(mob, 5);
-					}
+				} else {
+					Camera.turnTo(mob, 5);
+				}
 			}
 			int dist = (int)mob.getLocation().distanceTo();
 			if(dist > 7 && !Players.getLocal().isMoving()) {
 				Walking.walk(mob);
 			} else {
-				MonsterKiller.status = "Attacking " + mob.getName();
-				mob.interact("Attack", mob.getName());
-				new TimedCondition(1500) {
-					@Override
-					public boolean isDone() {
-						return Players.getLocal().getInteracting() != null;
-					}
-				}.waitStop();
+				if(!mob.isInCombat()) {
+					MonsterKiller.status = "Attacking " + mob.getName();
+					mob.interact("Attack", mob.getName());
+					new TimedCondition(1500) {
+						@Override
+						public boolean isDone() {
+							return Players.getLocal().getInteracting() != null;
+						}
+					}.waitStop();
+				}
 			}
 		}
 	}

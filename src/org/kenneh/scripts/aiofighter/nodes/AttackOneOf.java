@@ -50,11 +50,10 @@ public class AttackOneOf extends Node {
 		if(Players.getLocal().getInteracting() == null) {
 			final NPC mob = getNearest();
 			if(mob != null) {
-				//Logger.log("Attacking closest aggressive npc");
 				MonsterKiller.status = "Attacking closest aggressive npc";
 				if(!Misc.isOnScreen(mob)) {
 					if(FighterGUI.useFastCamera) {
-					MCamera.turnTo(mob, 50);
+						MCamera.turnTo(mob, 50);
 					} else {
 						Camera.turnTo(mob, 5);
 					}
