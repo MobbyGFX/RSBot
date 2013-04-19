@@ -344,6 +344,9 @@ public class FighterGUI extends JPanel {
 		Logger.log("Ability delay: " + FighterGUI.abilityDelay);
 		Logger.log("Quick prayer: " + FighterGUI.useQuickPrayer);
 		Logger.log("Food id: " + Constants.foodID);
+		
+		Misc.showMessage("Kenneh's AIO Fighter", "Script started!", MonsterKiller.img);
+		
 		Logger.log("AIOFighter Initialized..");
 		
 		try {

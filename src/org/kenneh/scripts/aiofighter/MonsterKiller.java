@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -138,6 +139,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	public void onStop() {
 		logger.dispose();
 		screenCap();
+		Misc.showMessage("Kenneh's AIO Fighter", "Script stopped!", MonsterKiller.img);
 	}
 
 	public static int antiPotAtValue = 0;
@@ -216,6 +218,8 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			@Override
 			public void run() {
 				try {
+					img = Toolkit.getDefaultToolkit().getImage(new URL("http://puu.sh/2CPmc.gif"));
+					System.out.println("Gif loaded");
 					mouseimg = ImageIO.read(new URL("http://i.imgur.com/WDgWvVu.png"));
 					Test.addToHashtable();
 					Logger.log("Items loaded: " + Test.pricelist.size());
@@ -272,6 +276,8 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		Logger.log("ShieldId: "+ shieldId + " WeaponId: " + mainWeapon);
 		Mouse.setSpeed(Speed.VERY_FAST);
 	}
+	
+	public static Image img = null;
 
 	Rectangle chat = Widgets.get(137, 0).getBoundingRectangle();
 	public boolean show = true;
@@ -384,6 +390,9 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 				i.getWidgetChild().click(true);
 				Task.sleep(500);
 			}
+		}
+		if(text.contains("are dead")) {
+			Misc.showMessage("Kenneh's AIO Fighter", "Somehow we've died!", MonsterKiller.img);
 		}
 		if(text.contains("down here to kill those.")) {
 			stopScript=true;

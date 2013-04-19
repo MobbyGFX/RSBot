@@ -1,6 +1,7 @@
 package org.kenneh.core.api;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import org.kenneh.core.api.astar.AStar;
 import org.powerbot.game.api.methods.Settings;
@@ -40,6 +42,10 @@ import org.powerbot.game.api.wrappers.node.GroundItem;
 import org.powerbot.game.api.wrappers.node.Item;
 import org.powerbot.game.api.wrappers.node.SceneObject;
 import org.powerbot.game.api.wrappers.widget.WidgetChild;
+
+import ch.swingfx.twinkle.NotificationBuilder;
+import ch.swingfx.twinkle.style.theme.DarkDefaultNotification;
+import ch.swingfx.twinkle.window.Positions;
 
 
 public class Misc {
@@ -66,6 +72,25 @@ public class Misc {
 		return Color.MAGENTA;
 	}
 	
+	public static void showMessage(final String title, final String message, final Image img) {
+		EventQueue.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				new NotificationBuilder()
+				.withStyle(new DarkDefaultNotification()
+				.withMessageFont(new Font("Calibri", Font.PLAIN, 13))
+				.withWindowCornerRadius(25))
+				.withTitle(title)
+				.withMessage(message)
+				.withDisplayTime(5000)
+				.withPosition(Positions.SOUTH_EAST)
+				.withIcon(new ImageIcon(img))
+				.showNotification();
+			}
+
+		});
+	}
 	
 	public static String capitalize(String toCaps) {
 		if(toCaps.length() == 0) {
