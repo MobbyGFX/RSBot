@@ -203,6 +203,7 @@ public class FighterGUI extends JPanel {
 		buryBones.setSelected(props.getProperty("burybones").equals("true") ? true : false );
 		waitLoot.setSelected(props.getProperty("waitloot").equals("true") ? true : false);
 		popupCheckbox.setSelected(props.getProperty("popups").equals("true") ? true : false );
+		lootClues.setSelected(props.getProperty("clues").equals("true") ? true : false);
 	}
 	
 	public static boolean useQuickPrayer = false;
@@ -210,6 +211,8 @@ public class FighterGUI extends JPanel {
 	
 	public static boolean bury = false;
 	private JCheckBox buryBones;
+	
+	private JCheckBox lootClues;
 
 	public void save() throws Exception {
 		Properties prop = new Properties();
@@ -230,6 +233,7 @@ public class FighterGUI extends JPanel {
 		prop.setProperty("burybones", String.valueOf(buryBones.isSelected()));
 		prop.setProperty("waitloot", String.valueOf(waitLoot.isSelected()));
 		prop.setProperty("popups", String.valueOf(popupCheckbox.isSelected()));
+		prop.setProperty("clues", String.valueOf(lootClues.isSelected()));
 		prop.store(new FileOutputStream(Environment.getStorageDirectory()+ "/config.properties"), null);
 		System.out.println("Settings saved!");
 	}
@@ -304,6 +308,8 @@ public class FighterGUI extends JPanel {
 
 		MonsterKiller.setSpeed(Settings.getMouseSpeed());
 		
+		Settings.setLootClues(lootClues.isSelected());
+		
 		useFastCamera = fastCamera.isSelected();
 		abilityDelay = abilDelay.getValue();
 		useQuickPrayer = quickPrayer.isSelected();
@@ -311,6 +317,11 @@ public class FighterGUI extends JPanel {
 		waitForLoot = waitLoot.isSelected();
 		showPopups = popupCheckbox.isSelected();
 		
+		if(Settings.lootClueScrolls()) { 
+			Settings.setLootIds(Constants.CLUE_SCROLLS);
+		}
+		
+		Logger.log("Looting clues: " + Settings.lootClueScrolls());
 		Logger.log("Mouse speed: " + Settings.getMouseSpeed());
 		Logger.log("Camera speed: "+ (FighterGUI.useFastCamera? "fast":"slow"));
 		Logger.log("Ability delay: " + FighterGUI.abilityDelay);
@@ -387,7 +398,8 @@ public class FighterGUI extends JPanel {
 		for(Speed s : Speed.values()) {
 			mouseBoxModel.addElement(s);
 		}
-		popupCheckbox = new JCheckBox("Show popup notifications?");
+		lootClues = new JCheckBox("Loot clue scrolls");
+		popupCheckbox = new JCheckBox("Show popup notifications");
 		quickPrayer = new JCheckBox("Enable quick prayer usage");
 		fastCamera = new JCheckBox("Use fast camera movements");
 		abilDelay = new JSlider();
@@ -433,6 +445,9 @@ public class FighterGUI extends JPanel {
 		c.gridx = 0;
 		c.gridy = 9;
 		panel.add(popupCheckbox, c);
+		c.gridx = 0;
+		c.gridy = 10;
+		panel.add(lootClues, c);
 		tabbedPane1.addTab("SETTINGS", panel);
 	}
 

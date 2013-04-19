@@ -16,6 +16,9 @@ public class Settings {
 		}
 	}
 
+	
+	private static boolean lootClues = false;
+	
 	private static int radius = 5;
 	private static String status = "";
 	private static int teletab = 9007;
@@ -27,6 +30,14 @@ public class Settings {
 	private static final Set<Integer> lootIds = new TreeSet<Integer>();
 	private static final Set<Integer> alchIds = new TreeSet<Integer>();
 	private static final Set<Integer> monsterIds = new TreeSet<Integer>();
+	
+	public static boolean lootClueScrolls() {
+		return lootClues;
+	}
+	
+	public static void setLootClues(final boolean t) {
+		lootClues = t;
+	}
 	
 	public static int[] getMonsterArray() {
 		return Misc.setToArray(monsterIds);
