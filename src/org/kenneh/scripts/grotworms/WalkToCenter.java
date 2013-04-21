@@ -12,7 +12,7 @@ public class WalkToCenter implements KNode {
 				&& !Players.getLocal().isInCombat() 
 				&& Players.getLocal().getInteracting() == null
 				&& LootItems.getLoot() == null
-				&& Settings.GROT_CENTER_TILE.distanceTo() > 5;
+				&& Settings.GROT_CENTER_TILE.distanceTo() > 15;
 	}
 
 	@Override
