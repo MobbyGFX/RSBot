@@ -71,6 +71,7 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 				} else {
 					final KNode curr = task.next();
 					if(curr != null && curr.canActivate()) {
+						System.out.println(curr);
 						currNode = curr.getClass().getSimpleName();
 						curr.activate();
 					}

@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import org.kenneh.core.api.framework.KNode;
 import org.kenneh.core.api.framework.KScript;
 import org.kenneh.core.api.utils.AbilityHandler;
 import org.kenneh.core.api.utils.Misc;
@@ -14,6 +15,7 @@ import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Timer;
+import org.powerbot.game.api.wrappers.Tile;
 
 @Manifest(authors = { "Kenneh" }, description = "Test", name = "Kenneh's Grotworms", hidden = false)
 public class GrotWorms extends KScript {
@@ -31,12 +33,11 @@ public class GrotWorms extends KScript {
 		Settings.pw.storePrice(Settings.GROTWORM_LOOT);
 		Settings.pw.storePrice(995, 1);
 		getContainer().submit(new AbilityHandler());
-		submit(new FightWorms());
-		submit(new Eating());
-		submit(new GoToBank());
-		submit(new BankItems());
-		submit(new LootItems());
-		submit(new WalkToGrots());
+		final KNode[] nodes = {
+				new FightWorms(), new Eating(), new GoToBank(), new LootItems(), new WalkToGrots(),
+				new Alching(), new BankItems()
+		};
+		submit(nodes);
 		startTime = System.currentTimeMillis();
 		return true;
 	}
@@ -54,6 +55,7 @@ public class GrotWorms extends KScript {
 		g.drawString("Runtime: "+ timer.toElapsedString(), 5, 112);
 		g.drawString("Status: " + Settings.getStatus(), 5, 124);
 		g.drawString("Profit: "+ Misc.perHour(startTime, Settings.getLootValue()) + "(+" + Settings.getLootValue() + ")", 5, 136);
+		g.drawString("Distance to bank: " + Settings.BANK_TILE.distanceTo(), 5, 148);
 		g.setFont(new Font("Calibri", Font.PLAIN, 14));
 		int x = 8, y = 396;
 		for(int i = 0; i < PaintUtils.SKILL_NAMES.length -1; i++) {
@@ -64,6 +66,11 @@ public class GrotWorms extends KScript {
 				y += 18;
 			}
 		}
+//		for(Tile t : Settings.GROT_CAVE.getTileArray()) {
+//			if(t.isOnScreen()) {
+//				t.draw(g);
+//			}
+//		}
 	}
 
 }

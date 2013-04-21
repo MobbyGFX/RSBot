@@ -11,9 +11,12 @@ import org.powerbot.game.api.wrappers.Tile;
 public class Settings { // Everything is just thrown in here.
 	
 	// Constants
-	public static final Area GROT_CAVE = new Area(new Tile(1206, 6512, 0), new Tile(1138, 6483, 0));
+	public static final Area GROT_CAVE = new Area(new Tile(1206, 6514, 0), new Tile(1120, 6468, 0));
 	
 	public static final int FOOD_ID = 385;
+	
+	public static final int NATURE_RUNE = 561;
+	public static final int FIRE_RUNE = 554;
 	
 	public static final Tile BANK_TILE = new Tile(2946, 3368, 0);
 	public static final Tile OUTSIDE_GROT_CAVE_TILE = new Tile(2990, 3236, 0);
@@ -31,6 +34,10 @@ public class Settings { // Everything is just thrown in here.
 	public static int GROTWORM_LOOT[] = {
 		1213,1432,1303,1147,1111,5298,5303,5302,5304,5300,1780,451,450,24372,
 		995,565,2362,563,217,2485
+	};
+	
+	public static int ALCHABLE[] = {
+		1213,1432,1303,1147,1111
 	};
 	
 	// Script variables

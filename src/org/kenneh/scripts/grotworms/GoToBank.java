@@ -13,10 +13,12 @@ public class GoToBank implements KNode {
 
 	@Override
 	public boolean canActivate() {
-		return (Inventory.isFull() && Eating.edible() == null) 
-				|| (Eating.edible() == null && Players.getLocal().getHealthPercent() < 50) 
-				|| (!Inventory.isFull() && !Inventory.contains(Settings.TELETAB))
-				&& !Bank.isOpen();
+
+
+		return (Inventory.isFull() && Eating.edible() == null || !Inventory.contains(Settings.TELETAB)) ||
+				(Eating.edible() == null && Players.getLocal().getHealthPercent() < 50) 
+				&& !Bank.isOpen()
+				&& Settings.BANK_TILE.distanceTo() >= 5;
 	}
 
 	@Override
