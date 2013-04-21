@@ -9,6 +9,8 @@ import org.powerbot.game.api.wrappers.Tile;
 
 public class Settings {
 	
+	public static boolean DEBUG = true;
+	
 	public static void main(String[] args) {
 		setLootIds(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
 		for(int i = 0; i < getLootArray().length; i++) {

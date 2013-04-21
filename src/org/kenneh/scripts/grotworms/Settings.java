@@ -1,0 +1,52 @@
+package org.kenneh.scripts.grotworms;
+
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.kenneh.core.api.utils.Misc;
+import org.powerbot.game.api.wrappers.Tile;
+
+public class Settings { // Everything is just thrown in here.
+	
+	// Constants
+	public static final int FOOD_ID = 385;
+	
+	public static final Tile BANK_TILE = new Tile(2946, 3368, 0);
+	public static final Tile OUTSIDE_GROT_CAVE_TILE = new Tile(2990, 3236, 0);
+	public static final Tile INSIDE_GROT_CAVE_TILE = new Tile(1177, 6357, 0);
+	
+	public static final int TELETAB = 8009;
+
+	public static final Tile GROT_CENTER_TILE = new Tile(1175, 6500, 0);
+	
+	public static int RARE_DROP_TABLE[] = {
+		452,574,9342,5289,570,1392,3001,2364,384,1215,1216,450,20667,2362,270,
+		5304,1201,2366,1149,892,7937,454,258,2999,6686,5315,5316,1516
+	};
+	
+	public static int GROTWORM_LOOT[] = {
+		1213,1432,1303,1147,1111,5298,5303,5302,5304,5300,1780,451,450,24372,
+		995,565,2362,563,217,2485
+	};
+	
+	// Script variables
+	private static String status = "Initializing";
+	private static Set<Integer> loot = new TreeSet<Integer>();
+	
+	public static void setLoot(int...is) {
+		for(int i : is)
+			loot.add(i);
+	}
+	
+	public static int[] getLoot() {
+		return Misc.setToArray(loot);
+	}
+
+	public static void setStatus(final String s) {
+		status = s;
+	}
+	
+	public static String getStatus() {
+		return status;
+	}
+}
