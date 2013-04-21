@@ -2,10 +2,13 @@ package org.kenneh.scripts.grotworms;
 
 import org.kenneh.core.api.framework.KNode;
 import org.kenneh.core.api.utils.Lodestone;
+import org.kenneh.core.api.utils.MCamera;
+import org.kenneh.core.api.utils.Misc;
 import org.kenneh.scripts.AIOFishingGuild.Inventory;
 import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.methods.Tabs;
 import org.powerbot.game.api.methods.Walking;
+import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.util.Timer;
@@ -18,6 +21,7 @@ public class WalkToGrots implements KNode {
 		return FightWorms.getBestGrot() == null
 				&& Inventory.contains(Settings.TELETAB)
 				&& !Bank.isOpen()
+				&& !Settings.GROT_CAVE.contains(Players.getLocal())
 				&& Inventory.getCount(Settings.FOOD_ID) >= 2;
 	}
 
@@ -40,15 +44,19 @@ public class WalkToGrots implements KNode {
 				}
 			} else if(Settings.OUTSIDE_GROT_CAVE_TILE.distanceTo() > 100 && Settings.INSIDE_GROT_CAVE_TILE.distanceTo() < 50) {
 				if(insideCave != null && Settings.INSIDE_GROT_CAVE_TILE.distanceTo() < 5) {
-					Settings.setStatus("Sliding down");
-					insideCave.interact("Slide");
-					Timer timer = new Timer(2000);
-					while(timer.isRunning() && insideCave != null) {
-						Task.sleep(20);
-					}
-					timer = new Timer(5000);
-					while(timer.isRunning() && Settings.GROT_CENTER_TILE.distanceTo() > 5) {
-						Walking.walk(Settings.GROT_CENTER_TILE);
+					if(Misc.isOnScreen(insideCave)) {
+						Settings.setStatus("Sliding down");
+						insideCave.interact("Slide");
+						Timer timer = new Timer(2000);
+						while(timer.isRunning() && insideCave != null) {
+							Task.sleep(20);
+						}
+						timer = new Timer(5000);
+						while(timer.isRunning() && Settings.GROT_CENTER_TILE.distanceTo() > 5) {
+							Walking.walk(Settings.GROT_CENTER_TILE);
+						}
+					} else {
+						MCamera.turnTo(insideCave, 50);
 					}
 				} else {
 					Settings.setStatus("Walking to inside tunnel");

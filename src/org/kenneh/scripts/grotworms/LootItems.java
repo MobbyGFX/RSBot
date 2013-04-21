@@ -2,10 +2,13 @@ package org.kenneh.scripts.grotworms;
 
 import org.kenneh.core.api.framework.KNode;
 import org.kenneh.core.api.utils.MCamera;
+import org.kenneh.core.api.utils.Misc;
+import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.methods.Walking;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.node.GroundItems;
 import org.powerbot.game.api.util.Filter;
+import org.powerbot.game.api.util.Timer;
 import org.powerbot.game.api.wrappers.node.GroundItem;
 
 public class LootItems implements KNode {
@@ -34,12 +37,11 @@ public class LootItems implements KNode {
 				&& FightWorms.getBestGrot() != null
 				&& getLoot() != null;
 	}
-
-	@Override
-	public void activate() {
+	
+	public void loot() {
 		final GroundItem loot = getLoot();
 		if(loot != null) {
-			if(!loot.isOnScreen()) {
+			if(!Misc.isOnScreen(loot)) {
 				MCamera.turnTo(loot, 50);
 			} else {
 				if(loot.getLocation().distanceTo() > 5) {
@@ -47,11 +49,21 @@ public class LootItems implements KNode {
 				} else {
 					Settings.setStatus("Looting " + loot.getGroundItem().getStackSize() + "x " + loot.getGroundItem().getName());
 					if(loot.interact("Take", loot.getGroundItem().getName())) {
-						Settings.setLoot(Settings.pw.getPrice(loot.getId()) * loot.getGroundItem().getStackSize());
+						System.out.println("Looting "+ loot.getGroundItem().getName() + " worth " + Settings.pw.getPrice(loot.getId()) + " each!");
+						final Timer timer = new Timer(2000);
+						while(timer.isRunning() && loot != null) {
+							Task.sleep(20);
+						}
+						Settings.setValue(Settings.pw.getPrice(loot.getId()) * loot.getGroundItem().getStackSize()); 
 					}
 				}
 			}
 		}
+	}
+
+	@Override
+	public void activate() {
+		loot();
 	}
 
 }

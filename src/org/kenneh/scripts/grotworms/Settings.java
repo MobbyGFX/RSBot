@@ -5,11 +5,14 @@ import java.util.TreeSet;
 
 import org.kenneh.core.api.net.PriceWrapper;
 import org.kenneh.core.api.utils.Misc;
+import org.powerbot.game.api.wrappers.Area;
 import org.powerbot.game.api.wrappers.Tile;
 
 public class Settings { // Everything is just thrown in here.
 	
 	// Constants
+	public static final Area GROT_CAVE = new Area(new Tile(1206, 6512, 0), new Tile(1138, 6483, 0));
+	
 	public static final int FOOD_ID = 385;
 	
 	public static final Tile BANK_TILE = new Tile(2946, 3368, 0);
@@ -38,7 +41,7 @@ public class Settings { // Everything is just thrown in here.
 	
 	public static void setValue(final int i) {
 		System.out.println("Adding " + i + " to the loot value!");
-		totalLootValue += i;
+		totalLootValue = totalLootValue + i;
 	}
 	
 	public static int getLootValue() {

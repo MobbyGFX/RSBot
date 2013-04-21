@@ -5,6 +5,7 @@ import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.methods.Walking;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.tab.Inventory;
+import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.util.Timer;
 import org.powerbot.game.api.wrappers.node.Item;
 
@@ -12,7 +13,10 @@ public class GoToBank implements KNode {
 
 	@Override
 	public boolean canActivate() {
-		return (Inventory.isFull() && Eating.edible() == null) || (Eating.edible() == null && Players.getLocal().getHealthPercent() < 50) || (!Inventory.isFull() && !Inventory.contains(Settings.TELETAB));
+		return (Inventory.isFull() && Eating.edible() == null) 
+				|| (Eating.edible() == null && Players.getLocal().getHealthPercent() < 50) 
+				|| (!Inventory.isFull() && !Inventory.contains(Settings.TELETAB))
+				&& !Bank.isOpen();
 	}
 
 	@Override

@@ -25,9 +25,9 @@ public class BankItems implements KNode {
 					Settings.setStatus("Withdrawing teleport tab");
 					Bank.withdraw(Settings.TELETAB, 1);
 				}
-				if(Inventory.getCount(Settings.FOOD_ID) < 2) {
+				if(!Inventory.contains(Settings.FOOD_ID)) {
 					Settings.setStatus("Withdrawing food");
-					Bank.withdraw(Settings.FOOD_ID, 2);
+					Bank.withdraw(Settings.FOOD_ID, 3);
 				}
 				if(Inventory.contains(Settings.TELETAB) && Inventory.contains(Settings.FOOD_ID) && Bank.isOpen()) {
 					Settings.setStatus("Closing bank");

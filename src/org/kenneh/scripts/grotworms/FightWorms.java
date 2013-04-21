@@ -23,6 +23,7 @@ public class FightWorms implements KNode {
 	@Override
 	public boolean canActivate() {
 		return Players.getLocal().getInteracting() == null 
+				&& Settings.GROT_CAVE.contains(Players.getLocal())
 				&& LootItems.getLoot() == null
 				&& Players.getLocal().getHealthPercent() > 40
 				&& getBestGrot() != null;

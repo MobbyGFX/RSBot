@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.kenneh.scripts.aiofighter.Settings;
 import org.powerbot.core.event.listeners.PaintListener;
 import org.powerbot.core.script.ActiveScript;
 import org.powerbot.game.api.methods.Game;
@@ -15,7 +14,7 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 
 	private final Set<KNode> container = Collections.synchronizedSet(new HashSet<KNode>());
 	private Iterator<KNode> task = null;
-	private KNode curr = null;
+	private String currNode = "none";
 	private volatile boolean canRun = false;
 
 	public abstract boolean init();
@@ -51,10 +50,11 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 
 	@Override
 	public void onRepaint(final Graphics g) {
-		if(curr != null && Settings.DEBUG) {
-			g.drawString("Current node: "+ curr.getClass().getName(), 5, 100);
-		}
+		g.drawString("Current node: "+ currNode, 5, 100);
+		paint(g);
 	}
+
+	public abstract void paint(final Graphics g);
 
 	@Override
 	public void onStop() {
@@ -69,8 +69,9 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 				if(task == null || !task.hasNext()) {
 					task = container.iterator();
 				} else {
-					curr = task.next();
+					final KNode curr = task.next();
 					if(curr != null && curr.canActivate()) {
+						currNode = curr.getClass().getSimpleName();
 						curr.activate();
 					}
 				}
