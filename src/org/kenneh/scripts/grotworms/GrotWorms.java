@@ -25,6 +25,7 @@ public class GrotWorms extends KScript implements PaintListener {
 		submit(new BankItems());
 		submit(new LootItems());
 		submit(new WalkToGrots());
+		submit(new WalkToCenter());
 		return true;
 	}
 
