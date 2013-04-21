@@ -8,11 +8,12 @@ public class WalkToCenter implements KNode {
 
 	@Override
 	public boolean canActivate() {
-		return FightWorms.getBestGrot() != null 
+		return FightWorms.getBestGrot() == null 
 				&& !Players.getLocal().isInCombat() 
 				&& Players.getLocal().getInteracting() == null
 				&& LootItems.getLoot() == null
-				&& Settings.GROT_CENTER_TILE.distanceTo() > 15;
+				&& Settings.GROT_CENTER_TILE.distanceTo() > 15
+				&& Settings.GROT_CENTER_TILE.distanceTo() < 50;
 	}
 
 	@Override

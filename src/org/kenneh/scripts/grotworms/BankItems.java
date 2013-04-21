@@ -8,7 +8,7 @@ public class BankItems implements KNode {
 
 	@Override
 	public boolean canActivate() {
-		return Settings.BANK_TILE.distanceTo() <= 5 && (Inventory.isFull() || !Inventory.contains(Settings.TELETAB) || Inventory.getCount(Settings.FOOD_ID) <= 2); 
+		return Settings.BANK_TILE.distanceTo() <= 5 && (Inventory.isFull() || !Inventory.contains(Settings.TELETAB) || !Inventory.contains(Settings.FOOD_ID)); 
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class BankItems implements KNode {
 					Bank.withdraw(Settings.FOOD_ID, 2);
 				}
 			}
-			if(Inventory.contains(Settings.TELETAB) && Inventory.getCount(Settings.FOOD_ID) >= 2 && Bank.isOpen()) {
+			if(Inventory.contains(Settings.TELETAB) && Inventory.contains(Settings.FOOD_ID) && Bank.isOpen()) {
 				Settings.setStatus("Closing bank");
 				Bank.close();
 			}
