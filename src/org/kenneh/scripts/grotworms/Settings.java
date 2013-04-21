@@ -3,6 +3,7 @@ package org.kenneh.scripts.grotworms;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.kenneh.core.api.net.PriceWrapper;
 import org.kenneh.core.api.utils.Misc;
 import org.powerbot.game.api.wrappers.Tile;
 
@@ -30,8 +31,19 @@ public class Settings { // Everything is just thrown in here.
 	};
 	
 	// Script variables
+	public static final PriceWrapper pw = new PriceWrapper();
 	private static String status = "Initializing";
 	private static Set<Integer> loot = new TreeSet<Integer>();
+	private static int totalLootValue = 0;
+	
+	public static void setValue(final int i) {
+		System.out.println("Adding " + i + " to the loot value!");
+		totalLootValue += i;
+	}
+	
+	public static int getLootValue() {
+		return totalLootValue;
+	}
 	
 	public static void setLoot(int...is) {
 		for(int i : is)

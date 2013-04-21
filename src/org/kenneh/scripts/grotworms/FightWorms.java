@@ -2,7 +2,6 @@ package org.kenneh.scripts.grotworms;
 
 import org.kenneh.core.api.framework.KNode;
 import org.kenneh.core.api.utils.MCamera;
-import org.powerbot.game.api.methods.Walking;
 import org.powerbot.game.api.methods.interactive.NPCs;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.util.Filter;
@@ -35,18 +34,13 @@ public class FightWorms implements KNode {
 		Settings.setStatus("Aquiring best target");
 		if(grot != null && !grot.isInCombat()) {
 			Settings.setStatus("Target aquired");
-			//if(grot.getLocation().distanceTo() > 10) {
-			//	Walking.walk(grot.getLocation());
-			//	MCamera.turnTo(grot, 50);
-		//	} else {
-				if(!grot.isOnScreen()) {
-					Settings.setStatus("Turning camera to target");
-					MCamera.turnTo(grot, 50);
-				} else {
-					Settings.setStatus("Initiating combat with target");
-					grot.interact("Attack");
-				}
-		//	}
+			if(!grot.isOnScreen()) {
+				Settings.setStatus("Turning camera to target");
+				MCamera.turnTo(grot, 50);
+			} else {
+				Settings.setStatus("Initiating combat with target");
+				grot.interact("Attack");
+			}
 		} else {
 			Settings.setStatus("No suitable targets found!");
 		}

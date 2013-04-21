@@ -12,7 +12,7 @@ public class GoToBank implements KNode {
 
 	@Override
 	public boolean canActivate() {
-		return (Inventory.isFull() && Eating.edible() == null) || (Eating.edible() == null && Players.getLocal().getHealthPercent() < 50);
+		return (Inventory.isFull() && Eating.edible() == null) || (Eating.edible() == null && Players.getLocal().getHealthPercent() < 50) || (!Inventory.isFull() && !Inventory.contains(Settings.TELETAB));
 	}
 
 	@Override

@@ -46,7 +46,9 @@ public class LootItems implements KNode {
 					Walking.walk(loot.getLocation());
 				} else {
 					Settings.setStatus("Looting " + loot.getGroundItem().getStackSize() + "x " + loot.getGroundItem().getName());
-					loot.interact("Take", loot.getGroundItem().getName());
+					if(loot.interact("Take", loot.getGroundItem().getName())) {
+						Settings.setLoot(Settings.pw.getPrice(loot.getId()) * loot.getGroundItem().getStackSize());
+					}
 				}
 			}
 		}

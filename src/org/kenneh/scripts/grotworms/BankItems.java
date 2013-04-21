@@ -17,7 +17,7 @@ public class BankItems implements KNode {
 			Settings.setStatus("Opening bank");
 			Bank.open();
 		} else {
-			if(Inventory.isFull()) {
+			if(Inventory.getCount() != 0) {
 				Settings.setStatus("Depositing inventory");
 				Bank.depositInventory();
 			} else {
@@ -29,11 +29,12 @@ public class BankItems implements KNode {
 					Settings.setStatus("Withdrawing food");
 					Bank.withdraw(Settings.FOOD_ID, 2);
 				}
+				if(Inventory.contains(Settings.TELETAB) && Inventory.contains(Settings.FOOD_ID) && Bank.isOpen()) {
+					Settings.setStatus("Closing bank");
+					Bank.close();
+				}
 			}
-			if(Inventory.contains(Settings.TELETAB) && Inventory.contains(Settings.FOOD_ID) && Bank.isOpen()) {
-				Settings.setStatus("Closing bank");
-				Bank.close();
-			}
+			
 		}
 
 	}
