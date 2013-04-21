@@ -329,7 +329,7 @@ public class FighterGUI extends JPanel {
 		Logger.log("Food id: " + Settings.getFoodId());
 		Logger.log("Looting items over " + Settings.getLootValue() + " gp!");
 		
-		Misc.showMessage(MonsterKiller.class, "Script started!", MonsterKiller.img);
+		Misc.showMessage("Kenneh's AIO Fighter", "Script started!", MonsterKiller.img);
 		
 		Logger.log("AIOFighter Initialized..");
 		

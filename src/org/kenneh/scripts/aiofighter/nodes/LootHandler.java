@@ -142,10 +142,10 @@ public class LootHandler extends Node {
 					if(value != 0) {
 						int price = value * stack;
 						totalValue += price;
-						Misc.showMessage(MonsterKiller.class, "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
+						Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
 					}
 				} else {
-					Misc.showMessage(MonsterKiller.class, "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
+					Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
 					totalValue += value * stack;
 				}
 			} catch(Exception a) {

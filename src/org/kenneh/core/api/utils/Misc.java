@@ -14,7 +14,6 @@ import java.util.Set;
 import javax.swing.ImageIcon;
 
 import org.kenneh.scripts.aiofighter.FighterGUI;
-import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.methods.Settings;
 import org.powerbot.game.api.methods.Tabs;
 import org.powerbot.game.api.methods.Widgets;
@@ -49,7 +48,7 @@ public class Misc {
 
 	
 
-	public static void showMessage(final Class<?> main, final String message, final Image img) {
+	public static void showMessage(final String title, final String message, final Image img) {
 		if(FighterGUI.showPopups){ 
 			try {
 				EventQueue.invokeLater(new Runnable() {
@@ -59,7 +58,7 @@ public class Misc {
 						.withStyle(new DarkDefaultNotification()
 						.withMessageFont(new Font("Calibri", Font.PLAIN, 13))
 						.withWindowCornerRadius(25))
-						.withTitle(main.getClass().getAnnotation(Manifest.class).name())
+						.withTitle(title)
 						.withMessage(message)
 						.withDisplayTime(3000)
 						.withPosition(Positions.SOUTH_EAST)

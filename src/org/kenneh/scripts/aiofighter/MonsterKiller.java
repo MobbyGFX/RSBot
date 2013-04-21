@@ -134,7 +134,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	public void onStop() {
 		logger.dispose();
 		screenCap();
-		Misc.showMessage(this.getClass(), "Script stopped!", MonsterKiller.img);
+		Misc.showMessage("Kenneh's AIO Fighter", "Script stopped!", MonsterKiller.img);
 	}
 
 	public static int antiPotAtValue = 0;
@@ -383,10 +383,10 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			}
 		}
 		if(text.contains("just advanced a")) {
-			Misc.showMessage(this.getClass(), Misc.capitalize(text), MonsterKiller.img);
+			Misc.showMessage("Kenneh's AIO Fighter", Misc.capitalize(text), MonsterKiller.img);
 		}
 		if(text.contains("are dead")) {
-			Misc.showMessage(this.getClass(), "Somehow we've died!", MonsterKiller.img);
+			Misc.showMessage("Kenneh's AIO Fighter", "Somehow we've died!", MonsterKiller.img);
 		}
 		if(text.contains("down here to kill those.")) {
 			stopScript=true;

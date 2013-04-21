@@ -12,7 +12,7 @@ import org.powerbot.game.api.util.Timer;
 import org.powerbot.game.api.wrappers.node.GroundItem;
 
 public class LootItems implements KNode {
-	
+
 	private final static Filter<GroundItem> LOOT_FILTER = new Filter<GroundItem>() {
 
 		@Override
@@ -24,9 +24,9 @@ public class LootItems implements KNode {
 			}
 			return false;
 		}
-		
+
 	};
-	
+
 	public static GroundItem getLoot() {
 		return GroundItems.getNearest(LOOT_FILTER);
 	}
@@ -37,15 +37,15 @@ public class LootItems implements KNode {
 				&& FightWorms.getBestGrot() != null
 				&& getLoot() != null;
 	}
-	
+
 	public void loot() {
 		final GroundItem loot = getLoot();
 		if(loot != null) {
-			if(!Misc.isOnScreen(loot)) {
-				MCamera.turnTo(loot, 50);
+			if(loot.getLocation().distanceTo() > 5) {
+				Walking.walk(loot.getLocation());
 			} else {
-				if(loot.getLocation().distanceTo() > 5) {
-					Walking.walk(loot.getLocation());
+				if(!Misc.isOnScreen(loot)) {
+					MCamera.turnTo(loot, 50);
 				} else {
 					Settings.setStatus("Looting " + loot.getGroundItem().getStackSize() + "x " + loot.getGroundItem().getName());
 					if(loot.interact("Take", loot.getGroundItem().getName())) {
