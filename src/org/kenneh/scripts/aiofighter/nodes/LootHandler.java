@@ -109,7 +109,7 @@ public class LootHandler extends Node {
 							//&& Test.getName(i.getId()) != null 
 							&& i.getId() != 954
 							&& !Misc.arrayContains(i.getId(), MonsterKiller.summoning)) {
-							//&& !Test.getName(i.getId()).contains("noted")) {
+						//&& !Test.getName(i.getId()).contains("noted")) {
 						price = PriceChecker.priceWrapper.getPrice(i.getId()) * i.getStackSize();
 						item = i;
 					}
@@ -124,7 +124,6 @@ public class LootHandler extends Node {
 		int id = item.getId();
 		int stack = item.getGroundItem().getStackSize();
 		if(item.interact("Take", item.getGroundItem().getName())) {
-			//Logger.log("Looting " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName());
 			MonsterKiller.status = "Looting " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName();
 			new TimedCondition(2000) {
 				@Override
@@ -137,19 +136,15 @@ public class LootHandler extends Node {
 				if(PriceChecker.priceWrapper.contains(id)) {
 					value = PriceChecker.priceWrapper.getPrice(id);
 				}
-				if(value == -1) {
-					value = PriceChecker.priceWrapper.getPrice(id + 1);
-					if(value != -1) {
+				if(value == 0) {
+					value = PriceChecker.priceWrapper.getPrice(id - 1);
+					if(value != 0) {
 						int price = value * stack;
 						totalValue += price;
-						if(value * stack > 100) {
-							Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
-						}
+						Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
 					}
 				} else {
-						if(value * stack > 100) {
-							Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
-						}
+					Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
 					totalValue += value * stack;
 				}
 			} catch(Exception a) {

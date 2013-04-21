@@ -381,8 +381,8 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 				Task.sleep(500);
 			}
 		}
-		if(text.contains("a level")) {
-			Misc.showMessage("Kenneh's AIO Fighter", text, MonsterKiller.img);
+		if(text.contains("just advanced a")) {
+			Misc.showMessage("Kenneh's AIO Fighter", Misc.capitalize(text), MonsterKiller.img);
 		}
 		if(text.contains("are dead")) {
 			Misc.showMessage("Kenneh's AIO Fighter", "Somehow we've died!", MonsterKiller.img);
