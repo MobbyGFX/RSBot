@@ -1,6 +1,6 @@
 package org.kenneh.scripts.hydrachopper;
 
-import org.kenneh.core.api.Misc;
+import org.powerbot.game.api.methods.Calculations;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.methods.tab.Inventory;
@@ -11,7 +11,7 @@ public class ChopTree implements Node {
 
 	@Override
 	public boolean activate() {
-		return Misc.distanceTo(Settings.treeTile) <= 5 && Settings.myTree.isTree() && Players.getLocal().getAnimation() == -1 && !Inventory.isFull();
+		return Calculations.distanceTo(Settings.treeTile) <= 5 && Settings.myTree.isTree() && Players.getLocal().getAnimation() == -1 && !Inventory.isFull();
 	}
 
 	@Override

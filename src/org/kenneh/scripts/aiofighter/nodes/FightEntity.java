@@ -1,7 +1,7 @@
 package org.kenneh.scripts.aiofighter.nodes;
 
-import org.kenneh.core.api.MCamera;
-import org.kenneh.core.api.Misc;
+import org.kenneh.core.api.utils.MCamera;
+import org.kenneh.core.api.utils.Misc;
 import org.kenneh.scripts.aiofighter.FighterGUI;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
 import org.kenneh.scripts.aiofighter.Settings;

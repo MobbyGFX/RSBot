@@ -1,6 +1,6 @@
 package org.kenneh.scripts.aiofighter.nodes;
 
-import org.kenneh.core.api.PriceWrapper;
+import org.kenneh.core.api.net.PriceWrapper;
 import org.kenneh.core.graphics.Logger;
 import org.kenneh.scripts.aiofighter.Settings;
 import org.powerbot.core.script.job.LoopTask;

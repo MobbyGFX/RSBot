@@ -1,7 +1,7 @@
 package org.kenneh.scripts.aiofighter.nodes;
 
-import org.kenneh.core.api.MCamera;
-import org.kenneh.core.api.Misc;
+import org.kenneh.core.api.utils.MCamera;
+import org.kenneh.core.api.utils.Misc;
 import org.kenneh.scripts.aiofighter.FighterGUI;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
 import org.powerbot.core.script.job.state.Node;
@@ -17,20 +17,18 @@ import sk.general.TimedCondition;
 
 public class AttackOneOf extends Node {
 
-	public static NPC[] getNearestAgressiveMob() {
-		return NPCs.getLoaded(new Filter<NPC>() {
-			@Override
-			public boolean accept(NPC mob) {
-				return mob != null 
-						&& mob.getInteracting() != null
-						&& !mob.equals(Summoning.getFamiliar())
-						&& mob.getInteracting().equals(Players.getLocal());
-			}
-		});
-	}
+	public static Filter<NPC> AGGRO_FILTER = new Filter<NPC>() {
+		@Override
+		public boolean accept(NPC mob) {
+			return mob != null 
+					&& mob.getInteracting() != null
+					&& !mob.equals(Summoning.getFamiliar())
+					&& mob.getInteracting().equals(Players.getLocal());
+		}
+	};
 
 	public static NPC getNearest() {
-		return Misc.getNearest(getNearestAgressiveMob());
+		return NPCs.getNearest(AGGRO_FILTER);
 	}
 
 

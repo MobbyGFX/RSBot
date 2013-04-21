@@ -1,6 +1,6 @@
 package org.kenneh.scripts.aiofighter.nodes;
 
-import org.kenneh.core.api.Misc;
+import org.kenneh.core.api.utils.Misc;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
 import org.powerbot.core.script.job.Task;
 import org.powerbot.core.script.job.state.Node;

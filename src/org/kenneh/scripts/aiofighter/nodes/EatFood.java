@@ -3,7 +3,7 @@ package org.kenneh.scripts.aiofighter.nodes;
 import java.util.Arrays;
 import java.util.List;
 
-import org.kenneh.core.api.Misc;
+import org.kenneh.core.api.utils.Misc;
 import org.kenneh.core.graphics.Logger;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
 import org.powerbot.core.script.job.Task;

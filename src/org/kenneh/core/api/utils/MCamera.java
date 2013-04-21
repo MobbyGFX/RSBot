@@ -1,4 +1,4 @@
-package org.kenneh.core.api;
+package org.kenneh.core.api.utils;
 
 import java.awt.event.MouseEvent;
 

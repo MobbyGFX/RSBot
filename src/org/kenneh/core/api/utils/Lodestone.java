@@ -1,4 +1,4 @@
-package org.kenneh.core.api;
+package org.kenneh.core.api.utils;
 
 import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.methods.Widgets;

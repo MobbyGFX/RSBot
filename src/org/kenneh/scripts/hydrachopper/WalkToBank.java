@@ -1,6 +1,6 @@
 package org.kenneh.scripts.hydrachopper;
 
-import org.kenneh.core.api.Misc;
+import org.powerbot.game.api.methods.Calculations;
 import org.powerbot.game.api.methods.Walking;
 import org.powerbot.game.api.methods.tab.Inventory;
 
@@ -8,7 +8,7 @@ public class WalkToBank implements Node {
 
 	@Override
 	public boolean activate() {
-		return Misc.distanceTo(Settings.bankTile) > 5 && Inventory.isFull();
+		return Calculations.distanceTo(Settings.bankTile) > 5 && Inventory.isFull();
 	}
 
 	@Override

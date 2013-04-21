@@ -1,6 +1,6 @@
 package org.kenneh.scripts.hydrachopper;
 
-import org.kenneh.core.api.Misc;
+import org.powerbot.game.api.methods.Calculations;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.wrappers.node.Item;
@@ -9,7 +9,7 @@ public class BankLogs implements Node {
 
 	@Override
 	public boolean activate() {
-		return Misc.distanceTo(Settings.bankTile) <=5 && Inventory.isFull();
+		return Calculations.distanceTo(Settings.bankTile) <=5 && Inventory.isFull();
 	}
 
 	@Override

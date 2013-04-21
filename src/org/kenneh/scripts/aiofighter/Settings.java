@@ -3,7 +3,7 @@ package org.kenneh.scripts.aiofighter;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.kenneh.core.api.Misc;
+import org.kenneh.core.api.utils.Misc;
 import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.wrappers.Tile;
 

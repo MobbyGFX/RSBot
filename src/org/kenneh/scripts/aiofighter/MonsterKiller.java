@@ -23,8 +23,9 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 
-import org.kenneh.core.api.Misc;
+import org.kenneh.core.api.utils.Misc;
 import org.kenneh.core.graphics.Logger;
+import org.kenneh.core.graphics.PaintUtils;
 import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.kenneh.scripts.aiofighter.nodes.AbilityHandler;
 import org.kenneh.scripts.aiofighter.nodes.Expandbar;
@@ -133,7 +134,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	public void onStop() {
 		logger.dispose();
 		screenCap();
-		Misc.showMessage("Kenneh's AIO Fighter", "Script stopped!", MonsterKiller.img);
+		Misc.showMessage(this.getClass(), "Script stopped!", MonsterKiller.img);
 	}
 
 	public static int antiPotAtValue = 0;
@@ -172,11 +173,11 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		y = 396;
 		if(show) {
 			g1.setFont(new Font("Calibri", Font.PLAIN, 14));
-			for(int i = 0; i < Misc.SKILL_NAMES.length -1; i++) {
+			for(int i = 0; i < PaintUtils.SKILL_NAMES.length -1; i++) {
 				if(sd.experience(i) > 0) {
-					Misc.drawProgressBar(g1, x, y, 487, 17, Color.BLACK, Misc.getSkillColor(i), 150, Misc.getPercentToNextLevel(i));
+					PaintUtils.drawProgressBar(g1, x, y, 487, 17, Color.BLACK, PaintUtils.getSkillColor(i), 150, PaintUtils.getPercentToNextLevel(i));
 					g1.setColor(Color.WHITE);
-					g1.drawString(Misc.generateString(sd, i), x + 5, y + 13);
+					g1.drawString(PaintUtils.generateString(sd, i), x + 5, y + 13);
 					y += 18;
 				}
 			}
@@ -382,10 +383,10 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			}
 		}
 		if(text.contains("just advanced a")) {
-			Misc.showMessage("Kenneh's AIO Fighter", Misc.capitalize(text), MonsterKiller.img);
+			Misc.showMessage(this.getClass(), Misc.capitalize(text), MonsterKiller.img);
 		}
 		if(text.contains("are dead")) {
-			Misc.showMessage("Kenneh's AIO Fighter", "Somehow we've died!", MonsterKiller.img);
+			Misc.showMessage(this.getClass(), "Somehow we've died!", MonsterKiller.img);
 		}
 		if(text.contains("down here to kill those.")) {
 			stopScript=true;

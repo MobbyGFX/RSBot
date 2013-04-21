@@ -1,7 +1,9 @@
 package org.kenneh.scripts.aiofighter.nodes;
 
-import org.kenneh.core.api.MCamera;
-import org.kenneh.core.api.Misc;
+import java.util.Arrays;
+
+import org.kenneh.core.api.utils.MCamera;
+import org.kenneh.core.api.utils.Misc;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
 import org.kenneh.scripts.aiofighter.Settings;
 import org.powerbot.core.script.job.Task;
@@ -108,8 +110,7 @@ public class LootHandler extends Node {
 							&& i.getId() != Settings.getTeletab()
 							//&& Test.getName(i.getId()) != null 
 							&& i.getId() != 954
-							&& !Misc.arrayContains(i.getId(), MonsterKiller.summoning)) {
-						//&& !Test.getName(i.getId()).contains("noted")) {
+							&& Arrays.binarySearch(MonsterKiller.summoning, i.getId()) > 0)  { 
 						price = PriceChecker.priceWrapper.getPrice(i.getId()) * i.getStackSize();
 						item = i;
 					}
@@ -141,10 +142,10 @@ public class LootHandler extends Node {
 					if(value != 0) {
 						int price = value * stack;
 						totalValue += price;
-						Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
+						Misc.showMessage(MonsterKiller.class, "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
 					}
 				} else {
-					Misc.showMessage("Kenneh's AIO Fighter", "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
+					Misc.showMessage(MonsterKiller.class, "Looted " + item.getGroundItem().getStackSize() + "x " + item.getGroundItem().getName() + " worth " + value * stack  + "!", MonsterKiller.img);
 					totalValue += value * stack;
 				}
 			} catch(Exception a) {

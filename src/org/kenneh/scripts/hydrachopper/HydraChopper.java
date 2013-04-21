@@ -3,12 +3,13 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.kenneh.core.api.Misc;
-import org.kenneh.core.api.PriceWrapper;
+import org.kenneh.core.api.net.PriceWrapper;
+import org.kenneh.core.api.utils.Misc;
 import org.powerbot.core.event.events.MessageEvent;
 import org.powerbot.core.event.listeners.MessageListener;
 import org.powerbot.core.event.listeners.PaintListener;
@@ -26,7 +27,8 @@ import org.powerbot.game.api.wrappers.node.SceneObject;
 public class HydraChopper extends ActiveScript implements PaintListener, MessageListener {
 
 	private long startTime;
-	private final Set<Node> container = new HashSet<Node>();
+	private final Set<Node> container = Collections.synchronizedSet(new HashSet<Node>());
+	//private final Set<Node> container = new HashSet<Node>();
 	private final Timer timer = new Timer(0);
 	private final SkillData skillData = new SkillData();
 

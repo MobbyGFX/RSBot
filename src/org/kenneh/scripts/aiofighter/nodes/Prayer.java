@@ -1,6 +1,6 @@
 package org.kenneh.scripts.aiofighter.nodes;
 
-import org.kenneh.core.api.Misc;
+import org.kenneh.core.api.utils.Misc;
 import org.kenneh.scripts.aiofighter.FighterGUI;
 import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.powerbot.core.script.job.LoopTask;

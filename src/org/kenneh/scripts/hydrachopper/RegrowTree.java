@@ -1,8 +1,8 @@
 package org.kenneh.scripts.hydrachopper;
 
-import org.kenneh.core.api.Misc;
 import org.powerbot.core.script.job.Task;
 import org.powerbot.core.script.util.Timer;
+import org.powerbot.game.api.methods.Calculations;
 import org.powerbot.game.api.methods.Widgets;
 import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.methods.tab.Inventory;
@@ -14,7 +14,7 @@ public class RegrowTree implements Node {
 
 	@Override
 	public boolean activate() {
-		return Misc.distanceTo(Settings.treeTile) <= 5 && Settings.myTree.isStump() 
+		return Calculations.distanceTo(Settings.treeTile) <= 5 && Settings.myTree.isStump() 
 				&& !Inventory.isFull() && Summoning.isFamiliarSummoned() 
 				&& Inventory.contains(Settings.hydraScroll);
 	}

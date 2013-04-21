@@ -39,7 +39,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
-import org.kenneh.core.api.Misc;
+import org.kenneh.core.api.utils.Misc;
 import org.kenneh.core.graphics.Logger;
 import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.kenneh.scripts.aiofighter.nodes.Alch;
@@ -329,7 +329,7 @@ public class FighterGUI extends JPanel {
 		Logger.log("Food id: " + Settings.getFoodId());
 		Logger.log("Looting items over " + Settings.getLootValue() + " gp!");
 		
-		Misc.showMessage("Kenneh's AIO Fighter", "Script started!", MonsterKiller.img);
+		Misc.showMessage(MonsterKiller.class, "Script started!", MonsterKiller.img);
 		
 		Logger.log("AIOFighter Initialized..");
 		
