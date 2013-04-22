@@ -132,7 +132,7 @@ public class AbilityHandler extends LoopTask {
 						BookAbility toSend = null;
 						if (toSend == null) toSend = getAbility(AbilityType.ULTIMATE);
 						if (toSend == null) toSend = getAbility(AbilityType.THRESHOLD);
-						if (toSend == null) toSend = getAbility(AbilityType.BASIC);
+						if (toSend == null && Players.getLocal().getInteracting().getHealthPercent() > 50) toSend = getAbility(AbilityType.BASIC);
 						if (toSend != null) sendAbility(toSend);
 					}
 				} else {
