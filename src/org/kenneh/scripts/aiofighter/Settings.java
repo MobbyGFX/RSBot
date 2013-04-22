@@ -29,6 +29,8 @@ public class Settings {
 	private static Tile startTile;
 	private static int lootValue = 9001;
 
+	public static int killCount = 0;
+
 	private static final Set<Integer> lootIds = new TreeSet<Integer>();
 	private static final Set<Integer> alchIds = new TreeSet<Integer>();
 	private static final Set<Integer> monsterIds = new TreeSet<Integer>();

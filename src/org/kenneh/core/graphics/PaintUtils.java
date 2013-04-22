@@ -20,6 +20,7 @@ import org.kenneh.core.api.utils.Misc;
 import org.powerbot.game.api.methods.Settings;
 import org.powerbot.game.api.methods.tab.Skills;
 import org.powerbot.game.api.util.SkillData;
+import org.powerbot.game.api.util.SkillData.Rate;
 import org.powerbot.game.api.util.Time;
 
 public class PaintUtils {
@@ -77,7 +78,7 @@ public class PaintUtils {
 		String name = SKILL_NAMES[index];
 		sb.append(Misc.capitalize(name) +": ");
 		sb.append(Skills.getRealLevel(index) + "(+" + sd.level(index) + ") ");
-		sb.append("Experience: " + sd.experience(SkillData.Rate.HOUR, index) + "(+" + sd.experience(index) + ") ");
+		sb.append("Experience: " + Misc.formatNumber(sd.experience(index)) + "(+" + Misc.formatNumber(sd.experience(Rate.HOUR, index)) + ") ");
 		sb.append("TTL: " + (Skills.getRealLevel(index) == 99 ? "N/A" : Time.format(sd.timeToLevel(SkillData.Rate.HOUR, index))));
 		if(index == Skills.SLAYER) {
 			sb.append(" NPCS Left: " + Settings.get(183));

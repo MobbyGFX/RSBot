@@ -2,6 +2,7 @@ package org.kenneh.scripts.aiofighter;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -29,6 +30,7 @@ import org.kenneh.core.graphics.PaintUtils;
 import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.kenneh.scripts.aiofighter.nodes.AbilityHandler;
 import org.kenneh.scripts.aiofighter.nodes.Expandbar;
+import org.kenneh.scripts.aiofighter.nodes.KillCount;
 import org.kenneh.scripts.aiofighter.nodes.LootHandler;
 import org.kenneh.scripts.aiofighter.nodes.Prayer;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
@@ -161,11 +163,25 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		Graphics2D g1 = (Graphics2D) arg0;
 		g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		int x = 8, y = 90;
+		final int boxX = 5, boxY = 80;
+		final FontMetrics fm = g1.getFontMetrics();
+		final String title = "Kenneh's AIO Fighter - Runtime: "+ t.toElapsedString();
+		final int boxH = fm.getHeight() * 4, boxW = fm.stringWidth(title) + 6;
+		final int yOff = fm.getHeight();
+		int x = 8, y = 80 + yOff - 3;
+		g1.setColor(new Color(0, 0, 0, 200));
+		g1.fillRoundRect(boxX, boxY, boxW, boxH, 5, 5);
+		g1.setColor(Color.RED);
+		g1.drawRoundRect(boxX, boxY, boxW, boxH, 5, 5);
 		g1.setColor(Color.WHITE);
 		g1.setFont(new Font("Calibri", Font.PLAIN, 12));
-		g1.drawString("Kennehs AIO Fighter - Runtime: " + t.toElapsedString() + " - Status: " + status, x, y);
-		g1.drawString("Total looted value - "  + LootHandler.totalValue + "(+" + Misc.perHour(startTime, LootHandler.totalValue) + ")", x, y + 12);
+		g1.drawString(title, x, y);
+		y += yOff;
+		g1.drawString("Status: " + status, x, y);
+		y += yOff;
+		g1.drawString("Total looted value - "  + Misc.formatNumber(LootHandler.totalValue) + "(+" + Misc.perHour(startTime, LootHandler.totalValue) + ")", x, y );
+		y += yOff;
+		g1.drawString("Monsters killed: " + Settings.killCount + "(+" + Misc.perHour(startTime, Settings.killCount) + ")", x, y);
 		if(mouseimg != null) {
 			drawMouse(arg0);
 		}
@@ -214,8 +230,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 					img = Toolkit.getDefaultToolkit().getImage(new URL("http://puu.sh/2CPmc.gif"));
 					System.out.println("Gif loaded");
 					mouseimg = ImageIO.read(new URL("http://i.imgur.com/WDgWvVu.png"));
-//					Test.addToHashtable();
-//					Logger.log("Items loaded: " + Test.pricelist.size());
 					Environment.enableRandom(org.powerbot.core.randoms.SpinTickets.class, false);
 				} catch (Exception a) {
 					a.printStackTrace();
@@ -264,6 +278,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		getContainer().submit(new AbilityHandler());
 		getContainer().submit(new PriceChecker());
 		getContainer().submit(new Prayer());
+		getContainer().submit(new KillCount());
 		startTime = System.currentTimeMillis();
 		provide(new SprinkleNeem());
 		Logger.log("ShieldId: "+ shieldId + " WeaponId: " + mainWeapon);
