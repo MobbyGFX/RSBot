@@ -10,17 +10,22 @@ public class KillCount extends LoopTask {
 
 	@Override
 	public int loop() {
-		if(Players.getLocal().isInCombat()) {
-			final NPC interacting = (NPC) Players.getLocal().getInteracting();
-			if(interacting != null) {
-				if(interacting.getHealthPercent() == 0) {
-					Settings.killCount++; 
-					final Timer timer = new Timer(1000);
-					while(timer.isRunning() && interacting != null) {
-						sleep(20);
+		try {
+			if(Players.getLocal().isInCombat()) {
+				final NPC interacting = (NPC) Players.getLocal().getInteracting();
+				if(interacting != null) {
+					if(interacting.getHealthPercent() == 0) {
+						Settings.killCount++; 
+						final Timer timer = new Timer(1000);
+						while(timer.isRunning() && interacting.validate()) {
+                            System.out.println("Sleeping until npc is null");
+							sleep(20);
+						}
 					}
 				}
 			}
+		} catch(Exception a) {
+			System.out.println("Timer fix internal errors pls");
 		}
 		return 200;
 	}

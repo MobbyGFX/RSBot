@@ -166,13 +166,13 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		final int boxX = 5, boxY = 80;
 		final FontMetrics fm = g1.getFontMetrics();
 		final String title = "Kenneh's AIO Fighter - Runtime: "+ t.toElapsedString();
-		final int boxH = fm.getHeight() * 4, boxW = fm.stringWidth(title) + 6;
+		final int boxH = fm.getHeight() * 5, boxW = fm.stringWidth(title) + 10;
 		final int yOff = fm.getHeight();
-		int x = 8, y = 80 + yOff - 3;
-		g1.setColor(new Color(0, 0, 0, 200));
-		g1.fillRoundRect(boxX, boxY, boxW, boxH, 5, 5);
+		int x = 10, y = 80 + yOff + yOff / 2 - 5;
+		g1.setColor(new Color(0, 0, 0, 150));
+		g1.fillRoundRect(boxX, boxY, boxW, boxH, 10, 10);
 		g1.setColor(Color.RED);
-		g1.drawRoundRect(boxX, boxY, boxW, boxH, 5, 5);
+		g1.drawRoundRect(boxX, boxY, boxW, boxH, 10, 10);
 		g1.setColor(Color.WHITE);
 		g1.setFont(new Font("Calibri", Font.PLAIN, 12));
 		g1.drawString(title, x, y);
@@ -181,7 +181,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		y += yOff;
 		g1.drawString("Total looted value - "  + Misc.formatNumber(LootHandler.totalValue) + "(+" + Misc.perHour(startTime, LootHandler.totalValue) + ")", x, y );
 		y += yOff;
-		g1.drawString("Monsters killed: " + Settings.killCount + "(+" + Misc.perHour(startTime, Settings.killCount) + ")", x, y);
+		g1.drawString("Monsters killed - " + Settings.killCount + "(+" + Misc.perHour(startTime, Settings.killCount) + ")", x, y);
 		if(mouseimg != null) {
 			drawMouse(arg0);
 		}
