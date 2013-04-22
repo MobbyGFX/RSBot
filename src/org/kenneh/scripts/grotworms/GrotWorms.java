@@ -15,7 +15,6 @@ import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Timer;
-import org.powerbot.game.api.wrappers.Tile;
 
 @Manifest(authors = { "Kenneh" }, description = "Test", name = "Kenneh's Grotworms", hidden = false)
 public class GrotWorms extends KScript {
@@ -32,10 +31,13 @@ public class GrotWorms extends KScript {
 		Settings.pw.storePrice(Settings.RARE_DROP_TABLE);
 		Settings.pw.storePrice(Settings.GROTWORM_LOOT);
 		Settings.pw.storePrice(995, 1);
+		Settings.pw.storePrice(385, 0);
+		Settings.pw.storePrice(450, Settings.pw.getPrice(449));
+		Settings.pw.storePrice(1180, Settings.pw.getPrice(1179));
 		getContainer().submit(new AbilityHandler());
 		final KNode[] nodes = {
-				new FightWorms(), new Eating(), new GoToBank(), new LootItems(), new WalkToGrots(),
-				new Alching(), new BankItems()
+				new Failsafe(),  new FightWorms(), new Eating(), new GoToBank(), new LootItems(), new WalkToGrots(),
+				new Alching(), new BankItems(), 
 		};
 		submit(nodes);
 		startTime = System.currentTimeMillis();

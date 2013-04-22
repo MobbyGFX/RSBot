@@ -34,6 +34,7 @@ public class LootItems implements KNode {
 	@Override
 	public boolean canActivate() {
 		return Players.getLocal().getInteracting() == null
+				&& !Players.getLocal().isMoving()
 				&& FightWorms.getBestGrot() != null
 				&& getLoot() != null;
 	}

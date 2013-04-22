@@ -33,7 +33,7 @@ public class Settings { // Everything is just thrown in here.
 	
 	public static int GROTWORM_LOOT[] = {
 		1213,1432,1303,1147,1111,5298,5303,5302,5304,5300,1780,451,450,24372,
-		995,565,2362,563,217,2485
+		995,565,2362,563,217,2485, 385
 	};
 	
 	public static int ALCHABLE[] = {

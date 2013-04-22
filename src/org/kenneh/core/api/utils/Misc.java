@@ -13,6 +13,7 @@ import java.util.Set;
 
 import javax.swing.ImageIcon;
 
+import org.kenneh.core.graphics.Logger;
 import org.kenneh.scripts.aiofighter.FighterGUI;
 import org.powerbot.game.api.methods.Settings;
 import org.powerbot.game.api.methods.Tabs;
@@ -46,9 +47,8 @@ public class Misc {
 		return temp;
 	}
 
-	
-
 	public static void showMessage(final String title, final String message, final Image img) {
+		Logger.log(message);
 		if(FighterGUI.showPopups){ 
 			try {
 				EventQueue.invokeLater(new Runnable() {

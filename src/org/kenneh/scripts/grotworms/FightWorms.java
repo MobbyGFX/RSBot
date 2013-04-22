@@ -13,7 +13,7 @@ public class FightWorms implements KNode {
 	private static final Filter<NPC> WORM = new Filter<NPC>() {
 		@Override
 		public boolean accept(NPC npc) {
-			return npc.getId() == 15463 && !npc.isInCombat();
+			return Settings.GROT_CAVE.contains(npc) && npc.getId() == 15463 && !npc.isInCombat();
 		}
 	};
 
@@ -24,6 +24,7 @@ public class FightWorms implements KNode {
 	@Override
 	public boolean canActivate() {
 		return Players.getLocal().getInteracting() == null 
+				&& Players.getLocal().isMoving()
 				&& Alching.alchable() == null
 				&& Settings.GROT_CAVE.contains(Players.getLocal())
 				&& LootItems.getLoot() == null

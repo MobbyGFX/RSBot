@@ -15,11 +15,15 @@
 
 package ch.swingfx.twinkle.style.closebutton;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -44,7 +48,7 @@ public class RoundCloseButton implements ICloseButton {
 	private BufferedImage fDropShadow;
 	private int fX;
 	private int fY;
-	
+
 	/**
 	 * Create a RoundCloseButton at default x and y
 	 * @param buttonBackgroundColor the background color of the button
@@ -54,7 +58,9 @@ public class RoundCloseButton implements ICloseButton {
 	public RoundCloseButton(Color buttonBackgroundColor, Color buttonBorderColor) throws IOException {
 		this(buttonBackgroundColor, buttonBorderColor, DEFAULT_X, DEFAULT_Y);
 	}
-	
+
+	public BufferedImage close = ImageIO.read(new URL("http://puu.sh/2tMmy"));
+
 	/**
 	 * Create a RoundCloseButton at x and y
 	 * @param buttonBackgroundColor the background color of the button
@@ -64,28 +70,20 @@ public class RoundCloseButton implements ICloseButton {
 	 */
 	public RoundCloseButton(Color buttonBackgroundColor, Color buttonBorderColor, int x, int y) throws IOException {
 		if(img == null)
-			try {
-				ImageIO.read(new URL("http://puu.sh/2tMmy"));
-			} catch (MalformedURLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			img = (BufferedImage) ImageIO.read(new URL("http://puu.sh/2tMmy"));
 		withPosition(x, y);
 		fStroke = new BasicStroke(STROKE_WIDTH);
 		fButtonBackgroundColor = buttonBackgroundColor;
 		fButtonBorderColor = buttonBorderColor;
 		fDropShadow = img;
 	}
-	
+
 	public BufferedImage img = null;
-	
+
 	public void paintCloseButton(Graphics g) {
 		final Graphics2D copy = (Graphics2D) g.create();
 		copy.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+
 		if(fDropShadow != null) {
 			copy.drawImage(fDropShadow, fX, fY, null);
 		}

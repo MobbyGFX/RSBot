@@ -78,10 +78,13 @@ public class LootHandler extends Node {
 
 		@Override
 		public boolean accept(GroundItem arg0) {
+			if(arg0.getId() == 22448 && arg0.getGroundItem().getStackSize() < 10) {
+				return false;
+			}
+			if(arg0.getId() == 22445 && arg0.getGroundItem().getStackSize() <= 100) {
+				return true;
+			}
 			for(int i : Settings.getLootArray()) {
-				if(arg0.getId() == 22448 && arg0.getGroundItem().getStackSize() < 10) {
-					return false;
-				}
 				if(arg0.getId() == i && MonsterKiller.isInLootArea(arg0)) 
 					return true;
 			}

@@ -8,8 +8,8 @@ public class BankItems implements KNode {
 
 	@Override
 	public boolean canActivate() {
-		return Settings.BANK_TILE.distanceTo() <= 5 &&// && !Inventory.contains(Settings.TELETAB); //&& 
-				(!Inventory.contains(Settings.NATURE_RUNE) || !Inventory.contains(Settings.FIRE_RUNE) || !Inventory.contains(Settings.TELETAB)|| !Inventory.contains(Settings.FOOD_ID)); 
+		return Settings.BANK_TILE.distanceTo() <= 5  && !Inventory.contains(Settings.TELETAB); //&& 
+				//(!Inventory.contains(Settings.NATURE_RUNE) || !Inventory.contains(Settings.FIRE_RUNE) || !Inventory.contains(Settings.TELETAB)|| !Inventory.contains(Settings.FOOD_ID)); 
 				//!Inventory.containsAll(new int[] { Settings.NATURE_RUNE, Settings.FIRE_RUNE, Settings.TELETAB, Settings.FOOD_ID });
 	}
 
@@ -37,7 +37,7 @@ public class BankItems implements KNode {
 				}
 				if(!Inventory.contains(Settings.FOOD_ID)) {
 					Settings.setStatus("Withdrawing food");
-					Bank.withdraw(Settings.FOOD_ID, 3);
+					Bank.withdraw(Settings.FOOD_ID, 2);
 				}
 				if(Inventory.contains(Settings.TELETAB) 
 						&& Inventory.contains(Settings.FOOD_ID) 
