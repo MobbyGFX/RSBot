@@ -81,7 +81,7 @@ public class LootHandler extends Node {
 			if(arg0.getId() == 22448 && arg0.getGroundItem().getStackSize() < 10) {
 				return false;
 			}
-			if(arg0.getId() == 22445 && arg0.getGroundItem().getStackSize() <= 100) {
+			if(arg0.getId() == 22445 && arg0.getGroundItem().getStackSize() >= 100) {
 				return true;
 			}
 			for(int i : Settings.getLootArray()) {
