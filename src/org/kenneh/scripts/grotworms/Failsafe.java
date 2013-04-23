@@ -9,12 +9,12 @@ public class Failsafe implements KNode {
 
 	@Override
 	public boolean canActivate() {
-		return FightWorms.getBestGrot() != null && !Settings.GROT_CAVE.contains(Players.getLocal());
+		return Settings.GROT_CAVE.contains(Players.getLocal()) && !Settings.isInArea(Players.getLocal());
 	}
 
 	@Override
 	public void activate() {
-		final Timer timer = new Timer(5000);
+		final Timer timer = new Timer(7000);
 		while(timer.isRunning() && Settings.GROT_CENTER_TILE.distanceTo() > 5) {
 			Walking.walk(Settings.GROT_CENTER_TILE);
 		}

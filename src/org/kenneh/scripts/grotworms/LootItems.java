@@ -17,9 +17,11 @@ public class LootItems implements KNode {
 
 		@Override
 		public boolean accept(GroundItem g) {
-			for(int i : Settings.getLoot()) {
-				if(i == g.getId()) {
-					return true;
+			if(Settings.isInArea(g)) {
+				for(int i : Settings.getLoot()) {
+					if(i == g.getId()) {
+						return true;
+					}
 				}
 			}
 			return false;
@@ -39,7 +41,7 @@ public class LootItems implements KNode {
 				&& getLoot() != null;
 	}
 
-	public void loot() {
+	public static void loot() {
 		final GroundItem loot = getLoot();
 		if(loot != null) {
 			if(loot.getLocation().distanceTo() > 5) {
@@ -51,11 +53,11 @@ public class LootItems implements KNode {
 					Settings.setStatus("Looting " + loot.getGroundItem().getStackSize() + "x " + loot.getGroundItem().getName());
 					if(loot.interact("Take", loot.getGroundItem().getName())) {
 						System.out.println("Looting "+ loot.getGroundItem().getName() + " worth " + Settings.pw.getPrice(loot.getId()) + " each!");
+						Settings.setValue(Settings.pw.getPrice(loot.getId()) * loot.getGroundItem().getStackSize()); 
 						final Timer timer = new Timer(2000);
 						while(timer.isRunning() && loot != null) {
 							Task.sleep(20);
 						}
-						Settings.setValue(Settings.pw.getPrice(loot.getId()) * loot.getGroundItem().getStackSize()); 
 					}
 				}
 			}

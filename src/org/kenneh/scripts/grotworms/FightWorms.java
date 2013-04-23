@@ -2,18 +2,21 @@ package org.kenneh.scripts.grotworms;
 
 import org.kenneh.core.api.framework.KNode;
 import org.kenneh.core.api.utils.MCamera;
+import org.kenneh.core.api.utils.Misc;
 import org.powerbot.game.api.methods.Walking;
 import org.powerbot.game.api.methods.interactive.NPCs;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.util.Filter;
 import org.powerbot.game.api.wrappers.interactive.NPC;
 
+import sk.general.TimedCondition;
+
 public class FightWorms implements KNode {
 
 	private static final Filter<NPC> WORM = new Filter<NPC>() {
 		@Override
 		public boolean accept(NPC npc) {
-			return Settings.GROT_CAVE.contains(npc) && npc.getId() == 15463 && !npc.isInCombat();
+			return Settings.isInArea(npc) && npc.getId() == 15463 && !npc.isInCombat();
 		}
 	};
 
@@ -25,7 +28,7 @@ public class FightWorms implements KNode {
 	public boolean canActivate() {
 		return Players.getLocal().getInteracting() == null 
 				&& Alching.alchable() == null
-				&& Settings.GROT_CAVE.contains(Players.getLocal())
+				&& Settings.isInArea(Players.getLocal())
 				&& LootItems.getLoot() == null
 				&& Players.getLocal().getHealthPercent() > 40
 				&& getBestGrot() != null;
@@ -33,25 +36,27 @@ public class FightWorms implements KNode {
 
 	@Override
 	public void activate() {
-		final NPC grot = getBestGrot();
-		Settings.setStatus("Aquiring best target");
-		if(grot != null && !grot.isInCombat()) {
-			Settings.setStatus("Target aquired");
-			if(grot.getLocation().distanceTo() >= 10) {
-				Walking.walk(grot.getLocation());
+		final NPC mob = getBestGrot();
+		if(mob != null) {
+			if(!Misc.isOnScreen(mob)) {
+				MCamera.turnTo(mob, 50);
+			}
+			int dist = (int) mob.getLocation().distanceTo();
+			if(dist > 7 && !Players.getLocal().isMoving()) {
+				Walking.walk(mob);
 			} else {
-				if(!grot.isOnScreen()) {
-					Settings.setStatus("Turning camera to target");
-					MCamera.turnTo(grot, 50);
-				} else {
+				if(!mob.isInCombat()) {
 					Settings.setStatus("Initiating combat with target");
-					grot.interact("Attack");
+					mob.interact("Attack", mob.getName());
+					new TimedCondition(1500) {
+						@Override
+						public boolean isDone() {
+							return Players.getLocal().getInteracting() != null;
+						}
+					}.waitStop();
 				}
 			}
-		} else {
-			Settings.setStatus("No suitable targets found!");
 		}
-
 	}
 
 }

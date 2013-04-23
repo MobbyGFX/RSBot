@@ -5,7 +5,9 @@ import java.util.TreeSet;
 
 import org.kenneh.core.api.net.PriceWrapper;
 import org.kenneh.core.api.utils.Misc;
+import org.powerbot.game.api.methods.Calculations;
 import org.powerbot.game.api.wrappers.Area;
+import org.powerbot.game.api.wrappers.Locatable;
 import org.powerbot.game.api.wrappers.Tile;
 
 public class Settings { // Everything is just thrown in here.
@@ -45,6 +47,10 @@ public class Settings { // Everything is just thrown in here.
 	private static String status = "Initializing";
 	private static Set<Integer> loot = new TreeSet<Integer>();
 	private static int totalLootValue = 0;
+	
+	public static boolean isInArea(Locatable loc) {
+		return Calculations.distance(GROT_CENTER_TILE, loc) <= 15;
+	}
 	
 	public static void setValue(final int i) {
 		System.out.println("Adding " + i + " to the loot value!");
