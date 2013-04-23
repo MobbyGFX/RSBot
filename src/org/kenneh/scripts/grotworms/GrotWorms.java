@@ -53,8 +53,8 @@ public class GrotWorms extends KScript implements MouseMotionListener, MouseList
 		getContainer().submit(new AbilityHandler());
 		getContainer().submit(new PriceChecker());
 		final KNode[] nodes = {
-				new Failsafe(),  new FightWorms(), new Eating(), new GoToBank(), new LootItems(), new WalkToGrots(),
-				new Alching(), new BankItems(), new AttackOneOf() 
+				new Alching(), new Failsafe(),  new FightWorms(), new Eating(), new GoToBank(),
+				new LootItems(), new WalkToGrots(), new BankItems(), new AttackOneOf() 
 		};
 		submit(nodes);
 		startTime = System.currentTimeMillis();

@@ -20,10 +20,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 
 import org.kenneh.core.api.utils.Misc;
+import org.kenneh.core.api.utils.MouseTrail;
 import org.kenneh.core.graphics.Logger;
 import org.kenneh.core.graphics.PaintUtils;
 import org.kenneh.scripts.aiofighter.constants.Constants;
@@ -70,8 +70,8 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	Timer t = new Timer(0);
 	SkillData sd = null;
 
-	public Image mouseimg = null;
-
+	private final MouseTrail mouseTrail = new MouseTrail();
+	
 	public static long startTime;
 
 	long lastcall  = 0;
@@ -197,11 +197,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		g1.drawString("Total looted value - "  + Misc.formatNumber(LootHandler.totalValue) + "(+" + Misc.perHour(startTime, LootHandler.totalValue) + ")", tX, tY);
 		tY += 12;
 		g1.drawString("Monsters killed - " + Settings.killCount + "(+" + Misc.perHour(startTime, Settings.killCount) + ")", tX, tY);
-
-		if(mouseimg != null) {
-			drawMouse(arg0);
-		}
-		
 		g1.setColor(Color.WHITE);
 		x = 8;
 		y = 396;
@@ -216,6 +211,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 				}
 			}
 		}
+		drawMouse(g1);
 		drawAuthorBox(g1);
 	}
 	
@@ -232,11 +228,12 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		}
 	}
 
-	public void drawMouse(Graphics g) {
-		int centerX = mouseimg.getWidth(null) / 2;
-		int centerY = mouseimg.getHeight(null) / 2;
-		Point center = new Point(Mouse.getX() - centerX, Mouse.getY() - centerY);
-		g.drawImage(mouseimg,  center.x, center.y, null);
+	public void drawMouse(final Graphics2D g) {
+		mouseTrail.add(Mouse.getLocation());
+		mouseTrail.draw(g);
+		g.setColor(gold);
+		g.drawOval(Mouse.getX() - 5, Mouse.getY() - 5, 11, 11);
+		g.fillOval(Mouse.getX() - 2, Mouse.getY() - 2, 5, 5);
 	}
 	
 	public static void setSpeed(Speed s) {
@@ -260,8 +257,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			public void run() {
 				try {
 					img = Toolkit.getDefaultToolkit().getImage(new URL("http://puu.sh/2CPmc.gif"));
-					System.out.println("Gif loaded");
-					mouseimg = ImageIO.read(new URL("http://i.imgur.com/WDgWvVu.png"));
 					Environment.enableRandom(org.powerbot.core.randoms.SpinTickets.class, false);
 				} catch (Exception a) {
 					a.printStackTrace();
