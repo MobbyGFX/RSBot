@@ -162,7 +162,7 @@ public class AbilityHandler extends LoopTask {
 				}
 			}
 		} catch(Exception a) {
-			a.printStackTrace();
+			System.out.println("Timer plx fix internal errors!");
 		}
 		return FighterGUI.abilityDelay;
 	}

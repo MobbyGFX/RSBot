@@ -50,7 +50,7 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 
 	@Override
 	public void onRepaint(final Graphics g) {
-		g.drawString("Current node: "+ currNode, 5, 100);
+		//g.drawString("Current node: "+ currNode, 5, 100);
 		paint(g);
 	}
 

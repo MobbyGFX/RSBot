@@ -2,7 +2,6 @@ package org.kenneh.scripts.aiofighter;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -159,32 +158,50 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 				|| Misc.contains(Constants.SUPER_ANTIFIRE);
 	}
 
+	
+	private final Color blackT = new Color(0, 0, 0, 150);
+	private final Color gold = new Color(255,215,0);
+	private final Color whiteT = new Color(255, 255, 255, 125);
+	private final Font font = new Font("Calibri", Font.PLAIN, 13);
+	
+	private final Rectangle nameText = new Rectangle(5, 86, 236, 17);
+	
+	private final Rectangle nameTextGlow = new Rectangle(5, 86, 236, 8);
+	
 	public void paint(Graphics arg0) {
 		Graphics2D g1 = (Graphics2D) arg0;
 		g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		final int boxX = 5, boxY = 80;
-		final FontMetrics fm = g1.getFontMetrics();
-		final String title = "Kenneh's AIO Fighter - Runtime: "+ t.toElapsedString();
-		final int boxH = fm.getHeight() * 5, boxW = fm.stringWidth(title) + 10;
-		final int yOff = fm.getHeight();
-		int x = 10, y = 80 + yOff + yOff / 2 - 5;
-		g1.setColor(new Color(0, 0, 0, 150));
-		g1.fillRoundRect(boxX, boxY, boxW, boxH, 10, 10);
-		g1.setColor(Color.RED);
-		g1.drawRoundRect(boxX, boxY, boxW, boxH, 10, 10);
+		g1.setColor(blackT);
+		g1.setFont(font);
+		
+		int x = 5, y = 80;
+		final int fontH = 17;
+		final int width = 236;
+		final int height = fontH * 4;
+
+		g1.fillRoundRect(x, y, width, height, 10, 10);
+		g1.setColor(gold);
+		g1.drawRoundRect(x, y, width, height, 10, 10);
+		
+		g1.draw(nameText);
+		g1.setColor(whiteT);
+		g1.fill(nameTextGlow);
 		g1.setColor(Color.WHITE);
-		g1.setFont(new Font("Calibri", Font.PLAIN, 12));
-		g1.drawString(title, x, y);
-		y += yOff;
-		g1.drawString("Status: " + status, x, y);
-		y += yOff;
-		g1.drawString("Total looted value - "  + Misc.formatNumber(LootHandler.totalValue) + "(+" + Misc.perHour(startTime, LootHandler.totalValue) + ")", x, y );
-		y += yOff;
-		g1.drawString("Monsters killed - " + Settings.killCount + "(+" + Misc.perHour(startTime, Settings.killCount) + ")", x, y);
+		final int tX = 10;
+		int tY = 98;
+		g1.drawString("Kenneh's AIO Fighter - Runtime: " + t.toElapsedString(), tX, tY);
+		tY += 19;
+		g1.drawString("Status: " + status, tX, tY);
+		tY += 12;
+		g1.drawString("Total looted value - "  + Misc.formatNumber(LootHandler.totalValue) + "(+" + Misc.perHour(startTime, LootHandler.totalValue) + ")", tX, tY);
+		tY += 12;
+		g1.drawString("Monsters killed - " + Settings.killCount + "(+" + Misc.perHour(startTime, Settings.killCount) + ")", tX, tY);
+
 		if(mouseimg != null) {
 			drawMouse(arg0);
 		}
+		
 		g1.setColor(Color.WHITE);
 		y = 396;
 		if(show) {
@@ -197,6 +214,20 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 					y += 18;
 				}
 			}
+		}
+		drawAuthorBox(g1);
+	}
+	
+	public void drawAuthorBox(final Graphics2D g) {
+		if(nameText.contains(mouse)) {
+			g.setFont(font);
+			final Rectangle box = new Rectangle(mouse.x,  mouse.y - 17, 90, 17);
+			g.setColor(Color.BLACK);
+			g.fill(box);
+			g.setColor(gold);
+			g.draw(box);
+			g.setColor(Color.WHITE);
+			g.drawString("Author: Kenneh", mouse.x + 4, mouse.y - 4);
 		}
 	}
 
