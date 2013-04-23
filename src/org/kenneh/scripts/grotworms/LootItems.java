@@ -58,7 +58,7 @@ public class LootItems implements KNode {
 
 		@Override
 		public boolean accept(GroundItem arg0) {
-			if(arg0.getId() == 385 && Inventory.getCount(385) <= 3) {
+			if(arg0.getId() == 385 && Inventory.getCount(385) >= 3) {
 				return false;
 			}
 			if(arg0.getId() == 22448 && arg0.getGroundItem().getStackSize() < 10) {

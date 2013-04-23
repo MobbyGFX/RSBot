@@ -24,7 +24,7 @@ import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Timer;
 
-@Manifest(authors = { "Kenneh" }, description = "Start in Falador, Have these items in your bank\nFalador teletabs, sharks, and fire/nature runes.", name = "Kenneh's Grotworms", hidden = false)
+@Manifest(authors = { "Kenneh" }, description = "Start in Falador, Have these items in your bank\nFalador teletabs, sharks, and fire/nature runes.", name = "Kenneh's Grotworms")
 public class GrotWorms extends KScript implements MouseMotionListener, MouseListener {
 
 	private final SkillData sd = new SkillData();
