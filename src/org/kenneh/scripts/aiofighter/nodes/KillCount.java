@@ -18,7 +18,6 @@ public class KillCount extends LoopTask {
 						Settings.killCount++; 
 						final Timer timer = new Timer(1000);
 						while(timer.isRunning() && interacting.validate()) {
-                            System.out.println("Sleeping until npc is null");
 							sleep(20);
 						}
 					}
