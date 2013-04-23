@@ -17,6 +17,7 @@ import org.kenneh.core.api.utils.AbilityHandler;
 import org.kenneh.core.api.utils.Misc;
 import org.kenneh.core.api.utils.MouseTrail;
 import org.kenneh.core.graphics.PaintUtils;
+import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
 import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.input.Mouse.Speed;
@@ -50,6 +51,7 @@ public class GrotWorms extends KScript implements MouseMotionListener, MouseList
 		Settings.pw.storePrice(450, Settings.pw.getPrice(449));
 		Settings.pw.storePrice(1180, Settings.pw.getPrice(1179));
 		getContainer().submit(new AbilityHandler());
+		getContainer().submit(new PriceChecker());
 		final KNode[] nodes = {
 				new Failsafe(),  new FightWorms(), new Eating(), new GoToBank(), new LootItems(), new WalkToGrots(),
 				new Alching(), new BankItems(), new AttackOneOf() 
