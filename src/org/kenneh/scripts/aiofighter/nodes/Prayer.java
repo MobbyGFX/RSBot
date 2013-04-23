@@ -30,6 +30,15 @@ public class Prayer extends LoopTask {
 		return Misc.contains(Constants.PRAYER_RENEWALS) && !isRenewPotted();
 	}
 
+	public boolean prayerFruit() {
+		return Misc.contains(Constants.PRAYER_FRUIT) && getPrayerPoints() < 200;
+	}
+	
+	public void eatPrayerFruit() {
+		Inventory.getItem(Constants.PRAYER_FRUIT).getWidgetChild().interact("Eat");
+		Task.sleep(1000);
+	}
+	
 	public void drinkPrayerPot() {
 		Inventory.getItem(Constants.PRAYER_POTIONS).getWidgetChild().interact("Drink");
 		Task.sleep(1000);
@@ -45,18 +54,12 @@ public class Prayer extends LoopTask {
 	}
 
 	public void disableQuickPrayer() {
-		//ActionBar.useSlot(0);
-		Keyboard.sendKey((char)  48 );
-		System.out.println("Turning off");
-		//Widgets.get(749, 3).interact("off");
+		Keyboard.sendKey((char) 48);
 		Task.sleep(1000);
 	}
 
 	public void enableQuickPrayer() {
-		//ActionBar.useSlot(0);
-		Keyboard.sendKey((char)  48 );
-		System.out.println("Turning on!");
-		//Widgets.get(749, 3).interact("on");
+		Keyboard.sendKey((char) 48);
 		Task.sleep(1000);
 	}
 
@@ -65,6 +68,9 @@ public class Prayer extends LoopTask {
 		if(FighterGUI.useQuickPrayer) {
 			if(Players.getLocal().isInCombat() && AttackOneOf.getNearest() != null) {
 				if(prayerIsOn()) {
+					if(prayerFruit()) { // prayer fruit
+						eatPrayerFruit(); // eat it if we have it before resorting to prayer potions
+					}
 					if(potPray()) {
 						drinkPrayerPot();
 					} else {

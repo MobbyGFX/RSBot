@@ -34,6 +34,10 @@ public class Constants {
 		19056, 19057, 19058, 19059, 19060, 19061, 19062, 19063, 190641
 	};
 
+	public static int[] PRAYER_FRUIT = {
+		21386,21387,21388
+	};
+	
 	public static int[] UNTRADABLE = {
 		15398, 24909, 10976, 298
 	};
