@@ -44,12 +44,12 @@ public class GrotWorms extends KScript implements MouseMotionListener, MouseList
 		Mouse.setSpeed(Speed.VERY_FAST);
 		Settings.setLoot(Settings.RARE_DROP_TABLE);
 		Settings.setLoot(Settings.GROTWORM_LOOT);
-		Settings.pw.storePrice(Settings.RARE_DROP_TABLE);
-		Settings.pw.storePrice(Settings.GROTWORM_LOOT);
-		Settings.pw.storePrice(995, 1);
-		Settings.pw.storePrice(385, 0);
-		Settings.pw.storePrice(450, Settings.pw.getPrice(449));
-		Settings.pw.storePrice(1180, Settings.pw.getPrice(1179));
+		PriceChecker.priceWrapper.storePrice(Settings.RARE_DROP_TABLE);
+		PriceChecker.priceWrapper.storePrice(Settings.GROTWORM_LOOT);
+		PriceChecker.priceWrapper.storePrice(995, 1);
+		PriceChecker.priceWrapper.storePrice(385, 0);
+		PriceChecker.priceWrapper.storePrice(450, PriceChecker.priceWrapper.getPrice(449));
+		PriceChecker.priceWrapper.storePrice(1180, PriceChecker.priceWrapper.getPrice(1179));
 		getContainer().submit(new AbilityHandler());
 		getContainer().submit(new PriceChecker());
 		final KNode[] nodes = {
