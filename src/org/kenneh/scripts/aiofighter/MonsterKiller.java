@@ -92,12 +92,11 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 
 	public static void drawArea(Graphics g2d) {
 		try {
-			Color color = new Color(Color.cyan.getRed(), Color.cyan.getGreen(),
-					Color.cyan.getBlue(), 150);
-			g2d.setColor(color);
+			g2d.setColor(goldT);
 			Point p = Calculations.worldToMap(myPos.getX(), myPos.getY());
-			g2d.fillOval(p.x - (radius * 5), p.y - (radius * 5),
-					5 * (radius * 2), 5 * (radius * 2));
+			g2d.fillOval(p.x - (radius * 5), p.y - (radius * 5), 5 * (radius * 2), 5 * (radius * 2));
+			g2d.setColor(gold);
+			g2d.drawOval(p.x - (radius * 5), p.y - (radius * 5), 5 * (radius * 2), 5 * (radius * 2));
 		} catch (Exception a) {
 		}
 	}
@@ -119,10 +118,10 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			Graphics2D g1 = (Graphics2D) g;
 			g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			drawArea(g1);
-			g1.setFont(new Font("Calibri", Font.PLAIN, 12));
+			g1.setFont(font);
 			elapsed = System.currentTimeMillis() - starttime;
 			paint(g);
-			g.setColor(Color.CYAN);
+			g.setColor(gold);
 			g.drawString("FPS: " + fps, 5, 45);
 		} catch (Exception a) {
 			a.printStackTrace();
@@ -160,7 +159,8 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 
 	
 	private final Color blackT = new Color(0, 0, 0, 150);
-	private final Color gold = new Color(255,215,0);
+	private final static Color gold = new Color(255,215,0);
+	private final static Color goldT = new Color(255, 215, 0, 150);
 	private final Color whiteT = new Color(255, 255, 255, 125);
 	private final Font font = new Font("Calibri", Font.PLAIN, 13);
 	
@@ -203,6 +203,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		}
 		
 		g1.setColor(Color.WHITE);
+		x = 8;
 		y = 396;
 		if(show) {
 			g1.setFont(new Font("Calibri", Font.PLAIN, 14));
