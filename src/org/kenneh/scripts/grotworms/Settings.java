@@ -59,7 +59,7 @@ public class Settings { // Everything is just thrown in here.
 	}
 
 	public static boolean isInArea(Locatable loc) {
-		return Calculations.distance(GROT_CENTER_TILE, loc) <= 15;
+		return Calculations.distance(GROT_CENTER_TILE, loc) <= 20;
 	}
 
 	public static void setValue(final int i) {
