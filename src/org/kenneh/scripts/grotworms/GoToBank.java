@@ -4,6 +4,8 @@ import org.kenneh.core.api.framework.KNode;
 import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.methods.Walking;
 import org.powerbot.game.api.methods.interactive.Players;
+import org.powerbot.game.api.methods.tab.Equipment;
+import org.powerbot.game.api.methods.tab.Equipment.Slot;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.util.Timer;
@@ -16,7 +18,8 @@ public class GoToBank implements KNode {
 
 
 		return (Inventory.isFull() && Eating.edible() == null || !Inventory.contains(Settings.TELETAB)) ||
-				(Eating.edible() == null && Players.getLocal().getHealthPercent() < 50) 
+				(Eating.edible() == null && Players.getLocal().getHealthPercent() < 50)  ||
+				(Equipment.getAppearanceId(Slot.WEAPON) == Settings.POLYPORE_STICK)
 				&& !Bank.isOpen()
 				&& Settings.BANK_TILE.distanceTo() >= 5;
 	}

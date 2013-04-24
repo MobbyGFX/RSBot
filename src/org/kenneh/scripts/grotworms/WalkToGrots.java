@@ -22,6 +22,7 @@ public class WalkToGrots implements KNode {
 				&& Inventory.contains(Settings.TELETAB)
 				&& !Bank.isOpen()
 				&& !Settings.GROT_CAVE.contains(Players.getLocal())
+				&& !Inventory.contains(Settings.POLYPORE_STAFF)
 				&& Inventory.getCount(Settings.FOOD_ID) >= 2;
 	}
 

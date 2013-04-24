@@ -16,6 +16,9 @@ public class Settings { // Everything is just thrown in here.
 	public static final Area GROT_CAVE = new Area(new Tile(1206, 6514, 0), new Tile(1120, 6468, 0));
 
 	public static final int FOOD_ID = 385;
+	
+	public static final int POLYPORE_STICK = 22498;
+	public static final int POLYPORE_STAFF = 22494;
 
 	public static final int NATURE_RUNE = 561;
 	public static final int FIRE_RUNE = 554;

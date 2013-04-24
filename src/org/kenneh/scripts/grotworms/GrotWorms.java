@@ -113,6 +113,7 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 				y += 18;
 			}
 		}
+		
 		drawAuthorBox(g1);
 		drawMouse(g1);
 	}
