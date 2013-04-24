@@ -31,7 +31,6 @@ import sk.action.ActionBar;
 public class GrotWorms extends KScript implements Script, MouseMotionListener, MouseListener {
 
 	private final SkillData sd = new SkillData();
-	private final MouseTrail mouseTrail = new MouseTrail();
 	private final Timer timer = new Timer(0);
 	private final Color blackT = new Color(0, 0, 0, 150);
 	private final Color gold = new Color(255,215,0);
@@ -39,6 +38,7 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 	private final Font font = new Font("Calibri", Font.PLAIN, 13);
 	private final Rectangle nameText = new Rectangle(5, 86, 236, 17);
 	private final Rectangle nameTextGlow = new Rectangle(5, 86, 236, 8);
+	private final MouseTrail mouseTrail = new MouseTrail(gold);
 	private long startTime = 0;
 	private Point mouse;
 

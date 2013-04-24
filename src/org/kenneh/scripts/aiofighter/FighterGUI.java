@@ -38,7 +38,6 @@ import javax.swing.LayoutStyle;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
-
 import org.kenneh.core.api.utils.Misc;
 import org.kenneh.core.graphics.Logger;
 import org.kenneh.scripts.aiofighter.constants.Constants;
@@ -68,7 +67,6 @@ import org.powerbot.game.api.util.Filter;
 import org.powerbot.game.api.wrappers.interactive.NPC;
 
 
-
 /**
  * @author Kenneth LaCombe
  */
@@ -95,7 +93,6 @@ public class FighterGUI extends JPanel {
 	}
 
 	public FighterGUI() {
-
 		initComponents();
 		try {
 			load();
@@ -246,9 +243,13 @@ public class FighterGUI extends JPanel {
 			}
 			URL url = new URL(url2);
 			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-			String htmlText;
-			while ((htmlText = in.readLine()) != null) {
+			String htmlText = in.readLine();
+			if(!htmlText.isEmpty()) {
 				editorPane1.setText(htmlText);
+			}
+			htmlText = in.readLine();
+			if(!htmlText.isEmpty()) {
+				editorPane2.setText(htmlText);
 			}
 			in.close();
 		} catch (Exception e) {

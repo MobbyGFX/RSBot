@@ -69,8 +69,18 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 
 	Timer t = new Timer(0);
 	SkillData sd = null;
+	
+	private final Color blackT = new Color(0, 0, 0, 150);
+	private final static Color gold = new Color(255,215,0);
+	private final static Color goldT = new Color(255, 215, 0, 150);
+	private final Color whiteT = new Color(255, 255, 255, 125);
+	private final Font font = new Font("Calibri", Font.PLAIN, 13);
+	
+	private final Rectangle nameText = new Rectangle(5, 86, 236, 17);
+	
+	private final Rectangle nameTextGlow = new Rectangle(5, 86, 236, 8);
 
-	private final MouseTrail mouseTrail = new MouseTrail();
+	private final MouseTrail mouseTrail = new MouseTrail(gold);
 	
 	public static long startTime;
 
@@ -157,17 +167,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 				|| Misc.contains(Constants.SUPER_ANTIFIRE);
 	}
 
-	
-	private final Color blackT = new Color(0, 0, 0, 150);
-	private final static Color gold = new Color(255,215,0);
-	private final static Color goldT = new Color(255, 215, 0, 150);
-	private final Color whiteT = new Color(255, 255, 255, 125);
-	private final Font font = new Font("Calibri", Font.PLAIN, 13);
-	
-	private final Rectangle nameText = new Rectangle(5, 86, 236, 17);
-	
-	private final Rectangle nameTextGlow = new Rectangle(5, 86, 236, 8);
-	
 	public void paint(Graphics arg0) {
 		Graphics2D g1 = (Graphics2D) arg0;
 		g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
