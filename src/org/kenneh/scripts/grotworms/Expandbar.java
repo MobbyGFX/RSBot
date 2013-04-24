@@ -1,16 +1,14 @@
-package org.kenneh.scripts.aiofighter.nodes;
+package org.kenneh.scripts.grotworms;
 
-import org.kenneh.core.graphics.Logger;
-import org.kenneh.scripts.aiofighter.MonsterKiller;
+import org.kenneh.core.api.framework.KNode;
 import org.powerbot.core.script.job.Task;
-import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Widgets;
+import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.wrappers.widget.WidgetChild;
 
 import sk.action.ActionBar;
 
-
-public class Expandbar extends Node {
+public class Expandbar implements KNode {
 
 	private static final int BAR_WIDGET = 640;
 	private static final int MAIN_BAR_CHILD = 4;
@@ -40,7 +38,7 @@ public class Expandbar extends Node {
 	}
 	
 	public static boolean wrongIndex() {
-		return ActionBar.getCurrentBar() != MonsterKiller.barIndex;
+		return ActionBar.getCurrentBar() != Settings.getBar();
 	}
 
 	public static boolean isInvVisible() {
@@ -48,7 +46,7 @@ public class Expandbar extends Node {
 	}
 
 	@Override
-	public boolean activate() {
+	public boolean canActivate() {
 		return !isExpanded() || wrongIndex();
 	}
 	
@@ -66,12 +64,11 @@ public class Expandbar extends Node {
 	}
 
 	@Override
-	public void execute() {
+	public void activate() {
 		if(wrongIndex()) {
-			setToIndex(MonsterKiller.barIndex);
+			setToIndex(Settings.getBar());
 		}
-		if(!isExpanded()) {
-			Logger.log("Expanding action bar");
+		if(!isExpanded() && !Bank.isOpen()) {
 			setExpanded(true);
 		}
 	}

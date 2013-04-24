@@ -18,20 +18,23 @@ import org.kenneh.core.api.utils.Misc;
 import org.kenneh.core.api.utils.MouseTrail;
 import org.kenneh.core.graphics.PaintUtils;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
+import org.powerbot.core.script.Script;
 import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Timer;
 
+import sk.action.ActionBar;
+
 @Manifest(authors = { "Kenneh" }, description = "Start in Falador, Have these items in your bank\nFalador teletabs, sharks, and fire/nature runes.", name = "Kenneh's Grotworms")
-public class GrotWorms extends KScript implements MouseMotionListener, MouseListener {
+public class GrotWorms extends KScript implements Script, MouseMotionListener, MouseListener {
 
 	private final SkillData sd = new SkillData();
 	private final MouseTrail mouseTrail = new MouseTrail();
 	private final Timer timer = new Timer(0);
 	private final Color blackT = new Color(0, 0, 0, 150);
-	private final static Color gold = new Color(255,215,0);
+	private final Color gold = new Color(255,215,0);
 	private final Color whiteT = new Color(255, 255, 255, 125);
 	private final Font font = new Font("Calibri", Font.PLAIN, 13);
 	private final Rectangle nameText = new Rectangle(5, 86, 236, 17);
@@ -50,11 +53,12 @@ public class GrotWorms extends KScript implements MouseMotionListener, MouseList
 		PriceChecker.priceWrapper.storePrice(385, 0);
 		PriceChecker.priceWrapper.storePrice(450, PriceChecker.priceWrapper.getPrice(449));
 		PriceChecker.priceWrapper.storePrice(1180, PriceChecker.priceWrapper.getPrice(1179));
+		Settings.setBar(ActionBar.getCurrentBar());
 		getContainer().submit(new AbilityHandler());
 		getContainer().submit(new PriceChecker());
 		final KNode[] nodes = {
 				new Alching(), new Failsafe(),  new FightWorms(), new Eating(), new GoToBank(),
-				new LootItems(), new WalkToGrots(), new BankItems(), new AttackOneOf() 
+				new LootItems(), new WalkToGrots(), new BankItems(), new AttackOneOf(), new Expandbar()
 		};
 		submit(nodes);
 		startTime = System.currentTimeMillis();
@@ -95,7 +99,6 @@ public class GrotWorms extends KScript implements MouseMotionListener, MouseList
 		g1.drawString("Status: " + Settings.getStatus(), tX, tY);
 		tY += 12;
 		g1.drawString("Total looted value - "  + Misc.formatNumber(Settings.getLootValue()) + "(+" + Misc.perHour(startTime, Settings.getLootValue()) + ")", tX, tY);
-
 
 		g1.setColor(Color.WHITE);
 

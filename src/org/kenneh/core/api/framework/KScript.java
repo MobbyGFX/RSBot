@@ -6,15 +6,17 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.powerbot.core.Bot;
 import org.powerbot.core.event.listeners.PaintListener;
 import org.powerbot.core.script.ActiveScript;
 import org.powerbot.game.api.methods.Game;
+import org.powerbot.game.api.methods.widget.WidgetCache;
+import org.powerbot.game.client.Client;
 
 public abstract class KScript extends ActiveScript implements PaintListener {
 
 	private final Set<KNode> container = Collections.synchronizedSet(new HashSet<KNode>());
 	private Iterator<KNode> task = null;
-	private String currNode = "none";
 	private volatile boolean canRun = false;
 
 	public abstract boolean init();
@@ -62,8 +64,21 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 		close();
 	}
 
+	private Client client = Bot.client();
+	
 	@Override
 	public int loop() {
+		
+		if (Game.getClientState() != Game.INDEX_MAP_LOADED) {
+			return 1000;
+		}
+
+		if (client != Bot.client()) {
+			WidgetCache.purge();
+			Bot.context().getEventManager().addListener(this);
+			client = Bot.client();
+		}
+		
 		if(canRun && Game.isLoggedIn()) {
 			synchronized(container) { 
 				if(task == null || !task.hasNext()) {
@@ -72,7 +87,6 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 					final KNode curr = task.next();
 					if(curr != null && curr.canActivate()) {
 						System.out.println(curr);
-						currNode = curr.getClass().getSimpleName();
 						curr.activate();
 					}
 				}

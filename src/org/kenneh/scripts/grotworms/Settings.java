@@ -48,6 +48,16 @@ public class Settings { // Everything is just thrown in here.
 	private static Set<Integer> loot = new TreeSet<Integer>();
 	private static int totalLootValue = 0;
 	
+	private static int currBar = 0;
+	
+	public static void setBar(final int bar) {
+		currBar = bar;
+	}
+	
+	public static int getBar() {
+		return currBar;
+	}
+	
 	public static boolean isInArea(Locatable loc) {
 		return Calculations.distance(GROT_CENTER_TILE, loc) <= 15;
 	}

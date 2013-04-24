@@ -41,20 +41,24 @@ public class FightWorms implements KNode {
 			if(!Misc.isOnScreen(mob)) {
 				MCamera.turnTo(mob, 50);
 			}
-			int dist = (int) mob.getLocation().distanceTo();
-			if(dist > 7 && !Players.getLocal().isMoving()) {
-				Walking.walk(mob);
-			} else {
-				if(!mob.isInCombat()) {
-					Settings.setStatus("Initiating combat with target");
-					mob.interact("Attack", mob.getName());
-					new TimedCondition(1500) {
-						@Override
-						public boolean isDone() {
-							return Players.getLocal().getInteracting() != null;
-						}
-					}.waitStop();
+			try {
+				int dist = (int) mob.getLocation().distanceTo();
+				if(dist > 7 && !Players.getLocal().isMoving()) {
+					Walking.walk(mob);
+				} else {
+					if(!mob.isInCombat()) {
+						Settings.setStatus("Initiating combat with target");
+						mob.interact("Attack", mob.getName());
+						new TimedCondition(1500) {
+							@Override
+							public boolean isDone() {
+								return Players.getLocal().getInteracting() != null;
+							}
+						}.waitStop();
+					}
 				}
+			} catch(Exception a) {
+				System.out.println("Fix internal errors pls ");
 			}
 		}
 	}
