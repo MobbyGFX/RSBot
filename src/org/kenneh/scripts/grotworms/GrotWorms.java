@@ -27,7 +27,7 @@ import org.powerbot.game.api.util.Timer;
 
 import sk.action.ActionBar;
 
-@Manifest(authors = { "Kenneh" }, description = "Start in Falador, Have these items in your bank\nFalador teletabs, sharks, and fire/nature runes.", name = "Kenneh's Grotworms")
+@Manifest(authors = { "Kenneh" }, description = "Start in Falador, Have these items in your bank\nFalador teletabs, sharks, and fire/nature runes.", name = "Kenneh's Grotworms", version = 1.1)
 public class GrotWorms extends KScript implements Script, MouseMotionListener, MouseListener {
 
 	private final SkillData sd = new SkillData();
