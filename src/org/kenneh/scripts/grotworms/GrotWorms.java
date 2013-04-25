@@ -17,9 +17,11 @@ import org.kenneh.core.api.utils.AbilityHandler;
 import org.kenneh.core.api.utils.Misc;
 import org.kenneh.core.api.utils.MouseTrail;
 import org.kenneh.core.graphics.PaintUtils;
+import org.kenneh.scripts.aiofighter.nodes.KillCount;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
 import org.powerbot.core.script.Script;
 import org.powerbot.game.api.Manifest;
+import org.powerbot.game.api.methods.Calculations;
 import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.util.SkillData;
@@ -33,6 +35,7 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 	private final SkillData sd = new SkillData();
 	private final Timer timer = new Timer(0);
 	private final Color blackT = new Color(0, 0, 0, 150);
+	private final Color goldT = new Color(255, 215, 0, 150);
 	private final Color gold = new Color(255,215,0);
 	private final Color whiteT = new Color(255, 255, 255, 125);
 	private final Font font = new Font("Calibri", Font.PLAIN, 13);
@@ -56,6 +59,7 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 		Settings.setBar(ActionBar.getCurrentBar());
 		getContainer().submit(new AbilityHandler());
 		getContainer().submit(new PriceChecker());
+		getContainer().submit(new KillCount());
 		final KNode[] nodes = {
 				new Alching(), new Failsafe(),  new FightWorms(), new Eating(), new GoToBank(),
 				new LootItems(), new WalkToGrots(), new BankItems(), new AttackOneOf(), new Expandbar()
@@ -99,7 +103,8 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 		g1.drawString("Status: " + Settings.getStatus(), tX, tY);
 		tY += 12;
 		g1.drawString("Total looted value - "  + Misc.formatNumber(Settings.getLootValue()) + "(+" + Misc.perHour(startTime, Settings.getLootValue()) + ")", tX, tY);
-
+		tY += 12;
+		g1.drawString("Monsters killed - " + Settings.getKillCount()+ "(+" + Misc.perHour(startTime, Settings.getKillCount()) + ")", tX, tY);
 		g1.setColor(Color.WHITE);
 
 		g.setFont(new Font("Calibri", Font.PLAIN, 14));
@@ -116,8 +121,20 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 		
 		drawAuthorBox(g1);
 		drawMouse(g1);
+		drawArea(g1);
 	}
 
+	public  void drawArea(Graphics g2d) {
+		try {
+			g2d.setColor(goldT);
+			Point p = Calculations.worldToMap(Settings.GROT_CENTER_TILE.getX(), Settings.GROT_CENTER_TILE.getY());
+			g2d.fillOval(p.x - (Settings.getRadius() * 5), p.y - (Settings.getRadius() * 5), 5 * (Settings.getRadius() * 2), 5 * (Settings.getRadius() * 2));
+			g2d.setColor(gold);
+			g2d.drawOval(p.x - (Settings.getRadius() * 5), p.y - (Settings.getRadius() * 5), 5 * (Settings.getRadius() * 2), 5 * (Settings.getRadius() * 2));
+		} catch (Exception a) {
+		}
+	}
+	
 	public void drawAuthorBox(final Graphics2D g) {
 		if(nameText.contains(mouse)) {
 			g.setFont(font);

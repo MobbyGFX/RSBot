@@ -50,9 +50,17 @@ public class Settings { // Everything is just thrown in here.
 	private static String status = "Initializing";
 	private static Set<Integer> loot = new TreeSet<Integer>();
 	private static int totalLootValue = 0;
-
+	private static int radius = 23;
 	private static int currBar = 0;
 
+	public static int getKillCount() {
+		return org.kenneh.scripts.aiofighter.Settings.killCount;
+	}
+	
+	public static int getRadius() {
+		return radius;
+	}
+	
 	public static void setBar(final int bar) {
 		currBar = bar;
 	}
@@ -62,7 +70,7 @@ public class Settings { // Everything is just thrown in here.
 	}
 
 	public static boolean isInArea(Locatable loc) {
-		return Calculations.distance(GROT_CENTER_TILE, loc) <= 20;
+		return Calculations.distance(GROT_CENTER_TILE, loc) <= getRadius();
 	}
 
 	public static void setValue(final int i) {
