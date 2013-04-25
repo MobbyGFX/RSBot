@@ -19,18 +19,21 @@ import org.kenneh.core.api.utils.MouseTrail;
 import org.kenneh.core.graphics.PaintUtils;
 import org.kenneh.scripts.aiofighter.nodes.KillCount;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
+import org.powerbot.core.event.events.MessageEvent;
+import org.powerbot.core.event.listeners.MessageListener;
 import org.powerbot.core.script.Script;
 import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.methods.Calculations;
+import org.powerbot.game.api.methods.Game;
+import org.powerbot.game.api.methods.input.Keyboard;
 import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Timer;
-
 import sk.action.ActionBar;
 
-@Manifest(authors = { "Kenneh" }, description = "Fights Mature grotworms for profit\nStart in Falador, ensure you have the following items: Sharks, Falador teleports, Fire runes and Nature runes.", name = "Kenneh's Grotworms", version = 1.2)
-public class GrotWorms extends KScript implements Script, MouseMotionListener, MouseListener {
+@Manifest(authors = { "Kenneh" }, description = "Requires Sharks, Falador teleports, Fire runes and Nature runes. Start in fally bank.", name = "Kenneh's Grotworms", version = 1.2)
+public class GrotWorms extends KScript implements Script, MouseMotionListener, MouseListener, MessageListener {
 
 	private final SkillData sd = new SkillData();
 	private final Timer timer = new Timer(0);
@@ -118,7 +121,7 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 				y += 18;
 			}
 		}
-		
+
 		drawAuthorBox(g1);
 		drawMouse(g1);
 		drawArea(g1);
@@ -196,6 +199,17 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		mouse = arg0.getPoint();
+	}
+
+	@Override
+	public void messageReceived(MessageEvent arg0) {
+		final String line = arg0.getMessage().toLowerCase();
+		if(line.contains("cya nerds")) {
+			Keyboard.sendText("Bye!", true);
+			Game.logout(true);
+			stop();
+		}
+		
 	}
 
 }
