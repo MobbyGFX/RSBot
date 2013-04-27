@@ -201,7 +201,11 @@ public class FighterGUI extends JPanel {
 		waitLoot.setSelected(props.getProperty("waitloot").equals("true") ? true : false);
 		popupCheckbox.setSelected(props.getProperty("popups").equals("true") ? true : false );
 		lootClues.setSelected(props.getProperty("clues").equals("true") ? true : false);
+		eatAtSlider.setValue(props.getProperty("eat") != null ? Integer.parseInt(props.getProperty("eat")) : 50);
 	}
+	
+	
+	public JSlider eatAtSlider;
 	
 	public static boolean useQuickPrayer = false;
 	public JCheckBox quickPrayer;
@@ -231,6 +235,7 @@ public class FighterGUI extends JPanel {
 		prop.setProperty("waitloot", String.valueOf(waitLoot.isSelected()));
 		prop.setProperty("popups", String.valueOf(popupCheckbox.isSelected()));
 		prop.setProperty("clues", String.valueOf(lootClues.isSelected()));
+		prop.setProperty("eat", String.valueOf(eatAtSlider.getValue()));
 		prop.store(new FileOutputStream(Environment.getStorageDirectory()+ "/config.properties"), null);
 		System.out.println("Settings saved!");
 	}
@@ -311,6 +316,8 @@ public class FighterGUI extends JPanel {
 		
 		Settings.setLootClues(lootClues.isSelected());
 		
+		
+		Settings.setEat(eatAtSlider.getValue());
 		useFastCamera = fastCamera.isSelected();
 		abilityDelay = abilDelay.getValue();
 		useQuickPrayer = quickPrayer.isSelected();
@@ -329,6 +336,7 @@ public class FighterGUI extends JPanel {
 		Logger.log("Quick prayer: " + FighterGUI.useQuickPrayer);
 		Logger.log("Food id: " + Settings.getFoodId());
 		Logger.log("Looting items over " + Settings.getLootValue() + " gp!");
+		Logger.log("Eating at: "+ Settings.getEatPercent() + " percent of health!");
 		
 		Misc.showMessage("Kenneh's AIO Fighter", "Script started!", MonsterKiller.img);
 		
@@ -389,11 +397,20 @@ public class FighterGUI extends JPanel {
 		final JLabel label = new JLabel();
 		final JLabel label2 = new JLabel();
 		final JLabel label3 = new JLabel();
+		final JLabel label4 = new JLabel();
 		buryBones = new JCheckBox("Bury bones");
 		waitLoot = new JCheckBox("Wait for loot");
 		label3.setText("Have quick prayers in ActionBar slot 0!");
 		label2.setText("Choose the default mouse speed!");
 		label.setText("Choose the ability delay (The higher the value, the longer it will wait inbetween ability usage!)");
+		label4.setText("Select the percent you want the script to eat at");
+		eatAtSlider = new JSlider();
+		eatAtSlider.setPaintTicks(true);
+		eatAtSlider.setMaximum(100);
+		eatAtSlider.setPaintLabels(true);
+		eatAtSlider.setMajorTickSpacing(5);
+		eatAtSlider.setPaintTrack(true);
+		eatAtSlider.setPreferredSize(new Dimension(600, 10));
 		mouseBoxModel = new DefaultComboBoxModel<Speed>();
 		mouseBox = new JComboBox<Speed>(mouseBoxModel);
 		for(Speed s : Speed.values()) {
@@ -449,6 +466,13 @@ public class FighterGUI extends JPanel {
 		c.gridx = 0;
 		c.gridy = 10;
 		panel.add(lootClues, c);
+		c.gridx = 0;
+		c.gridy = 11;
+		c.ipady = 30;
+		panel.add(label4, c);
+		c.gridx = 0;
+		c.gridy = 12;
+		panel.add(eatAtSlider, c);
 		tabbedPane1.addTab("SETTINGS", panel);
 	}
 

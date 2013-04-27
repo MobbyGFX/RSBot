@@ -21,6 +21,10 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 
 	public abstract boolean init();
 	public abstract void close();
+	
+	public void setRun(final boolean b) {
+		canRun = b;
+	}
 
 	public synchronized final void submit(final KNode... nodes) {
 		if(nodes == null) 
@@ -52,7 +56,6 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 
 	@Override
 	public void onRepaint(final Graphics g) {
-		//g.drawString("Current node: "+ currNode, 5, 100);
 		paint(g);
 	}
 

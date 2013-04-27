@@ -4,12 +4,22 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.kenneh.core.api.framework.KNode;
 import org.kenneh.core.api.framework.KScript;
@@ -21,15 +31,20 @@ import org.kenneh.scripts.aiofighter.nodes.KillCount;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
 import org.powerbot.core.event.events.MessageEvent;
 import org.powerbot.core.event.listeners.MessageListener;
+import org.powerbot.core.randoms.BankPin;
+import org.powerbot.core.randoms.WidgetCloser;
 import org.powerbot.core.script.Script;
+import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.methods.Calculations;
+import org.powerbot.game.api.methods.Environment;
 import org.powerbot.game.api.methods.Game;
 import org.powerbot.game.api.methods.input.Keyboard;
 import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Timer;
+
 import sk.action.ActionBar;
 
 @Manifest(authors = { "Kenneh" }, description = "Requires Sharks, Falador teleports, Fire runes and Nature runes. Start in fally bank.", name = "Kenneh's Grotworms", version = 1.2)
@@ -50,6 +65,8 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 
 	@Override
 	public boolean init() {
+		Environment.enableRandom(BankPin.class, false);
+		Environment.enableRandom(WidgetCloser.class, false);
 		Mouse.setSpeed(Speed.VERY_FAST);
 		Settings.setLoot(Settings.RARE_DROP_TABLE);
 		Settings.setLoot(Settings.GROTWORM_LOOT);
@@ -65,7 +82,8 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 		getContainer().submit(new KillCount());
 		final KNode[] nodes = {
 				new Alching(), new Failsafe(),  new FightWorms(), new Eating(), new GoToBank(),
-				new LootItems(), new WalkToGrots(), new BankItems(), new AttackOneOf(), new Expandbar()
+				new LootItems(), new WalkToGrots(), new BankItems(), new AttackOneOf(), new Expandbar(),
+				new HandlePin()
 		};
 		submit(nodes);
 		startTime = System.currentTimeMillis();
@@ -137,7 +155,7 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 		} catch (Exception a) {
 		}
 	}
-	
+
 	public void drawAuthorBox(final Graphics2D g) {
 		if(nameText.contains(mouse)) {
 			g.setFont(font);
@@ -209,7 +227,44 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 			Game.logout(true);
 			stop();
 		}
-		
+
+	}
+
+	private JFrame frame;
+
+	private void initGui() {
+		frame = new JFrame("Kenneh's Grotworms");
+		final JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		final GridBagConstraints c = new GridBagConstraints();
+		final JTextField pinField = new JTextField();
+		final JLabel label = new JLabel("Enter bank pin here");
+		final JButton button = new JButton("Start");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(pinField.getText().length() != 0) {
+					Settings.setPin(Integer.parseInt(pinField.getText()));
+				}
+				frame.setVisible(false);
+				setRun(true);
+			}
+		});
+		c.gridx = 0;
+		c.gridy = 0;
+		c.ipadx = 20;
+		panel.add(label, c);
+		c.gridx = 1;
+		c.gridy = 0;
+		c.ipadx = 50;
+		panel.add(pinField, c);
+		c.gridx = 0;
+		c.ipadx = 20;
+		c.gridy = 1;
+		panel.add(button);
+		frame.add(panel);
+		frame.pack();
+		frame.setVisible(true);
 	}
 
 }

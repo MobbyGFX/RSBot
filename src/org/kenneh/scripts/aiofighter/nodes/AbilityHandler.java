@@ -38,7 +38,7 @@ public class AbilityHandler extends LoopTask {
 	}
 
 	public static boolean needsToRejuvenate() {
-		return rejuvOffCd() && Players.getLocal().getHealthPercent() < 70 && getAdrenalinePercent() == 100;
+		return rejuvOffCd() && Players.getLocal().getHealthPercent() < org.kenneh.scripts.aiofighter.Settings.getEatPercent() - 10 && getAdrenalinePercent() == 100;
 	}
 
 

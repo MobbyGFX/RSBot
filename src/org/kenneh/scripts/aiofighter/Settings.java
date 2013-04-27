@@ -29,6 +29,8 @@ public class Settings {
 	private static Tile startTile;
 	private static int lootValue = 9001;
 
+	private static int eatAt = 50;
+	
 	public static int killCount = 0;
 
 	private static final Set<Integer> lootIds = new TreeSet<Integer>();
@@ -37,6 +39,14 @@ public class Settings {
 	
 	public static boolean lootClueScrolls() {
 		return lootClues;
+	}
+	
+	public static void setEat(final int percent) {
+		eatAt = percent;
+	}
+	
+	public static int getEatPercent() {
+		return eatAt;
 	}
 	
 	public static void setLootClues(final boolean t) {

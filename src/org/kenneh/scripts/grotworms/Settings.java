@@ -18,7 +18,9 @@ public class Settings { // Everything is just thrown in here.
 	public static final int FOOD_ID = 385;
 	
 	public static final int POLYPORE_STICK = 22498;
-	public static final int POLYPORE_STAFF = 22494;
+	public static final int POLYPORE_STAFF[] = {
+		22494, 22495, 22496, 22497
+	};
 
 	public static final int NATURE_RUNE = 561;
 	public static final int FIRE_RUNE = 554;
@@ -52,6 +54,15 @@ public class Settings { // Everything is just thrown in here.
 	private static int totalLootValue = 0;
 	private static int radius = 23;
 	private static int currBar = 0;
+	private static int pin = 0000;
+	
+	public static void setPin(final int p) {
+		pin = p;
+	}
+	
+	public static int getPin() {
+		return pin;
+	}
 
 	public static int getKillCount() {
 		return org.kenneh.scripts.aiofighter.Settings.killCount;

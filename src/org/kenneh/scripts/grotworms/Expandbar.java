@@ -44,6 +44,10 @@ public class Expandbar implements KNode {
 	public static boolean isInvVisible() {
 		return Widgets.get(746, 110).visible();
 	}
+	
+	public boolean isBankPinOpen() {
+		return Widgets.get(13, 0).isOnScreen();
+	}
 
 	@Override
 	public boolean canActivate() {
@@ -68,7 +72,7 @@ public class Expandbar implements KNode {
 		if(wrongIndex()) {
 			setToIndex(Settings.getBar());
 		}
-		if(!isExpanded() && !Bank.isOpen()) {
+		if(!isExpanded() && !Bank.isOpen() && !isBankPinOpen()) {
 			setExpanded(true);
 		}
 	}

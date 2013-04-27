@@ -41,7 +41,8 @@ public class BankItems implements KNode {
 			} else {
 				if(Equipment.getAppearanceId(Slot.WEAPON) == Settings.POLYPORE_STICK) {
 					Settings.setStatus("Withdrawing polypore staff");
-					Bank.withdraw(Settings.POLYPORE_STAFF, 1);
+					final Item staff = Bank.getItem(Settings.POLYPORE_STAFF);
+					Bank.withdraw(staff.getId(), 1);
 					Bank.close();
 				}
 				if(!Inventory.contains(Settings.TELETAB)) {

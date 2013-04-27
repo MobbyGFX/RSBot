@@ -2,6 +2,7 @@ package org.kenneh.scripts.aiofighter.nodes;
 
 import org.kenneh.core.api.utils.Misc;
 import org.kenneh.scripts.aiofighter.MonsterKiller;
+import org.kenneh.scripts.aiofighter.Settings;
 import org.powerbot.core.script.job.Task;
 import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Tabs;
@@ -19,7 +20,7 @@ public class Teleport extends Node {
 		if(Tabs.getCurrent() != Tabs.INVENTORY) {
 			return false;
 		}
-		return Misc.getHpPercent() < 40  && EatFood.edible() == null  || BarrowsCheck.teleOut || outtaAntifire();
+		return Misc.getHpPercent() < Settings.getEatPercent()  && EatFood.edible() == null  || BarrowsCheck.teleOut || outtaAntifire();
 	}
 
 	@Override
