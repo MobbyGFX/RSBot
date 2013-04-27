@@ -50,6 +50,7 @@ import org.powerbot.game.api.methods.input.Mouse.Speed;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.tab.Equipment;
 import org.powerbot.game.api.methods.tab.Inventory;
+import org.powerbot.game.api.methods.tab.Skills;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Timer;
 import org.powerbot.game.api.wrappers.Locatable;
@@ -119,6 +120,8 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	@Override
 	public void onRepaint(Graphics g) {
 		try {
+			currCount = Skills.getExperience(Skills.CONSTITUTION);
+			
 			if(lastCount != currCount)
 				amount++;
 

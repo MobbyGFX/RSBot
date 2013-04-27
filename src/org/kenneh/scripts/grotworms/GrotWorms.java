@@ -54,8 +54,6 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 
 	@Override
 	public boolean init() {
-		Environment.enableRandom(BankPin.class, false);
-		Environment.enableRandom(WidgetCloser.class, false);
 		Mouse.setSpeed(Speed.VERY_FAST);
 		Settings.setLoot(Settings.RARE_DROP_TABLE);
 		Settings.setLoot(Settings.GROTWORM_LOOT);
