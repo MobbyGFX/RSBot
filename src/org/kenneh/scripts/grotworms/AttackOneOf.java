@@ -17,6 +17,7 @@ public class AttackOneOf implements KNode {
 		@Override
 		public boolean accept(NPC mob) {
 			return mob != null 
+					&& Settings.GROT_CAVE.contains(Players.getLocal())
 					&& mob.getInteracting() != null
 					&& !mob.equals(Summoning.getFamiliar())
 					&& mob.getInteracting().equals(Players.getLocal());
