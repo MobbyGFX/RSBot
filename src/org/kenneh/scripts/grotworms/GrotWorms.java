@@ -4,22 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import org.kenneh.core.api.framework.KNode;
 import org.kenneh.core.api.framework.KScript;
@@ -27,14 +17,12 @@ import org.kenneh.core.api.utils.AbilityHandler;
 import org.kenneh.core.api.utils.Misc;
 import org.kenneh.core.api.utils.MouseTrail;
 import org.kenneh.core.graphics.PaintUtils;
-import org.kenneh.scripts.aiofighter.nodes.KillCount;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
 import org.powerbot.core.event.events.MessageEvent;
 import org.powerbot.core.event.listeners.MessageListener;
 import org.powerbot.core.randoms.BankPin;
 import org.powerbot.core.randoms.WidgetCloser;
 import org.powerbot.core.script.Script;
-import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.methods.Calculations;
 import org.powerbot.game.api.methods.Environment;
@@ -42,6 +30,7 @@ import org.powerbot.game.api.methods.Game;
 import org.powerbot.game.api.methods.input.Keyboard;
 import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.input.Mouse.Speed;
+import org.powerbot.game.api.methods.tab.Skills;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Timer;
 
@@ -79,7 +68,6 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 		Settings.setBar(ActionBar.getCurrentBar());
 		getContainer().submit(new AbilityHandler());
 		getContainer().submit(new PriceChecker());
-		getContainer().submit(new KillCount());
 		final KNode[] nodes = {
 				new Alching(), new Failsafe(),  new FightWorms(), new Eating(), new GoToBank(),
 				new LootItems(), new WalkToGrots(), new BankItems(), new AttackOneOf(), new Expandbar(),
@@ -96,8 +84,18 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 
 	}
 
+	private static int lastCount = 0;
+	private static int currCount = 0;
+
+	public static int amount = 0;
+
 	@Override
 	public void paint(final Graphics g) {
+		currCount = Skills.getExperience(Skills.CONSTITUTION);
+
+		if(lastCount != currCount)
+			amount++;
+
 		final Graphics2D g1 = (Graphics2D) g;
 		g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -125,7 +123,7 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 		tY += 12;
 		g1.drawString("Total looted value - "  + Misc.formatNumber(Settings.getLootValue()) + "(+" + Misc.perHour(startTime, Settings.getLootValue()) + ")", tX, tY);
 		tY += 12;
-		g1.drawString("Monsters killed - " + Settings.getKillCount()+ "(+" + Misc.perHour(startTime, Settings.getKillCount()) + ")", tX, tY);
+		g1.drawString("Monsters killed - " + amount+ "(+" + Misc.perHour(startTime, amount) + ")", tX, tY);
 		g1.setColor(Color.WHITE);
 
 		g.setFont(new Font("Calibri", Font.PLAIN, 14));
@@ -143,6 +141,8 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 		drawAuthorBox(g1);
 		drawMouse(g1);
 		drawArea(g1);
+		
+		lastCount = currCount;
 	}
 
 	public  void drawArea(Graphics g2d) {
@@ -228,43 +228,6 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 			stop();
 		}
 
-	}
-
-	private JFrame frame;
-
-	private void initGui() {
-		frame = new JFrame("Kenneh's Grotworms");
-		final JPanel panel = new JPanel();
-		panel.setLayout(new GridBagLayout());
-		final GridBagConstraints c = new GridBagConstraints();
-		final JTextField pinField = new JTextField();
-		final JLabel label = new JLabel("Enter bank pin here");
-		final JButton button = new JButton("Start");
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if(pinField.getText().length() != 0) {
-					Settings.setPin(Integer.parseInt(pinField.getText()));
-				}
-				frame.setVisible(false);
-				setRun(true);
-			}
-		});
-		c.gridx = 0;
-		c.gridy = 0;
-		c.ipadx = 20;
-		panel.add(label, c);
-		c.gridx = 1;
-		c.gridy = 0;
-		c.ipadx = 50;
-		panel.add(pinField, c);
-		c.gridx = 0;
-		c.ipadx = 20;
-		c.gridy = 1;
-		panel.add(button);
-		frame.add(panel);
-		frame.pack();
-		frame.setVisible(true);
 	}
 
 }

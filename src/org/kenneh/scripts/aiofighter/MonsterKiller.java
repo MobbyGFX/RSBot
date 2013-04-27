@@ -29,7 +29,6 @@ import org.kenneh.core.graphics.PaintUtils;
 import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.kenneh.scripts.aiofighter.nodes.AbilityHandler;
 import org.kenneh.scripts.aiofighter.nodes.Expandbar;
-import org.kenneh.scripts.aiofighter.nodes.KillCount;
 import org.kenneh.scripts.aiofighter.nodes.LootHandler;
 import org.kenneh.scripts.aiofighter.nodes.Prayer;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
@@ -111,9 +110,19 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		}
 	}
 
+	private static int lastCount = 0;
+	private static int currCount = 0;
+
+	public static int amount = 0;
+
+	
 	@Override
 	public void onRepaint(Graphics g) {
 		try {
+			if(lastCount != currCount)
+				amount++;
+
+			
 			final long starttime = System.currentTimeMillis();
 			int fps = (int) (1000 / (starttime - lastcall));
 			lastcall = starttime;
@@ -133,6 +142,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			paint(g);
 			g.setColor(gold);
 			g.drawString("FPS: " + fps, 5, 45);
+			lastCount = currCount;
 		} catch (Exception a) {
 			a.printStackTrace();
 		}
@@ -195,7 +205,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		tY += 12;
 		g1.drawString("Total looted value - "  + Misc.formatNumber(LootHandler.totalValue) + "(+" + Misc.perHour(startTime, LootHandler.totalValue) + ")", tX, tY);
 		tY += 12;
-		g1.drawString("Monsters killed - " + Settings.killCount + "(+" + Misc.perHour(startTime, Settings.killCount) + ")", tX, tY);
+		g1.drawString("Monsters killed - " + amount + "(+" + Misc.perHour(startTime, amount) + ")", tX, tY);
 		g1.setColor(Color.WHITE);
 		x = 8;
 		y = 396;
@@ -304,7 +314,6 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		getContainer().submit(new AbilityHandler());
 		getContainer().submit(new PriceChecker());
 		getContainer().submit(new Prayer());
-		getContainer().submit(new KillCount());
 		startTime = System.currentTimeMillis();
 		provide(new SprinkleNeem());
 		Logger.log("ShieldId: "+ shieldId + " WeaponId: " + mainWeapon);
