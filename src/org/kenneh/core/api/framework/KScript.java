@@ -21,7 +21,7 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 
 	public abstract boolean init();
 	public abstract void close();
-	
+
 	public void setRun(final boolean b) {
 		canRun = b;
 	}
@@ -68,32 +68,37 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 	}
 
 	private Client client = Bot.client();
-	
+
 	@Override
 	public int loop() {
-		
-		if (Game.getClientState() != Game.INDEX_MAP_LOADED) {
-			return 1000;
-		}
 
-		if (client != Bot.client()) {
-			WidgetCache.purge();
-			Bot.context().getEventManager().addListener(this);
-			client = Bot.client();
-		}
-		
-		if(canRun && Game.isLoggedIn()) {
-			synchronized(container) { 
-				if(task == null || !task.hasNext()) {
-					task = container.iterator();
-				} else {
-					final KNode curr = task.next();
-					if(curr != null && curr.canActivate()) {
-						System.out.println(curr);
-						curr.activate();
+		try {
+
+			if (Game.getClientState() != Game.INDEX_MAP_LOADED) {
+				return 1000;
+			}
+
+			if (client != Bot.client()) {
+				WidgetCache.purge();
+				Bot.context().getEventManager().addListener(this);
+				client = Bot.client();
+			}
+
+			if(canRun && Game.isLoggedIn()) {
+				synchronized(container) { 
+					if(task == null || !task.hasNext()) {
+						task = container.iterator();
+					} else {
+						final KNode curr = task.next();
+						if(curr != null && curr.canActivate()) {
+							System.out.println(curr);
+							curr.activate();
+						}
 					}
 				}
 			}
+		} catch(Exception a) {
+			System.out.println("Some more internal errors..");
 		}
 		return 50;
 	}
