@@ -12,6 +12,8 @@ import org.kenneh.scripts.aiofighter.constants.Constants;
 
 public class PriceWrapper {
 
+	private int counter = 0;
+	
 	private final Map<Integer, Integer> prices = new HashMap<Integer, Integer>();
 
 	public static void main(String[] args) {
@@ -54,6 +56,7 @@ public class PriceWrapper {
 		try {
 			final BufferedReader in = new BufferedReader(new InputStreamReader(
 					new URL(add).openConnection().getInputStream()));
+			counter++;
 			final String line = in.readLine();
 			in.close();
 			final String[] sets = line.split("[;]");
@@ -61,6 +64,7 @@ public class PriceWrapper {
 				final String[] set = s.split("[:]");
 				prices.put(Integer.parseInt(set[0]), Integer.parseInt(set[1]));
 			}
+			System.out.println("Accessed SWU - Count: " + counter);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

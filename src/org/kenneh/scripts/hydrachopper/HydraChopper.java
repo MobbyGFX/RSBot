@@ -23,12 +23,11 @@ import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Time;
 import org.powerbot.game.api.wrappers.node.SceneObject;
 
-@Manifest(authors = { "Kenneh" }, description = "Uses a spirit hydra to regrow trees to chop in falador park", name = "HydraChopper")
+@Manifest(hidden = true, authors = { "Kenneh" }, description = "Uses a spirit hydra to regrow trees to chop in falador park", name = "HydraChopper")
 public class HydraChopper extends ActiveScript implements PaintListener, MessageListener {
 
 	private long startTime;
 	private final Set<Node> container = Collections.synchronizedSet(new HashSet<Node>());
-	//private final Set<Node> container = new HashSet<Node>();
 	private final Timer timer = new Timer(0);
 	private final SkillData skillData = new SkillData();
 

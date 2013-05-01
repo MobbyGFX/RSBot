@@ -63,10 +63,6 @@ public class Settings { // Everything is just thrown in here.
 	public static int getPin() {
 		return pin;
 	}
-
-	public static int getKillCount() {
-		return org.kenneh.scripts.aiofighter.Settings.killCount;
-	}
 	
 	public static int getRadius() {
 		return radius;

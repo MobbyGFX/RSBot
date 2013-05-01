@@ -17,15 +17,11 @@ import org.kenneh.core.api.utils.AbilityHandler;
 import org.kenneh.core.api.utils.Misc;
 import org.kenneh.core.api.utils.MouseTrail;
 import org.kenneh.core.graphics.PaintUtils;
-import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
 import org.powerbot.core.event.events.MessageEvent;
 import org.powerbot.core.event.listeners.MessageListener;
-import org.powerbot.core.randoms.BankPin;
-import org.powerbot.core.randoms.WidgetCloser;
 import org.powerbot.core.script.Script;
 import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.methods.Calculations;
-import org.powerbot.game.api.methods.Environment;
 import org.powerbot.game.api.methods.Game;
 import org.powerbot.game.api.methods.input.Keyboard;
 import org.powerbot.game.api.methods.input.Mouse;
@@ -36,7 +32,7 @@ import org.powerbot.game.api.util.Timer;
 
 import sk.action.ActionBar;
 
-@Manifest(authors = { "Kenneh" }, description = "Requires Sharks, Falador teleports, Fire runes and Nature runes. Start in fally bank.", name = "Kenneh's Grotworms", version = 1.2)
+@Manifest(hidden = true, authors = { "Kenneh" }, description = "Requires Sharks, Falador teleports, Fire runes and Nature runes. Start in fally bank.", name = "Kenneh's Grotworms", version = 1.2)
 public class GrotWorms extends KScript implements Script, MouseMotionListener, MouseListener, MessageListener {
 
 	private final SkillData sd = new SkillData();
@@ -57,15 +53,14 @@ public class GrotWorms extends KScript implements Script, MouseMotionListener, M
 		Mouse.setSpeed(Speed.VERY_FAST);
 		Settings.setLoot(Settings.RARE_DROP_TABLE);
 		Settings.setLoot(Settings.GROTWORM_LOOT);
-		PriceChecker.priceWrapper.storePrice(Settings.RARE_DROP_TABLE);
-		PriceChecker.priceWrapper.storePrice(Settings.GROTWORM_LOOT);
-		PriceChecker.priceWrapper.storePrice(995, 1);
-		PriceChecker.priceWrapper.storePrice(385, 0);
-		PriceChecker.priceWrapper.storePrice(450, PriceChecker.priceWrapper.getPrice(449));
-		PriceChecker.priceWrapper.storePrice(1180, PriceChecker.priceWrapper.getPrice(1179));
+		Settings.pw.storePrice(Settings.RARE_DROP_TABLE);
+		Settings.pw.storePrice(Settings.GROTWORM_LOOT);
+		Settings.pw.storePrice(995, 1);
+		Settings.pw.storePrice(385, 0);
+		Settings.pw.storePrice(450, Settings.pw.getPrice(449));
+		Settings.pw.storePrice(1180, Settings.pw.getPrice(1179));
 		Settings.setBar(ActionBar.getCurrentBar());
 		getContainer().submit(new AbilityHandler());
-		getContainer().submit(new PriceChecker());
 		final KNode[] nodes = {
 				new Alching(), new Failsafe(),  new FightWorms(), new Eating(), new GoToBank(),
 				new LootItems(), new WalkToGrots(), new BankItems(), new AttackOneOf(), new Expandbar(),

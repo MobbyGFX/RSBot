@@ -33,6 +33,7 @@ import org.kenneh.scripts.aiofighter.nodes.LootHandler;
 import org.kenneh.scripts.aiofighter.nodes.Prayer;
 import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
 import org.kenneh.scripts.aiofighter.nodes.SprinkleNeem;
+import org.powerbot.core.Bot;
 import org.powerbot.core.event.events.MessageEvent;
 import org.powerbot.core.event.listeners.MessageListener;
 import org.powerbot.core.event.listeners.PaintListener;
@@ -51,11 +52,13 @@ import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.tab.Equipment;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.tab.Skills;
+import org.powerbot.game.api.methods.widget.WidgetCache;
 import org.powerbot.game.api.util.SkillData;
 import org.powerbot.game.api.util.Timer;
 import org.powerbot.game.api.wrappers.Locatable;
 import org.powerbot.game.api.wrappers.Tile;
 import org.powerbot.game.api.wrappers.node.Item;
+import org.powerbot.game.client.Client;
 
 import sk.action.ActionBar;
 
@@ -64,24 +67,25 @@ import sk.action.ActionBar;
 description = "Select stuff, fight mobs, loot things, gain xp. :3 \nBring a teleport tablet for safety", 
 version = 2.5,
 website = "http://loot-files.atspace.com",
-vip = true)
+vip = true,
+hidden = true)
 public class MonsterKiller extends ActiveScript implements PaintListener, MouseListener, MessageListener, MouseMotionListener {
 
 	Timer t = new Timer(0);
 	SkillData sd = null;
-	
+
 	private final Color blackT = new Color(0, 0, 0, 150);
 	private final static Color gold = new Color(255,215,0);
 	private final static Color goldT = new Color(255, 215, 0, 150);
 	private final Color whiteT = new Color(255, 255, 255, 125);
 	private final Font font = new Font("Calibri", Font.PLAIN, 13);
-	
+
 	private final Rectangle nameText = new Rectangle(5, 86, 236, 17);
-	
+
 	private final Rectangle nameTextGlow = new Rectangle(5, 86, 236, 8);
 
 	private final MouseTrail mouseTrail = new MouseTrail(gold);
-	
+
 	public static long startTime;
 
 	long lastcall  = 0;
@@ -116,16 +120,16 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 
 	public static int amount = 0;
 
-	
+
 	@Override
 	public void onRepaint(Graphics g) {
 		try {
 			currCount = Skills.getExperience(Skills.CONSTITUTION);
-			
+
 			if(lastCount != currCount)
 				amount++;
 
-			
+
 			final long starttime = System.currentTimeMillis();
 			int fps = (int) (1000 / (starttime - lastcall));
 			lastcall = starttime;
@@ -183,10 +187,10 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 	public void paint(Graphics arg0) {
 		Graphics2D g1 = (Graphics2D) arg0;
 		g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+
 		g1.setColor(blackT);
 		g1.setFont(font);
-		
+
 		int x = 5, y = 80;
 		final int fontH = 17;
 		final int width = 236;
@@ -195,7 +199,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		g1.fillRoundRect(x, y, width, height, 10, 10);
 		g1.setColor(gold);
 		g1.drawRoundRect(x, y, width, height, 10, 10);
-		
+
 		g1.draw(nameText);
 		g1.setColor(whiteT);
 		g1.fill(nameTextGlow);
@@ -226,7 +230,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		drawMouse(g1);
 		drawAuthorBox(g1);
 	}
-	
+
 	public void drawAuthorBox(final Graphics2D g) {
 		if(nameText.contains(mouse)) {
 			g.setFont(font);
@@ -247,7 +251,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		g.drawOval(Mouse.getX() - 5, Mouse.getY() - 5, 11, 11);
 		g.fillOval(Mouse.getX() - 2, Mouse.getY() - 2, 5, 5);
 	}
-	
+
 	public static void setSpeed(Speed s) {
 		System.out.println("Setting default mouse speed to: " + s);
 		Mouse.setSpeed(s);
@@ -276,7 +280,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			}
 		});
 		t.start();
-		
+
 		if (!hasAntifires()) {
 			Logger.log("You're out of antifires..");
 		} else {
@@ -322,7 +326,7 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 		Logger.log("ShieldId: "+ shieldId + " WeaponId: " + mainWeapon);
 		Mouse.setSpeed(Speed.VERY_FAST);
 	}
-	
+
 	public static Image img = null;
 
 	Rectangle chat = Widgets.get(137, 0).getBoundingRectangle();
@@ -350,6 +354,8 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 
 	String currNode = "";
 
+	private Client client = Bot.client();
+	
 	@Override
 	public int loop() {
 
@@ -365,6 +371,12 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 			return 1000;
 		}
 
+		if (client != Bot.client()) {
+			WidgetCache.purge();
+			Bot.context().getEventManager().addListener(this);
+			client = Bot.client();
+		}
+		
 		while (FighterGUI.getFrame() != null && FighterGUI.getFrame().isVisible()) {
 			status = "Sleeping for GUI";
 			Task.sleep(20);

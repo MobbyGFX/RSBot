@@ -3,7 +3,6 @@ package org.kenneh.scripts.grotworms;
 import org.kenneh.core.api.framework.KNode;
 import org.kenneh.core.api.utils.MCamera;
 import org.kenneh.core.api.utils.Misc;
-import org.kenneh.scripts.aiofighter.nodes.PriceChecker;
 import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.methods.Calculations;
 import org.powerbot.game.api.methods.Walking;
@@ -98,11 +97,11 @@ public class LootItems implements KNode {
 			}.waitStop();
 			try {
 				int value = 0;
-				if(PriceChecker.priceWrapper.contains(id)) {
-					value = PriceChecker.priceWrapper.getPrice(id);
+				if(Settings.pw.contains(id)) {
+					value = Settings.pw.getPrice(id);
 				}
 				if(value == 0) {
-					value = PriceChecker.priceWrapper.getPrice(id - 1);
+					value = Settings.pw.getPrice(id - 1);
 					if(value != 0) {
 						int price = value * stack;
 						totalValue += price;

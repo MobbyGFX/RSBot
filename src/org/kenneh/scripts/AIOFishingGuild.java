@@ -54,7 +54,7 @@ import org.powerbot.game.api.wrappers.widget.WidgetChild;
 
 
 
-@Manifest(authors = { "Kenneh" }, name = "Auto Fishing Guild", description = "Fishes everything at the fishing guild!", version = 2.0)
+@Manifest(hidden = true, authors = { "Kenneh" }, name = "Auto Fishing Guild", description = "Fishes everything at the fishing guild!", version = 2.0)
 public class AIOFishingGuild extends ActiveScript implements PaintListener, MessageListener, MouseListener {
 	MousePaint mt = new MousePaint();
 	AntiBan ab = new AntiBan();

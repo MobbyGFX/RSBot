@@ -29,11 +29,11 @@ public class PriceChecker extends LoopTask {
 						return true;
 					}
 				} else {
-					if(priceWrapper.getPrice(id) != -1) {
+					if(priceWrapper.getPrice(id) != 0) {
 						System.out.println("Price for "+ name+"("+id+") found!");
 						priceWrapper.storePrice(id);
 					} else {
-						if(priceWrapper.getPrice(id - 1) != -1) {
+						if(priceWrapper.getPrice(id - 1) != 0) {
 							System.out.println("Noted price for "+ name+"("+id+") found!");
 							priceWrapper.storePrice(id - 1);
 						} else {
