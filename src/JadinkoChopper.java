@@ -67,7 +67,7 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 
 	};
 
-	private void doAction(final String action, final SceneObject obj) {
+	private boolean doAction(final String action, final SceneObject obj) {
 		if(Players.getLocal().getAnimation() == -1 && !Players.getLocal().isMoving()) {
 			if(obj.getLocation().distanceTo() > 5) {
 				Walking.walk(obj.getLocation());
@@ -80,11 +80,13 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 						while(Players.getLocal().getAnimation() == -1 && timeout.isRunning()) {
 							Task.sleep(20);
 						}
+						return true;
 					}
 
 				}
 			}
 		}
+		return false;
 	}
 
 	@Override
@@ -113,18 +115,8 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 		} else {
 			final SceneObject firePit = SceneEntities.getNearest(FIRE_PIT);
 			if(firePit != null) {
-				if(Players.getLocal().getAnimation() == -1 && !Players.getLocal().isMoving()) {
-					if(firePit.getLocation().distanceTo() > 5) {
-						Walking.walk(firePit.getLocation());
-					} else {
-						if(!firePit.isOnScreen()) {
-							Camera.turnTo(firePit);
-						} else {
-							if(firePit.interact("Add", firePit.getDefinition().getName())) {
-								burning = true;
-							}
-						}
-					}
+				if(doAction("Add", firePit)) {
+					burning = true;
 				}
 			}
 		}
