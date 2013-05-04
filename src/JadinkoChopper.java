@@ -43,17 +43,18 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 	public final static int INVENTORY_ROOT_ID = 21350;
 	public final static int CURLY_ROOT_ID = 12274;
 	public final static int CUT_CURLY_ROOT_ID = 12279;
-	public final static int FIRE_PIT = 12286;
+	public final static int LIT_FIRE_PIT = 12286;
+	public final static int EMPTY_FIRE_PIT = 12284;
+	public final static int UNLIT_FIRE_PIT = 12285;
 	public final static int INVENTORY_STRAIGHT_ROOT_ID = 21349;
 
 	private final SkillData sd = new SkillData();
 	private final Timer timer = new Timer(0);
 	private final MouseTrail mt = new MouseTrail(Color.PINK);
+	private final long startTime = System.currentTimeMillis();
 
 	private boolean burning = false;
 	private boolean show = true;
-
-	private long startTime = System.currentTimeMillis();
 
 	private int burned = 0;
 	private int chopped = 0;
@@ -113,10 +114,18 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 				}
 			}
 		} else {
-			final SceneObject firePit = SceneEntities.getNearest(FIRE_PIT);
+			SceneObject firePit = SceneEntities.getNearest(LIT_FIRE_PIT);
 			if(firePit != null) {
-				if(doAction("Add", firePit)) {
-					burning = true;
+				burning = doAction("Add", firePit);
+			} else {
+				firePit = SceneEntities.getNearest(UNLIT_FIRE_PIT);
+				if(firePit != null) {
+					burning = doAction("Light", firePit);
+				} else {
+					firePit = SceneEntities.getNearest(EMPTY_FIRE_PIT);
+					if(firePit != null) {
+						burning = doAction("Add", firePit);
+					}
 				}
 			}
 		}
@@ -138,7 +147,6 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 			g2d.setFont(PAINT_TITLE_FONT);
 			g2d.drawString("Jadinko Firemaking", 170, 410);
 			g2d.drawString("Time running: "+ timer.toElapsedString(), 158, 425);
-
 
 			PaintUtils.drawProgressBar(g2d, 6, 435, 490, 17, Color.BLACK, Color.GREEN, 150, PaintUtils.getPercentToNextLevel(Skills.WOODCUTTING));
 			PaintUtils.drawProgressBar(g2d, 6, 453, 490, 17, Color.BLACK, Color.ORANGE, 150, PaintUtils.getPercentToNextLevel(Skills.FIREMAKING));
