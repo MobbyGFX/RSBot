@@ -32,19 +32,19 @@ import org.powerbot.game.api.wrappers.node.SceneObject;
 @Manifest(authors = { "Kenneh" }, description = "Chops and burns curly roots in the Jadinko lair.", name = "JadinkoChopper")
 public class JadinkoChopper extends ActiveScript implements PaintListener, MessageListener, MouseListener {
 
-	private final static Font PROGRESS_BAR_FONT = new Font("Calibri", Font.PLAIN, 14);
-	private final static Font PAINT_TEXT_FONT = new Font("Calibri", Font.PLAIN, 12);
-	private final static Font PAINT_TITLE_FONT = new Font("Calibri", Font.BOLD, 18);
+	public final static Font PROGRESS_BAR_FONT = new Font("Calibri", Font.PLAIN, 14);
+	public final static Font PAINT_TEXT_FONT = new Font("Calibri", Font.PLAIN, 12);
+	public final static Font PAINT_TITLE_FONT = new Font("Calibri", Font.BOLD, 18);
 
-	private final static Rectangle CHATBOX_AREA = new Rectangle(7, 395, 490, 114);
+	public final static Rectangle CHATBOX_AREA = new Rectangle(7, 395, 490, 114);
 
-	private final static Color BLACK_TRANS = new Color(0, 0, 0, 175);
+	public final static Color BLACK_TRANS = new Color(0, 0, 0, 175);
 
-	private final static int INVENTORY_ROOT_ID = 21350;
-	private final static int CURLY_ROOT_ID = 12274;
-	private final static int CUT_CURLY_ROOT_ID = 12279;
-	private final static int FIRE_PIT = 12286;
-	private final static int INVENTORY_STRAIGHT_ROOT_ID = 21349;
+	public final static int INVENTORY_ROOT_ID = 21350;
+	public final static int CURLY_ROOT_ID = 12274;
+	public final static int CUT_CURLY_ROOT_ID = 12279;
+	public final static int FIRE_PIT = 12286;
+	public final static int INVENTORY_STRAIGHT_ROOT_ID = 21349;
 
 	private final SkillData sd = new SkillData();
 	private final Timer timer = new Timer(0);
