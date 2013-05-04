@@ -67,6 +67,28 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 
 	};
 
+	public void doAction(final String action, final SceneObject obj) {
+		if(obj != null) {
+			if(Players.getLocal().getAnimation() == -1 && !Players.getLocal().isMoving()) {
+				if(obj.getLocation().distanceTo() > 5) {
+					Walking.walk(obj.getLocation());
+				} else {
+					if(!obj.isOnScreen()) {
+						Camera.turnTo(obj);
+					} else {
+						if(obj.interact(action, obj.getDefinition().getName())) {
+							final Timer timeout = new Timer(3000);
+							while(Players.getLocal().getAnimation() == -1 && timeout.isRunning()) {
+								Task.sleep(20);
+							}
+						}
+
+					}
+				}
+			}
+		}
+	}
+
 	@Override
 	public int loop() {
 		if(!Inventory.contains(INVENTORY_ROOT_ID)) {
@@ -82,42 +104,11 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 			if(!burning) {
 				final SceneObject cutRoot = SceneEntities.getNearest(CUT_ROOT_FILTER);
 				if(cutRoot != null) {
-					if(Players.getLocal().getAnimation() == -1 && !Players.getLocal().isMoving()) {
-						if(cutRoot.getLocation().distanceTo() > 5) {
-							Walking.walk(cutRoot.getLocation());
-						} else {
-							if(!cutRoot.isOnScreen()) {
-								Camera.turnTo(cutRoot);
-							} else {
-								if(cutRoot.interact("Collect", cutRoot.getDefinition().getName())) {
-									final Timer timeout = new Timer(3000);
-									while(Players.getLocal().getAnimation() == -1 && timeout.isRunning()) {
-										Task.sleep(20);
-									}
-								}
-
-							}
-						}
-					}
+					doAction("Collect", cutRoot);
 				} else {
 					final SceneObject uncutRoot = SceneEntities.getNearest(CURLY_ROOT_ID);
 					if(uncutRoot != null) {
-						if(Players.getLocal().getAnimation() == -1 && !Players.getLocal().isMoving()) {
-							if(uncutRoot.getLocation().distanceTo() > 5) {
-								Walking.walk(uncutRoot.getLocation());
-							} else {
-								if(!uncutRoot.isOnScreen()) {
-									Camera.turnTo(uncutRoot);
-								} else {
-									if(uncutRoot.interact("Chop", uncutRoot.getDefinition().getName())) {
-										final Timer timeout = new Timer(3000);
-										while(Players.getLocal().getAnimation() == -1 && timeout.isRunning()) {
-											Task.sleep(20);
-										}
-									}
-								}
-							}
-						}
+						doAction("Chop", uncutRoot);
 					}
 				}
 			}
@@ -180,7 +171,7 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 		mt.draw(g);
 
 	}
-	
+
 	@Override
 	public void onStop() {
 		Misc.savePaint(7, 395, 490, 114);
