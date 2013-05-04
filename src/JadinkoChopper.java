@@ -67,23 +67,21 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 
 	};
 
-	public void doAction(final String action, final SceneObject obj) {
-		if(obj != null) {
-			if(Players.getLocal().getAnimation() == -1 && !Players.getLocal().isMoving()) {
-				if(obj.getLocation().distanceTo() > 5) {
-					Walking.walk(obj.getLocation());
+	private void doAction(final String action, final SceneObject obj) {
+		if(Players.getLocal().getAnimation() == -1 && !Players.getLocal().isMoving()) {
+			if(obj.getLocation().distanceTo() > 5) {
+				Walking.walk(obj.getLocation());
+			} else {
+				if(!obj.isOnScreen()) {
+					Camera.turnTo(obj);
 				} else {
-					if(!obj.isOnScreen()) {
-						Camera.turnTo(obj);
-					} else {
-						if(obj.interact(action, obj.getDefinition().getName())) {
-							final Timer timeout = new Timer(3000);
-							while(Players.getLocal().getAnimation() == -1 && timeout.isRunning()) {
-								Task.sleep(20);
-							}
+					if(obj.interact(action, obj.getDefinition().getName())) {
+						final Timer timeout = new Timer(3000);
+						while(Players.getLocal().getAnimation() == -1 && timeout.isRunning()) {
+							Task.sleep(20);
 						}
-
 					}
+
 				}
 			}
 		}
