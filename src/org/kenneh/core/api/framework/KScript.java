@@ -20,7 +20,8 @@ public abstract class KScript extends ActiveScript implements PaintListener {
 	private volatile boolean canRun = false;
 
 	public abstract boolean init();
-	public abstract void close();
+	public void close() {
+	}
 
 	public void setRun(final boolean b) {
 		canRun = b;

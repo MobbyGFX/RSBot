@@ -1,8 +1,10 @@
-package org.kenneh.core.api.utils;
+package org.kenneh.core.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+
+import org.powerbot.game.api.methods.input.Mouse;
 
 public class MouseTrail {
 	private final int SIZE = 25;
@@ -32,5 +34,8 @@ public class MouseTrail {
 				alpha += ALPHA_STEP;
 			}
 		}
+		
+		g.drawOval(Mouse.getX() - 5, Mouse.getY() - 5, 11, 11);
+		g.fillOval(Mouse.getX() - 2, Mouse.getY() - 2, 5, 5);
 	}
 }

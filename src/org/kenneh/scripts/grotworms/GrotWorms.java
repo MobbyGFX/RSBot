@@ -15,7 +15,7 @@ import org.kenneh.core.api.framework.KNode;
 import org.kenneh.core.api.framework.KScript;
 import org.kenneh.core.api.utils.AbilityHandler;
 import org.kenneh.core.api.utils.Misc;
-import org.kenneh.core.api.utils.MouseTrail;
+import org.kenneh.core.graphics.MouseTrail;
 import org.kenneh.core.graphics.PaintUtils;
 import org.powerbot.core.event.events.MessageEvent;
 import org.powerbot.core.event.listeners.MessageListener;

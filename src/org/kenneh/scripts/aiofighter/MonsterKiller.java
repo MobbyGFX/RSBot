@@ -23,8 +23,8 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 import org.kenneh.core.api.utils.Misc;
-import org.kenneh.core.api.utils.MouseTrail;
 import org.kenneh.core.graphics.Logger;
+import org.kenneh.core.graphics.MouseTrail;
 import org.kenneh.core.graphics.PaintUtils;
 import org.kenneh.scripts.aiofighter.constants.Constants;
 import org.kenneh.scripts.aiofighter.nodes.AbilityHandler;

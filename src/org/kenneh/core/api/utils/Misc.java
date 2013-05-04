@@ -5,16 +5,20 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import org.kenneh.core.graphics.Logger;
 import org.kenneh.scripts.aiofighter.FighterGUI;
+import org.powerbot.game.api.methods.Environment;
 import org.powerbot.game.api.methods.Settings;
 import org.powerbot.game.api.methods.Tabs;
 import org.powerbot.game.api.methods.Widgets;
@@ -34,7 +38,17 @@ import ch.swingfx.twinkle.window.Positions;
 
 
 public class Misc {
-	
+
+	public static void savePaint(final int x, final int y, final int w, final int h) {
+		final File path = new File(Environment.getStorageDirectory().getPath(), System.currentTimeMillis() + ".png");
+		final BufferedImage img = Environment.captureScreen().getSubimage(x, y, w, h);
+		try {
+			ImageIO.write(img, "png", path);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static int[] setToArray(final Set<Integer> set) {
 		final int length = set.size();
 		final Iterator<Integer> it = set.iterator();
@@ -81,7 +95,7 @@ public class Misc {
 		}
 	}
 
-	
+
 
 	public static String formatNumber(int start) {
 		DecimalFormat nf = new DecimalFormat("0.0");
@@ -93,6 +107,10 @@ public class Misc {
 			return nf.format((i / 1000)) + "k";
 		}
 		return ""+start;
+	}
+
+	public static String perHourInfo(long startTime, int gained) {
+		return formatNumber(gained) + "(+" + perHour(startTime, gained) + ")";
 	}
 
 	public static String perHour(long startTime, int gained) {
