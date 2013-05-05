@@ -83,7 +83,6 @@ public class JadinkoChopper extends ActiveScript implements PaintListener, Messa
 						}
 						return true;
 					}
-
 				}
 			}
 		}
