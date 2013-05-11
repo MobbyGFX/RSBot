@@ -32,7 +32,7 @@ import org.powerbot.game.api.util.Timer;
 
 import sk.action.ActionBar;
 
-@Manifest(hidden = true, authors = { "Kenneh" }, description = "Requires Sharks, Falador teleports, Fire runes and Nature runes. Start in fally bank.", name = "Kenneh's Grotworms", version = 1.2)
+@Manifest(authors = { "Kenneh" }, description = "Requires Sharks, Falador teleports, Fire runes and Nature runes. Start in fally bank.", name = "Kenneh's Grotworms", version = 1.2)
 public class GrotWorms extends KScript implements Script, MouseMotionListener, MouseListener, MessageListener {
 
 	private final SkillData sd = new SkillData();

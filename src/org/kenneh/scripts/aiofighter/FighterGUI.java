@@ -38,6 +38,8 @@ import javax.swing.LayoutStyle;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
 import org.kenneh.core.api.utils.Misc;
 import org.kenneh.core.graphics.Logger;
 import org.kenneh.scripts.aiofighter.constants.Constants;
@@ -202,9 +204,10 @@ public class FighterGUI extends JPanel {
 		popupCheckbox.setSelected(props.getProperty("popups").equals("true") ? true : false );
 		lootClues.setSelected(props.getProperty("clues").equals("true") ? true : false);
 		eatAtSlider.setValue(props.getProperty("eat") != null ? Integer.parseInt(props.getProperty("eat")) : 50);
+		preferredWorld.setValue(props.getProperty("prefworld") != null ? Integer.parseInt(props.getProperty("prefworld")) : -1);
 	}
 	
-	
+	public JSpinner preferredWorld;
 	public JSlider eatAtSlider;
 	
 	public static boolean useQuickPrayer = false;
@@ -236,6 +239,7 @@ public class FighterGUI extends JPanel {
 		prop.setProperty("popups", String.valueOf(popupCheckbox.isSelected()));
 		prop.setProperty("clues", String.valueOf(lootClues.isSelected()));
 		prop.setProperty("eat", String.valueOf(eatAtSlider.getValue()));
+		prop.setProperty("prefworld", String.valueOf(preferredWorld.getValue()));
 		prop.store(new FileOutputStream(Environment.getStorageDirectory()+ "/config.properties"), null);
 		System.out.println("Settings saved!");
 	}
@@ -356,6 +360,8 @@ public class FighterGUI extends JPanel {
 	public static boolean waitForLoot = false;
 	public static boolean showPopups = false;
 	
+	public static int prefWorld = -1;
+	
 	
 	private JCheckBox popupCheckbox;
 	private JComboBox<Speed> mouseBox;
@@ -473,7 +479,23 @@ public class FighterGUI extends JPanel {
 		c.gridx = 0;
 		c.gridy = 12;
 		panel.add(eatAtSlider, c);
+		
+		preferredWorld = new JSpinner();
+		preferredWorld.setBorder(new TitledBorder("Preferred World"));
+		
+		c.gridx = 0;
+		c.gridy = 13;
+		c.ipadx = 300;
+		c.ipady = 5;
+		
+		panel.add(preferredWorld, c);
+		
 		tabbedPane1.addTab("SETTINGS", panel);
+	}
+	
+	public static void main(String[] args) {
+		FighterGUI f = new FighterGUI();
+		f.setVisible(true);
 	}
 
 	private void initComponents() {

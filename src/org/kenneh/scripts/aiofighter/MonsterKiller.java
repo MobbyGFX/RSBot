@@ -58,6 +58,7 @@ import org.powerbot.game.api.util.Timer;
 import org.powerbot.game.api.wrappers.Locatable;
 import org.powerbot.game.api.wrappers.Tile;
 import org.powerbot.game.api.wrappers.node.Item;
+import org.powerbot.game.bot.Context;
 import org.powerbot.game.client.Client;
 
 import sk.action.ActionBar;
@@ -65,10 +66,10 @@ import sk.action.ActionBar;
 
 @Manifest(authors = { "Kenneh" }, name = "Kenneh's AIO Fighter", 
 description = "Select stuff, fight mobs, loot things, gain xp. :3 \nBring a teleport tablet for safety", 
-version = 2.5,
+version = 2.51,
 website = "http://loot-files.atspace.com",
 vip = true,
-hidden = true)
+hidden = false)
 public class MonsterKiller extends ActiveScript implements PaintListener, MouseListener, MessageListener, MouseMotionListener {
 
 	Timer t = new Timer(0);
@@ -312,6 +313,10 @@ public class MonsterKiller extends ActiveScript implements PaintListener, MouseL
 
 		if(Expandbar.isInvVisible()) {
 			checkInv = true;
+		}
+		
+		if(FighterGUI.prefWorld != -1) {
+			Context.setLoginWorld(FighterGUI.prefWorld);
 		}
 
 		mainWeapon = Equipment.getAppearanceIds()[3];

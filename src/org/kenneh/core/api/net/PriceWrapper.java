@@ -48,6 +48,23 @@ public class PriceWrapper {
 	public void storePrice(final int id, final int value) {
 		prices.put(id, value);
 	}
+	
+	public static int getSinglePrice(final int ids) {
+		String add = "http://scriptwith.us/api/?return=text&item=" + ids;
+		try {
+			final BufferedReader in = new BufferedReader(new InputStreamReader(new URL(add).openConnection().getInputStream()));
+			final String line = in.readLine();
+			in.close();
+			final String[] sets = line.split("[;]");
+			for (String s : sets) {
+				final String[] set = s.split("[:]");
+				return Integer.parseInt(set[1]);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 
 	public void storePrice(final int... ids) {
 		String add = "http://scriptwith.us/api/?return=text&item=";

@@ -3,6 +3,7 @@ package org.kenneh.scripts.grotworms;
 import org.kenneh.core.api.framework.KNode;
 import org.kenneh.core.api.utils.MCamera;
 import org.kenneh.core.api.utils.Misc;
+import org.kenneh.core.astar.AStar;
 import org.powerbot.game.api.methods.Walking;
 import org.powerbot.game.api.methods.interactive.NPCs;
 import org.powerbot.game.api.methods.interactive.Players;
@@ -20,8 +21,29 @@ public class FightWorms implements KNode {
 		}
 	};
 
+	public static NPC[] getAllGrots() {
+		return NPCs.getLoaded(WORM);
+	}
+
+	public static NPC getNearest(NPC[] mobs) {
+		int distance = 9999;
+		NPC temp = null;
+		for(NPC n : mobs) {
+			int tempd = distanceTo(n);
+			if(tempd < distance) {
+				temp = n;
+				distance = tempd;
+			}
+		}
+		return temp;
+	}
+
+	public static int distanceTo(NPC t) {
+		return AStar.findDistance(t.getLocation());
+	}
+
 	public static NPC getBestGrot() {
-		return NPCs.getNearest(WORM);
+		return getNearest(getAllGrots());
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import org.powerbot.game.api.wrappers.node.Item;
 import org.powerbot.game.api.wrappers.node.SceneObject;
 
 
-@Manifest(authors = { "Foxeh" }, description = "Start inside enchantment room in the mage arena with cosmic runes and some sort of fire staff", name = "MTA Bot")
+@Manifest(authors = { "Foxeh" }, description = "Start inside enchantment room in the mage arena with cosmic runes and some sort of fire staff", name = "MTA Bot", hidden = true)
 
 public class MageBot extends ActiveScript {
 
